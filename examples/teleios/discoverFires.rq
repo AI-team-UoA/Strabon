@@ -1,0 +1,67 @@
+#Το πρώτο query εφαρμόζεται  με σκοπό τον περιορισμό τoυ θορύβου,
+#εντοπίζοντας την χρονική αστάθεια ("αναλαμπές") σε πολύγωνα
+#καμένων εκτάσεων. Υλοποιήσαμε και εφαρμόσαμε το ακόλουθο  χρονικό φίλτρο
+#στα δεδομένα (με αναφορές στον πηγαίο κώδικα):
+#- Στις γραμμές 1574..1614, για κάθε πολύγωνο, ομαδοποιούμε τις
+#καταγραφές οι οποίες δεν απέχουν μεταξύ τους (επόμενη-προηγούμενη)
+#περισσότερο από την τιμή της μεταβλητής persistence.
+#- Στην συνέχεια εξετάζουμε κάθε τέτοια ομάδα (κοντινών στο χώρο
+#καταγραφών), και ελέγχουμε εάν το πλήθος τους (για κάθε τέτοια ομάδα)
+#είναι μικρότερο ή ίσο από την τιμή της μεταβλητής repeat_in_persistence
+#(γραμμές 1614..1630).
+#- Αυτές τις καταγραφές τις διαγράφουμε θεωρώντας τις θόρυβο
+
+PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX strdf: <http://strdf.di.uoa.gr/ontology#>
+PREFIX strdf-ext: <http://strdf.di.uoa.gr/extensions/ontology#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX gag: <http://geo.linkedopendata.gr/greekadministrativeregion/ontology#>
+
+# The ending time of a fire (identificated by its starting time) is the latest
+# hotspot attributed to this fire
+SELECT ?start (max(?hTime) as ?end) ?geo 
+WHERE
+{
+    {
+		# Each hotspots is finally grouped only with the latest fire starting
+		# time found
+        SELECT (max(?hStartTime) as ?start) ?hTime ?geo ?h
+#        SELECT (count(distinct ?hStartTime) as ?c) ?geo
+        WHERE {
+	        # -- FIND HOTSPOTS THAT DEFINE THE START OF A FIRE (GROUP ALA THEMOS) -- 
+	        # Retrieve all hotstpots in time range...  
+	        ?hStart	noa:hasAcquisitionTime ?hStartTime ;
+                    noa:hasGeometry ?geo ;
+			        noa:producedFromProcessingChain "PROCESSING_CHAIN"^^xsd:string ;
+			        noa:isDerivedFromSensor "SENSOR"^^xsd:string .
+            OPTIONAL {?hStart noa:isDiscarded ?hStartDisc }. FILTER (!bound(?hStartDisc)) .
+            FILTER(strdf-ext:diffDateTime("MIN_ACQUISITION_TIME"^^xsd:dateTime,?hStartTime)<=0 && strdf-ext:diffDateTime("MAX_ACQUISITION_TIME"^^xsd:dateTime,?hStartTime)>=0).
+	        # ... narrow down results so that any previous hotspots is detected at least PERSISTENCE mins earlier
+            OPTIONAL {
+                ?hPrevious	noa:hasAcquisitionTime ?hPreviousTime ;
+                			noa:hasGeometry ?geo ;
+					        noa:producedFromProcessingChain "PROCESSING_CHAIN"^^xsd:string ;
+					        noa:isDerivedFromSensor "SENSOR"^^xsd:string .
+                OPTIONAL {?hPrevious noa:isDiscarded ?hPreviousDisc }. FILTER (!bound(?hPreviousDisc)) .
+         		FILTER(strdf-ext:diffDateTime("MIN_ACQUISITION_TIME"^^xsd:dateTime,?hPreviousTime)<=0 && strdf-ext:diffDateTime("MAX_ACQUISITION_TIME"^^xsd:dateTime,?hPreviousTime)>=0).                
+		        FILTER(strdf-ext:diffDateTime(?hStartTime, ?hPreviousTime) <= PERSISTENCE*60000 && strdf-ext:diffDateTime(?hStartTime, ?hPreviousTime) > 0).
+            } 
+            FILTER(!bound(?hPrevious)) .
+
+            # FIND HOTSPOTS AFTER A FIRE STARTING TIME
+            ?h  noa:hasAcquisitionTime ?hTime;
+                noa:hasGeometry ?geo;
+		        noa:producedFromProcessingChain "PROCESSING_CHAIN"^^xsd:string ;
+		        noa:isDerivedFromSensor "SENSOR"^^xsd:string .
+            OPTIONAL {?h noa:isDiscarded ?hDisc }. FILTER (!bound(?hDisc)) .
+        	FILTER(strdf-ext:diffDateTime("MIN_ACQUISITION_TIME"^^xsd:dateTime,?hTime)<=0 && strdf-ext:diffDateTime("MAX_ACQUISITION_TIME"^^xsd:dateTime,?hTime)>=0).   
+	 	    FILTER(strdf-ext:diffDateTime(?hTime, ?hStartTime) >= 0).
+        }
+#		group by ?geo
+        group by ?h ?hTime ?geo
+    }.
+}
+group by ?start ?geo
+having (count(?h) >= REPEAT_IN_PERS)
+

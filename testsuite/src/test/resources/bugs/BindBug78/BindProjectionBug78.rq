@@ -1,0 +1,7 @@
+SELECT (strdf:area(?inter) as ?area)
+WHERE
+{
+  ?x1 geo:asWKT ?g1 .
+  ?x2 geo:asWKT ?g2 .
+  BIND(strdf:intersection(?g1, ?g2) as ?inter)
+}

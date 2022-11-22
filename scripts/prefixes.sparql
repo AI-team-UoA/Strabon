@@ -1,0 +1,7 @@
+PREFIX clc: <http://geo.linkedopendata.gr/corine/ontology#>
+PREFIX gag: <http://teleios.di.uoa.gr/ontologies/gagKallikratis.rdf#>
+PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX strdf: <http://strdf.di.uoa.gr/ontology#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>

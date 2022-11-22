@@ -1,0 +1,8 @@
+#Test also a non spatial function to be sure
+
+SELECT ?x
+WHERE
+{
+?x geo:hasGeometry ?geom1
+}
+ORDER BY (str(?x))

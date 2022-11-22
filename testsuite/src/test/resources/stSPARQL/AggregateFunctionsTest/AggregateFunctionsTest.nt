@@ -1,0 +1,4 @@
+<http://example.org#A> <http://example.org#hasGeometry> "Polygon((0 0, 1 0, 1 1, 0 1, 0 0))"^^<http://strdf.di.uoa.gr/ontology#WKT>.
+<http://example.org#B> <http://example.org#hasGeometry> "Polygon((0 0, 2 0, 2 2, 0 2 , 0 0))"^^<http://strdf.di.uoa.gr/ontology#WKT>.
+<http://example.org#ExA> <http://example.org#consistsOf> <http://example.org#A> .
+<http://example.org#ExA> <http://example.org#consistsOf> <http://example.org#B> .

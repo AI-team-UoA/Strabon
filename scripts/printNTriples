@@ -1,0 +1,13 @@
+#! /bin/bash
+
+input=$1
+
+if [ "$input" == "" ]; then
+	echo "give database name"
+	exit -1
+fi
+
+fgrep '[s=' $input \
+| sed 's/\[s=\(.*\);o=\(.*\);p=\(.*\)\]/\1 \3 \2;/g' \
+| sed 's/\(http:\/\/[^ >]*\)\([ ;]\)/<\1>\2/g' \
+| sed 's/;/./g'

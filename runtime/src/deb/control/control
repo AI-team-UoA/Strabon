@@ -1,0 +1,9 @@
+Package: strabon-cmd
+Version: 3.3.2-SNAPSHOT
+Section: strabon-cmd
+Priority: optional
+Architecture: all
+Maintainer: Manolis Karpathiotakis <manos.karpathiotakis@epfl.ch>, Kostis Kyzirakos <Kostis.Kyzirakos@cwi.nl>, Charalampos Nikolaou <charnik@di.uoa.gr>, Konstantina Bereta <konstantina.bereta@di.uoa.gr>, Georgios Garbis <ggarbis@di.uoa.gr>,  Dimitrios Bilidas <dbilidas@di.uoa.gr>, Stella Giannakopoulou <sgian@di.uoa.gr>, Panayiotis Smeros <psmeros@di.uoa.gr>, Kalliroi Dogani <kallirroi@di.uoa.gr>, Maria Karpathiotaki <mkarpat@di.uoa.gr>, Ioannis Vlachopoulos <johnvl@di.uoa.gr>, Dimitrianos Savva <dimis@di.uoa.gr>, Georgios Stamoulis <gstam@di.uoa.gr>, Kanela Kaligosi <kalkan@di.uoa.gr>
+Description: Strabon Command Line Utility
+Depends: openjdk-7-jre | oracle-java7-installer, postgresql (>= 9.1) | postgresql-9.1
+Distribution: Mozilla v2.0 Public Liscence

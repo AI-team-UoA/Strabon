@@ -1,0 +1,5 @@
+select (strdf:extent(?g) as ?extent)
+where
+{
+	?x ex:hasGeometry ?g.
+}

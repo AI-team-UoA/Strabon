@@ -1,0 +1,365 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<sparql xmlns='http://www.w3.org/2005/sparql-results#'>
+	<head>
+		<variable name='x'/>
+		<variable name='y'/>
+		<variable name='intersects'/>
+	</head>
+	<results>
+		<result>
+			<binding name='x'>
+				<uri>http://example.org#A</uri>
+			</binding>
+			<binding name='y'>
+				<uri>http://example.org#B</uri>
+			</binding>
+			<binding name='intersects'>
+				<literal datatype='http://www.w3.org/2001/XMLSchema#boolean'>true</literal>
+			</binding>
+		</result>
+		
+		<result>
+			<binding name='x'>
+				<uri>http://example.org#A</uri>
+			</binding>
+			<binding name='y'>
+				<uri>http://example.org#C</uri>
+			</binding>
+			<binding name='intersects'>
+				<literal datatype='http://www.w3.org/2001/XMLSchema#boolean'>true</literal>
+			</binding>
+		</result>
+		
+		<result>
+			<binding name='x'>
+				<uri>http://example.org#A</uri>
+			</binding>
+			<binding name='y'>
+				<uri>http://example.org#D</uri>
+			</binding>
+			<binding name='intersects'>
+				<literal datatype='http://www.w3.org/2001/XMLSchema#boolean'>false</literal>
+			</binding>
+		</result>
+		
+		<result>
+			<binding name='x'>
+				<uri>http://example.org#A</uri>
+			</binding>
+			<binding name='y'>
+				<uri>http://example.org#E</uri>
+			</binding>
+			<binding name='intersects'>
+				<literal datatype='http://www.w3.org/2001/XMLSchema#boolean'>false</literal>
+			</binding>
+		</result>
+		
+		<result>
+			<binding name='x'>
+				<uri>http://example.org#A</uri>
+			</binding>
+			<binding name='y'>
+				<uri>http://example.org#F</uri>
+			</binding>
+			<binding name='intersects'>
+				<literal datatype='http://www.w3.org/2001/XMLSchema#boolean'>false</literal>
+			</binding>
+		</result>
+		
+		<result>
+			<binding name='x'>
+				<uri>http://example.org#A</uri>
+			</binding>
+			<binding name='y'>
+				<uri>http://example.org#G</uri>
+			</binding>
+			<binding name='intersects'>
+				<literal datatype='http://www.w3.org/2001/XMLSchema#boolean'>true</literal>
+			</binding>
+		</result>
+		
+		
+		
+		<result>
+			<binding name='x'>
+				<uri>http://example.org#A</uri>
+			</binding>
+			<binding name='y'>
+				<uri>http://example.org#H</uri>
+			</binding>
+			<binding name='intersects'>
+				<literal datatype='http://www.w3.org/2001/XMLSchema#boolean'>false</literal>
+			</binding>
+		</result>
+		
+		
+		
+		
+		
+		
+		
+		<!-- B -->
+		
+		<result>
+			<binding name='x'>
+				<uri>http://example.org#B</uri>
+			</binding>
+			<binding name='y'>
+				<uri>http://example.org#C</uri>
+			</binding>
+			<binding name='intersects'>
+				<literal datatype='http://www.w3.org/2001/XMLSchema#boolean'>true</literal>
+			</binding>
+		</result>
+		
+		<result>
+			<binding name='x'>
+				<uri>http://example.org#B</uri>
+			</binding>
+			<binding name='y'>
+				<uri>http://example.org#D</uri>
+			</binding>
+			<binding name='intersects'>
+				<literal datatype='http://www.w3.org/2001/XMLSchema#boolean'>false</literal>
+			</binding>
+		</result>
+		
+		<result>
+			<binding name='x'>
+				<uri>http://example.org#B</uri>
+			</binding>
+			<binding name='y'>
+				<uri>http://example.org#E</uri>
+			</binding>
+			<binding name='intersects'>
+				<literal datatype='http://www.w3.org/2001/XMLSchema#boolean'>false</literal>
+			</binding>
+		</result>
+		
+		<result>
+			<binding name='x'>
+				<uri>http://example.org#B</uri>
+			</binding>
+			<binding name='y'>
+				<uri>http://example.org#F</uri>
+			</binding>
+			<binding name='intersects'>
+				<literal datatype='http://www.w3.org/2001/XMLSchema#boolean'>false</literal>
+			</binding>
+		</result>
+		
+		<result>
+			<binding name='x'>
+				<uri>http://example.org#B</uri>
+			</binding>
+			<binding name='y'>
+				<uri>http://example.org#G</uri>
+			</binding>
+			<binding name='intersects'>
+				<literal datatype='http://www.w3.org/2001/XMLSchema#boolean'>true</literal>
+			</binding>
+		</result>
+		
+		<result>
+			<binding name='x'>
+				<uri>http://example.org#B</uri>
+			</binding>
+			<binding name='y'>
+				<uri>http://example.org#H</uri>
+			</binding>
+			<binding name='intersects'>
+				<literal datatype='http://www.w3.org/2001/XMLSchema#boolean'>false</literal>
+			</binding>
+		</result>
+		
+		<!-- C -->
+		
+		<result>
+			<binding name='x'>
+				<uri>http://example.org#C</uri>
+			</binding>
+			<binding name='y'>
+				<uri>http://example.org#D</uri>
+			</binding>
+			<binding name='intersects'>
+				<literal datatype='http://www.w3.org/2001/XMLSchema#boolean'>true</literal>
+			</binding>
+		</result>
+		
+		<result>
+			<binding name='x'>
+				<uri>http://example.org#C</uri>
+			</binding>
+			<binding name='y'>
+				<uri>http://example.org#E</uri>
+			</binding>
+			<binding name='intersects'>
+				<literal datatype='http://www.w3.org/2001/XMLSchema#boolean'>true</literal>
+			</binding>
+		</result>
+		
+		<result>
+			<binding name='x'>
+				<uri>http://example.org#C</uri>
+			</binding>
+			<binding name='y'>
+				<uri>http://example.org#F</uri>
+			</binding>
+			<binding name='intersects'>
+				<literal datatype='http://www.w3.org/2001/XMLSchema#boolean'>true</literal>
+			</binding>
+		</result>
+		
+		<result>
+			<binding name='x'>
+				<uri>http://example.org#C</uri>
+			</binding>
+			<binding name='y'>
+				<uri>http://example.org#G</uri>
+			</binding>
+			<binding name='intersects'>
+				<literal datatype='http://www.w3.org/2001/XMLSchema#boolean'>true</literal>
+			</binding>
+		</result>
+		
+		<result>
+			<binding name='x'>
+				<uri>http://example.org#C</uri>
+			</binding>
+			<binding name='y'>
+				<uri>http://example.org#H</uri>
+			</binding>
+			<binding name='intersects'>
+				<literal datatype='http://www.w3.org/2001/XMLSchema#boolean'>true</literal>
+			</binding>
+		</result>
+		
+		<!-- D -->
+		
+		<result>
+			<binding name='x'>
+				<uri>http://example.org#D</uri>
+			</binding>
+			<binding name='y'>
+				<uri>http://example.org#E</uri>
+			</binding>
+			<binding name='intersects'>
+				<literal datatype='http://www.w3.org/2001/XMLSchema#boolean'>true</literal>
+			</binding>
+		</result>
+		
+		<result>
+			<binding name='x'>
+				<uri>http://example.org#D</uri>
+			</binding>
+			<binding name='y'>
+				<uri>http://example.org#F</uri>
+			</binding>
+			<binding name='intersects'>
+				<literal datatype='http://www.w3.org/2001/XMLSchema#boolean'>true</literal>
+			</binding>
+		</result>
+		
+		<result>
+			<binding name='x'>
+				<uri>http://example.org#D</uri>
+			</binding>
+			<binding name='y'>
+				<uri>http://example.org#G</uri>
+			</binding>
+			<binding name='intersects'>
+				<literal datatype='http://www.w3.org/2001/XMLSchema#boolean'>false</literal>
+			</binding>
+		</result>
+		
+		<result>
+			<binding name='x'>
+				<uri>http://example.org#D</uri>
+			</binding>
+			<binding name='y'>
+				<uri>http://example.org#H</uri>
+			</binding>
+			<binding name='intersects'>
+				<literal datatype='http://www.w3.org/2001/XMLSchema#boolean'>false</literal>
+			</binding>
+		</result>
+		
+		<!-- E -->
+		
+		<result>
+			<binding name='x'>
+				<uri>http://example.org#E</uri>
+			</binding>
+			<binding name='y'>
+				<uri>http://example.org#F</uri>
+			</binding>
+			<binding name='intersects'>
+				<literal datatype='http://www.w3.org/2001/XMLSchema#boolean'>true</literal>
+			</binding>
+		</result>
+		
+		<result>
+			<binding name='x'>
+				<uri>http://example.org#E</uri>
+			</binding>
+			<binding name='y'>
+				<uri>http://example.org#G</uri>
+			</binding>
+			<binding name='intersects'>
+				<literal datatype='http://www.w3.org/2001/XMLSchema#boolean'>false</literal>
+			</binding>
+		</result>
+		
+		<result>
+			<binding name='x'>
+				<uri>http://example.org#E</uri>
+			</binding>
+			<binding name='y'>
+				<uri>http://example.org#H</uri>
+			</binding>
+			<binding name='intersects'>
+				<literal datatype='http://www.w3.org/2001/XMLSchema#boolean'>false</literal>
+			</binding>
+		</result>
+		
+		<!-- F -->
+
+		<result>
+			<binding name='x'>
+				<uri>http://example.org#F</uri>
+			</binding>
+			<binding name='y'>
+				<uri>http://example.org#G</uri>
+			</binding>
+			<binding name='intersects'>
+				<literal datatype='http://www.w3.org/2001/XMLSchema#boolean'>false</literal>
+			</binding>
+		</result>
+		
+		<result>
+			<binding name='x'>
+				<uri>http://example.org#F</uri>
+			</binding>
+			<binding name='y'>
+				<uri>http://example.org#H</uri>
+			</binding>
+			<binding name='intersects'>
+				<literal datatype='http://www.w3.org/2001/XMLSchema#boolean'>false</literal>
+			</binding>
+		</result>
+		
+		<!-- G -->
+		
+		<result>
+			<binding name='x'>
+				<uri>http://example.org#G</uri>
+			</binding>
+			<binding name='y'>
+				<uri>http://example.org#H</uri>
+			</binding>
+			<binding name='intersects'>
+				<literal datatype='http://www.w3.org/2001/XMLSchema#boolean'>false</literal>
+			</binding>
+		</result>
+	</results>
+</sparql>

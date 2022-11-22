@@ -1,0 +1,6 @@
+select (strdf:union(?g1, ?g2) as ?union)
+where
+{
+ex:A ex:hasGeometry ?g1.
+ex:C ex:hasGeometry ?g2.
+}

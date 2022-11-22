@@ -1,0 +1,5 @@
+select (strdf:geometryType(?g) as ?geomType)
+where
+{
+	ex:polygon1 ex:hasGeometry ?g.
+}

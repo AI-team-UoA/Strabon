@@ -1,0 +1,8 @@
+META-INF/templates/memory-rdfs-dt.ttl
+META-INF/templates/memory-rdfs.ttl
+META-INF/templates/memory.ttl
+META-INF/templates/native-rdfs-dt.ttl
+META-INF/templates/native-rdfs.ttl
+META-INF/templates/native.ttl
+META-INF/templates/pgsql.ttl
+META-INF/templates/mysql.ttl

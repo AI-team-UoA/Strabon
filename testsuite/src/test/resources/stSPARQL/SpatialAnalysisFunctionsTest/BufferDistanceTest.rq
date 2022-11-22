@@ -1,0 +1,6 @@
+select (strdf:buffer(?g1, strdf:distance(?g1, ?g2, ogc:degree), ogc:degree) as ?buffer)
+where
+{
+	ex:A ex:hasGeometry ?g1 .
+	ex:B ex:hasGeometry ?g2 .
+}

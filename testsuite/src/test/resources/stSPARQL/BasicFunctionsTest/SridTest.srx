@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+	<sparql xmlns='http://www.w3.org/2005/sparql-results#'> 
+		<head> 
+			<variable name='srid'/> 
+		</head> 
+		<results> 
+			<result> 
+				<binding name='srid'> 
+					<literal datatype='http://www.w3.org/2001/XMLSchema#int'>4326</literal> 
+				</binding> 
+			</result> 
+		</results> 
+	</sparql> 

@@ -1,0 +1,5 @@
+select (strdf:asText(?g) as ?wkt)
+where
+{
+	ex:polygon1 ex:hasGeometry ?g.
+}

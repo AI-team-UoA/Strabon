@@ -1,0 +1,2 @@
+SELECT ?o
+WHERE {?s strdf:hasGeometry ?o}

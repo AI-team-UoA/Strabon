@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<sparql xmlns='http://www.w3.org/2005/sparql-results#'>
+	<head>
+		<variable name='type'/>
+	</head>
+	<results>
+		<result>
+			<binding name='type'>
+				<uri>http://www.opengis.net/ont/geosparql#SpatialObject</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='type'>
+				<uri>http://www.opengis.net/ont/geosparql#Feature</uri>
+			</binding>
+		</result>
+	</results>
+</sparql>

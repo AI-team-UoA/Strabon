@@ -1,0 +1,627 @@
+#!/bin/bash
+
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#
+# Copyright (C) 2010, 2011, 2012, Pyravlos Team
+#
+# http://www.strabon.di.uoa.gr/
+#
+
+#
+# Script for running the main classes of Strabon. The main classes of Strabon comprises
+# QueryOp, , UpdateOp, StoreOp, and  DescribeOp.
+#
+# Author: Charalampos (Babis) Nikolaou <charnik@di.uoa.gr>
+#
+
+# command name
+CMD="$(basename ${0})"
+
+# absolute directory name of this command
+LOC="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+RUNTIME="${LOC}/../runtime"
+
+# runtime package
+PKG="eu.earthobservatory.runtime"
+
+# the underlying database to use (one of `postgis' or `monetdb')
+DATABASE="postgis"
+
+# the main class to run
+CLASS=
+
+# the hostname at which the database runs
+HOST="localhost"
+
+# the port at which the database listens
+PORT=
+
+# the database name to connect to
+DB="strabon"
+
+# the username for the database connection
+DBUSER=
+
+# the password for the database connection
+DBPASS=
+
+# the query to run
+QUERY=
+
+# the RDF format of the files to store (defaults to ntriples)
+FORMAT="ntriples"
+
+# true to force deletion of locked table, false otherwise
+FORCE_DELETE="false"
+
+# the URI of the named graph into which the RDF files shall be stored
+NAMED_GRAPH=
+
+# true when inference is enabled
+INFERENCE=
+
+# predefined queries
+QUERY_SIZE="SELECT (COUNT(*) as ?C) WHERE {?s ?p ?o}"
+QUERY_GETALL="SELECT * WHERE {?s ?p ?o}"
+QUERY_DELETEALL="DELETE {?s ?p ?o} WHERE {?s ?p ?o}"
+QUERY_HOTSPOT_SIZE="SELECT (COUNT(*) as ?C) WHERE {?h <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#Hotspot>}"
+QUERY_EXPORT="CONSTRUCT {?s ?p ?o} WHERE {?s ?p ?o}"
+
+# debug option for log4j configuration:
+#-Dlog4j.debug
+#-Dlog4j.configuration=\"${RUNTIME}/log4j.properties\"
+
+# further options for java
+JAVA_OPTS=
+
+# base max memory memory
+BASE_MEMORY=1024
+
+# more memory
+MORE_MEMORY="-Xms512M -Xmx1024M"
+
+# much more memory
+MMORE_MEMORY="-Xms512M -Xmx1536M"
+
+# flag for not setting the memory limit more than once
+MEMORY_INCREASED=false
+
+# just print what shall be executed
+DEBUG=false
+
+# if true, DEBUG has been set in command line,
+# so it must not be overidden
+DEBUG_SAVE=false
+
+# Filename containing the prefixes to be included in SPARQL queries
+PREFIXES_FILE="${LOC}/prefixes.sparql"
+
+# configuration file for the Strabon connection
+STRABON_CONF="${HOME}/.strabon"
+
+function help() {
+	echo "Usage: ${CMD} [OPTIONS] COMMAND ARGS"
+	echo
+	echo "Interface to execute the main classes of Strabon, such as QueryOp, StoreOp, UpdateOp, DescribeOp, etc."
+	echo
+	echo "	COMMAND	 : one of \`query', \`update', \`store', \`describe', or \`help'"
+	echo "	ARGS	 : arguments according to selected command"
+	echo
+	echo "OPTIONS can be any of the following (variable names and values are case sensitive)"
+	echo "	-d		: don't run, just print what shall be executed"
+	echo "			  Variable for configuration file: \`DEBUG'"
+	echo "			  Values: \`true' or \`false'" 
+	echo "	-m		: use more memory \`${MORE_MEMORY}' (useful in \"out of memory exceptions\")"
+	echo "	-M		: use much more memory \`${MMORE_MEMORY}' (useful in \"out of memory exceptions\")"
+	echo "	-MM MULT	: use MULT * ${BASE_MEMORY} MB of memory (useful in \"out of memory exceptions\")"
+	echo "	-i		: include URI prefixes in the SPARQL query. Prefixes are taken from file"
+	echo "			  \`prefixes.sparql'"
+	echo "	-e DATABASE	: the database engine to connect (one of \`postgis' (default) or \`monetdb')"
+	echo "			  Variable for configuration file: \`DATABASE'"
+	echo "			  Values: \`postgis' or \`monetdb'" 
+	echo "	-db DB		: the database to connect to (defaults to \`${DB}')"
+	echo "			  Variable for configuration file: \`DB'"
+	echo "	-p PORT		: the port to use for the database connection"
+	echo "			: (defaults to 5432 for postgis and 50000 for monetdb)"
+	echo "			  Variable for configuration file: \`PORT'"
+	echo "	-h HOSTNAME	: the hostname to use for the database connection (defaults to \`${HOST}')"
+	echo "			  Variable for configuration file: \`HOST'"
+	echo "	-u USERNAME	: the username for the database connection"
+	echo "			  (defaults to \`postgres' for postgis and \`monetdb' for monetdb)"
+	echo "			  Variable for configuration file: \`DBUSER'"
+	echo "	-pass PASS	: the password for the database connection"
+	echo "			  (defaults to \`postgres' for postgis and \`monetdb' for monetdb)"
+	echo "			  Variable for configuration file: \`DBPASS'"
+	echo "	-c FILE		: configuration file to use for the connection (defaults to \`${STRABON_CONF}')."
+	echo "			  If the default configuration file exists, it is read. Options specified in the"
+	echo "			  command line override their values already set by the configuration file."
+}
+
+function help_query() {
+	echo "Usage: ${CMD} query [OPTIONS] SPARQL_QUERY [RESULT_FORMAT]"
+	echo
+	echo "Execute a SPARQL query on Strabon."
+	echo
+	echo "	SPARQL_QUERY	: the SPARQL query to execute or an alias name such as the following:"
+	echo "				size: returns the number of triples"
+	echo "				all: returns all triples"
+	echo "				hotspots: returns the number of hotspots"
+	echo "	RESULT_FORMAT	: the format of the result. Possible values are \`???' (default), \`xml'"
+	echo "			  \`html', \`kml', \`kmz', or \`geojson'"
+	echo
+	echo "OPTIONS can be one of the following"
+	echo "	--force-delete  : forces deletion of \"locked\" table (e.g., when Strabon has been"
+	echo "			  ungracefully shutdown)"
+}
+
+function help_update() {
+	echo "Usage: ${CMD} update SPARQL_UPDATE"
+	echo
+	echo "Execute a SPARQL Update query on Strabon."
+	echo
+	echo "	SPARQL_UPDATE	: the SPARQL update query to execute or an alias name such as the"
+	echo "			  the following:"
+	echo "				clear: deletes all triples"
+}
+
+function help_store() {
+	echo "Usage: ${CMD} store [OPTIONS] FILE..."
+	echo
+	echo "Store RDF documents in Strabon."
+	echo
+	echo "	FILE	: the file containing the RDF document to store. It can be a filename or a URL,"
+	echo "		  (i.e., file:///tmp/file.nt, http://www.example.org/file.nt,"
+	echo "		  ftp://www.example.org/file.nt, etc.)."
+	echo 
+	echo "OPTIONS can be one of the following"
+	echo "	-f FORMAT : the RDF format of the files to store. The format can be one of the following:"
+	echo "		    \`ntriples' (default), \`n3', \`rdfxml', or \`turtle'."
+	echo "	-g NAMED_GRAPH : the URI of the named graph into which the RDF files shall be stored"
+	echo "	                 (defaults to the default graph)."
+	echo "	--inference : enables inference."
+}
+
+function help_describe() {
+	echo "Usage: ${CMD} describe DESCRIBE_QUERY [RESULT_FORMAT]"
+	echo
+	echo "Execute a SPARQL DESCRIBE query on Strabon."
+	echo
+	echo "	DESCRIBE_QUERY	: the SPARQL DESCRIBE query to execute or an alias name such as the following:"
+	echo "				export: returns all triples stored in the database"
+	echo "	RESULT_FORMAT	: the format of the result. Possible values are \`N-Triples', "
+	echo "			  \`RDM/XML', \`N3', \`TURTLE', \`TRIG', \`TRIX', and \`BinaryRDF'"
+	echo "			  (defaults to N-Triples)"
+}
+
+# read configuration script first
+if test -e "${STRABON_CONF}"; then
+	. ${STRABON_CONF}
+fi
+
+if ${DEBUG}; then
+	echo "${CMD}: debug is ON (from configuration file ${STRABON_CONF})"
+fi
+
+# read script options
+while test $# -gt 0 -a "X${1:0:1}" == "X-"; do
+	case "${1}" in
+		--help)
+			help
+			exit 0
+			;;
+		-d)
+			shift
+			if ! ${DEBUG}; then
+				echo "${CMD}: debug is ON"
+			fi
+			DEBUG=true
+			DEBUG_SAVE=true
+			;;
+		-m)
+			if ! ${MEMORY_INCREASED}; then
+				JAVA_OPTS="${JAVA_OPTS} ${MORE_MEMORY}"
+				MEMORY_INCREASED=true
+			else
+				echo "${CMD}: memory has already been increased; option \`${1}' will be ignored."
+			fi
+			shift
+			;;
+		-M)
+			if ! ${MEMORY_INCREASED}; then
+				JAVA_OPTS="${JAVA_OPTS} ${MMORE_MEMORY}"
+				MEMORY_INCREASED=true
+			else
+				echo "${CMD}: memory has already been increased; option \`${1}' will be ignored."
+			fi
+			shift
+			;;
+		-MM)
+			shift
+			if ! test $# -gt 1; then
+				help
+				exit 1
+			fi
+			MULT=${1}
+
+			if ! ${MEMORY_INCREASED}; then
+				JAVA_OPTS="${JAVA_OPTS} -Xms512M -Xmx$((${MULT}*${BASE_MEMORY}))M"
+				MEMORY_INCREASED=true
+			else
+				echo "${CMD}: memory has already been increased; option \`${1}' will be ignored."
+			fi
+			shift
+			;;
+		-i)
+			shift
+			PREFIXES="$(cat ${PREFIXES_FILE})
+"
+			;;
+		-e)
+			shift
+			if ! test $# -gt 1; then
+				help
+				exit 1
+			fi
+
+			DATABASE=${1}
+			case "${DATABASE}" in
+				monetdb|postgis)
+					shift
+					;;
+				postgis)
+					shift
+					;;
+				*)
+					echo "${CMD}: invalid database engine"
+					echo "${CMD}: valid database engines are \`postgis' or \`monetdb'"
+					exit 2
+					;;
+			esac
+			;;
+		-db)
+			shift
+			if ! test $# -gt 1; then
+				help
+				exit 1
+			fi
+			DB="${1}"
+			shift
+			;;
+		-p)
+			shift
+			if ! test $# -gt 1; then
+				help
+				exit 1
+			fi
+			PORT=${1}
+			shift
+			;;
+		-h)
+			shift
+			if ! test $# -gt 1; then
+				help
+				exit 1
+			fi
+			HOST=${1}
+			shift
+			;;
+		-u)
+			shift
+			if ! test $# -gt 1; then
+				help
+				exit 1
+			fi
+			DBUSER=${1}
+			shift
+			;;
+		-pass)
+			shift
+			if ! test $# -gt 1; then
+				help
+				exit 1
+			fi
+			DBPASS=${1}
+			shift
+			;;
+		-c)
+			shift
+			if ! test $# -gt 1; then
+				help
+				exit 1
+			fi
+
+			STRABON_CONF="${1}"
+			if ! test -e "${STRABON_CONF}"; then
+				echo "${CMD}: configuration file \"${1}\" does not exist"
+				exit 1
+			else
+				# if true, then debug has been set ON in command line
+				if $DEBUG; then
+					echo "${CMD}: Reading configuration file \"${STRABON_CONF}\""
+				fi
+
+				. ${STRABON_CONF}
+
+				if $DEBUG_SAVE; then
+					# restore debug value set on command line
+					DEBUG=true
+				fi
+				shift
+			fi
+			;;
+		-*)
+			echo "${CMD}: unknown option \"${1}\""
+			help
+			exit 1
+			;;
+	esac
+done
+
+# set defaults
+case "${DATABASE}" in
+	postgis)
+		if test -z "${PORT}";
+		then
+			PORT=5432
+		fi
+
+		if test -z "${DBUSER}";
+		then
+			DBUSER="postgres"
+		fi
+		
+		if test -z "${DBPASS}";
+		then
+			DBPASS="postgres"
+		fi
+		;;
+	monetdb)
+		if test -z "${PORT}";
+		then
+			PORT=50000
+		fi
+
+		if test -z "${DBUSER}";
+		then
+			DBUSER="monetdb"
+		fi
+		
+		if test -z "${DBPASS}";
+		then
+			DBPASS="monetdb"
+		fi
+		;;
+esac
+
+# print configuration/options
+if ${DEBUG}; then
+	echo "${CMD}: printing database connection details"
+	echo "	 Database Engine : ${DATABASE}"
+	echo "	 Database Name	 : ${DB}"
+	echo "	 Hostname	 : ${HOST}"
+	echo "	 Port		 : ${PORT}"
+	echo "	 Username	 : ${DBUSER}"
+	echo "	 Password	 : ${DBPASS}"
+fi
+
+# determine command to execute
+case "${1}" in
+	help)
+		shift
+		if test $# -ge 1; then
+			case "${1}" in
+				query)
+					help_query
+					;;
+				update)
+					help_update
+					;;
+				store)
+					help_store
+					;;
+				describe)
+					help_describe
+					;;
+				*)
+					help
+					;;
+			esac
+			exit 1
+		fi
+		help
+		exit 0
+		;;
+	query)
+		CLASS="QueryOp"
+		shift
+		if ! test $# -ge 1; then
+			help_query
+			exit 1
+		fi
+
+		# check whether force deletion of locked table has been specified
+		if test "${1}" = "--force-delete"; then
+			shift
+			FORCE_DELETE="true"
+		fi
+
+		QUERY="${1}"
+		shift
+
+		# check for predefined queries
+		case "${QUERY}" in
+			size)
+				QUERY="${QUERY_SIZE}"
+				;;
+			hotspots)
+				QUERY="${QUERY_HOTSPOT_SIZE}"
+				;;
+			all)
+				QUERY="${QUERY_GETALL}"
+				;;
+		esac
+
+		# check for format of result
+		if test $# -gt 0; then
+			RESULT_FORMAT="${1}"
+			shift
+			case "${RESULT_FORMAT}" in
+				[xX][mM][lL]|[hH][tT][mM][lL]|[kK][mM][lL]|[kK][mM][zZ]|[gG][eE][oO][jJ][sS][oO][nN]|[tT][sS][vV]|[eE][xX][pP])
+				;;
+			*)
+				echo "${CMD}: invalid result format \"${RESULT_FORMAT}\""
+				echo "${CMD}: valid formats are \`???' (default), \`xml', \`html', \`kml', \`kmz', or \`geojson'"
+				exit 2
+				;;
+			esac
+		fi
+		;;
+	update)
+		CLASS="UpdateOp"
+		shift
+		if ! test $# -eq 1; then
+			help_update
+			exit 1
+		fi
+		QUERY="${1}"
+
+		# check for predefined queries
+		case "${QUERY}" in
+			clear)
+				QUERY="${QUERY_DELETEALL}"
+				;;
+		esac
+		;;
+	store)
+		CLASS="StoreOp"
+		shift
+		if ! test $# -ge 1; then
+			help_store
+			exit 1
+		fi
+
+		while test $# -gt 0 -a "X${1:0:1}" == "X-"; do
+			# check whether format is specified
+			if test "${1}" = "-f"; then
+				shift
+				if ! test $# -ge 1; then
+					echo "${CMD}: Option -f requires an RDF format (\`ntriples', \`n3', \`rdfxml', or \`turtle')"
+					exit 2
+				else
+					FORMAT="${1}"
+					case "${FORMAT}" in
+						[nN][tT][rR][iI][pP][lL][eE][sS]|[nN]3|[rR][dD][fF][xX][mM][lL]|[tT][uU][rR][tT][lL][eE])
+							shift
+							;;
+						*)
+							echo "${CMD}: invalid RDF format \"${FORMAT}\"."
+							echo "${CMD}: valid RDF formats are \`ntriples', \`n3', \`rdfxml', or \`turtle'"
+							exit 2
+							;;
+					esac
+				fi
+			fi
+
+			# check whether a named graph is specified
+			if test "${1}" = "-g"; then
+				shift
+				if ! test $# -ge 1; then
+					echo "${CMD}: Option -g requires a URI argument"
+					exit 2
+				else
+					NAMED_GRAPH="-g ${1}"
+					shift
+				fi
+			fi
+
+			# check whether inference is enabled
+			if test "${1}" = "--inference"; then
+				shift
+				INFERENCE="-i true"
+			fi
+
+		done
+
+		# if no files are given
+		if ! test $# -ge 1; then
+			help_store
+			exit 1
+		fi
+
+		# do not make an assignment of the files to QUERY
+		# handle the case of storing multiple files afterwards
+		# QUERY="${@}"
+		;;
+	describe)
+		CLASS="DescribeOp"
+		shift
+		if ! test $# -ge 1; then
+			help_describe
+			exit 1
+		fi
+		QUERY="${1}"
+		shift
+
+		# check for predefined queries
+		case "${QUERY}" in
+			export)
+				QUERY="${QUERY_EXPORT}"
+				;;
+		esac
+
+		# check for format of result
+		if test $# -gt 0; then
+			RESULT_FORMAT="${1}"
+			shift
+			case "${RESULT_FORMAT}" in
+				N-Triples|RDF/XML|N3|TURTLE|TRIG|TRIX|BinaryRDF)
+				;;
+			*)
+				echo "${CMD}: invalid result format \"${RESULT_FORMAT}\""
+				echo "${CMD}: valid formats are \`N-Triples', \`RDM/XML', \`N3', \`TURTLE', \`TRIG', \`TRIX', and \`BinaryRDF'"
+				exit 2
+				;;
+			esac
+		fi
+		;;
+	"")
+		help
+		exit 1
+		;;
+	*) 
+		help
+		echo
+		echo "${CMD}: unknown command \"${1}\"."
+		exit 1
+		;;
+esac
+
+# compile command to execute
+if test "${CLASS}" = "StoreOp"; then
+	STRABON_EXEC=
+	for file in "${@}"; do
+		# check whether a relative path was given
+		if ! test "${file:0:7}" == "file://" -o "${file:0:7}" == "http://" -o "${file:0:1}" == "/"; then
+			file="$(pwd)/${file}"
+		fi
+
+		STRABON_EXEC="${STRABON_EXEC}(cd java ${JAVA_OPTS} -cp ./target/\*:. ${PKG}.${DATABASE}.${CLASS} ${HOST} ${PORT} ${DB} ${DBUSER} ${DBPASS} \"${file}\" -f ${FORMAT} ${NAMED_GRAPH} ${INFERENCE});
+"
+	done
+elif test "${CLASS}" = "QueryOp"; then
+	STRABON_EXEC="(java ${JAVA_OPTS} -cp ./target/\*:. ${PKG}.${DATABASE}.${CLASS} ${HOST} ${PORT} ${DB} ${DBUSER} ${DBPASS} \"${PREFIXES}${QUERY}\" ${FORCE_DELETE} ${RESULT_FORMAT})"
+else
+	STRABON_EXEC="(java ${JAVA_OPTS} -cp ./target/\*:. ${PKG}.${DATABASE}.${CLASS} ${HOST} ${PORT} ${DB} ${DBUSER} ${DBPASS} \"${PREFIXES}${QUERY}\" ${RESULT_FORMAT})"
+fi
+
+# execute command or debug
+if ${DEBUG}; then
+	echo "${CMD}: printing command for execution"
+	echo "${STRABON_EXEC}"
+else
+	eval "${STRABON_EXEC}"
+fi

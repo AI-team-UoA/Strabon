@@ -1,0 +1,3 @@
+SELECT ?geo 
+WHERE 
+{?geo rdf:type geo:Geometry}

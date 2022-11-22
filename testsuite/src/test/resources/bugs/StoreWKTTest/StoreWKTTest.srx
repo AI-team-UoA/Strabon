@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<sparql xmlns='http://www.w3.org/2005/sparql-results#'>
+	<head>
+		<variable name='o'/>
+	</head>
+	<results>
+		<result>
+			<binding name='o'>
+				<literal datatype='http://strdf.di.uoa.gr/ontology#WKT'>POLYGON((34.80 19.37,41.74 19.37,41.74 29.64 ,34.80 29.64,34.80 19.37));http://www.opengis.net/def/crs/EPSG/0/4326</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='o'>
+				<literal datatype='http://strdf.di.uoa.gr/ontology#WKT'>POLYGON((34.80 19.37,41.74 19.37,41.74 29.64 ,34.80 29.64,34.80 19.37));http://www.opengis.net/def/crs/EPSG/0/32630</literal>
+			</binding>
+		</result>
+	</results>
+</sparql>

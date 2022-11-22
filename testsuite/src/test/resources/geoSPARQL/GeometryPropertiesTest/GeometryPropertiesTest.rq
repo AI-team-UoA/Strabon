@@ -1,0 +1,8 @@
+SELECT *
+WHERE 
+{?geom geo:dimension ?dim.
+?geom geo:coordinateDimension ?coorDim.
+?geom geo:spatialDimension ?spatDim.
+?geom geo:isEmpty ?empty.
+?geom geo:isSimple ?simple.
+?geom geo:hasSerialization ?serialization.}

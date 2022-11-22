@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<sparql xmlns='http://www.w3.org/2005/sparql-results#'>
+	<head>
+		<variable name='symDifference'/>
+	</head>
+	<results>
+		<result>
+			<binding name='symDifference'>
+				<literal datatype='http://strdf.di.uoa.gr/ontology#WKT'>MULTIPOLYGON (((2 1, 2 0, 0 0, 0 2, 1 2, 1 1, 2 1)), ((2 1, 2 2, 3 2, 3 1, 2 1)))</literal>
+			</binding>
+		</result>
+	</results>
+</sparql>

@@ -1,0 +1,6 @@
+<http://example.org#A> <http://www.opengis.net/ont/geosparql#hasGeometry> <http://example.org#geomA>.
+<http://example.org#B> <http://www.opengis.net/ont/geosparql#hasGeometry> <http://example.org#geomB>.
+<http://example.org#C> <http://www.opengis.net/ont/geosparql#hasGeometry> <http://example.org#geomC>.
+<http://example.org#geomA> <http://www.opengis.net/ont/geosparql#asWKT> " Polygon((2.1 1.1, 2.9 1.1, 2.9 1.9, 2.1 1.9, 2.1 1.1))  "^^<http://www.opengis.net/ont/geosparql#wktLiteral>.
+<http://example.org#geomB> <http://www.opengis.net/ont/geosparql#asWKT> " "^^<http://www.opengis.net/ont/geosparql#wktLiteral>.
+<http://example.org#geomC> <http://www.opengis.net/ont/geosparql#asGML> " "^^<http://www.opengis.net/ont/geosparql#gmlLiteral>.

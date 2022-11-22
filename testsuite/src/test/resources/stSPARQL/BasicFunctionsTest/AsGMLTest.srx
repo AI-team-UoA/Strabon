@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?> 
+	<sparql xmlns='http://www.w3.org/2005/sparql-results#'> 
+		<head> 
+			<variable name='gml'/> 
+		</head> 
+		<results> 
+			<result> 
+				<binding name='gml'> 
+					<literal>&lt;gml:Polygon srsName="EPSG:4326"&gt;&lt;gml:outerBoundaryIs&gt;&lt;gml:LinearRing&gt;&lt;gml:coordinates&gt;0,0 1,0 1,1 0,1 0,0&lt;/gml:coordinates&gt;&lt;/gml:LinearRing&gt;&lt;/gml:outerBoundaryIs&gt;&lt;/gml:Polygon&gt;</literal> 
+				</binding> 
+			</result> 
+		</results> 
+	</sparql> 

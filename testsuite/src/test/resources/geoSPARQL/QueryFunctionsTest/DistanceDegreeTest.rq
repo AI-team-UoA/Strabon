@@ -1,0 +1,8 @@
+SELECT (geof:distance(?g1, ?g2, <http://www.opengis.net/def/uom/OGC/1.0/degree>) as ?dist)
+WHERE
+{
+<http://example.org#A> geo:hasGeometry ?geom1.
+?geom1 geo:asWKT ?g1.
+
+<http://example.org#E> geo:hasGeometry ?geom2.
+?geom2 geo:asWKT ?g2.}

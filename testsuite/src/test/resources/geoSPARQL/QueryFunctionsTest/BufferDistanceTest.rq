@@ -1,0 +1,9 @@
+select (geof:buffer(?g1, geof:distance(?g1, ?g2, ogc:degree), ogc:degree) as ?buffer)
+where
+{
+	<http://example.org#A> geo:hasGeometry ?geom1 .
+	?geom1 geo:asWKT ?g1.
+	
+	<http://example.org#G> geo:hasGeometry ?geom2 .
+	?geom2 geo:asWKT ?g2.
+}

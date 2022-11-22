@@ -1,0 +1,2 @@
+SELECT DISTINCT (geof:getSRID("POINT(0 1)"^^geo:wktLiteral) as ?srid)   
+WHERE { ?s ?p ?o }

@@ -1,0 +1,5 @@
+select (strdf:asGML(?g) as ?gml)
+where
+{
+	ex:polygon1 ex:hasGeometry ?g.
+}

@@ -1,0 +1,6 @@
+select (strdf:distance(?g1, ?g2, ogc:metre) as ?dist)
+where
+{
+	ex:A ex:hasGeometry ?g1 .
+	ex:D ex:hasGeometry ?g2 .
+}

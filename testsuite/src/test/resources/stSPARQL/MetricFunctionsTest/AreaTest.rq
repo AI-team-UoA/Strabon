@@ -1,0 +1,5 @@
+select (strdf:area(?g) as ?area)
+where
+{
+	ex:A ex:hasGeometry ?g .
+}

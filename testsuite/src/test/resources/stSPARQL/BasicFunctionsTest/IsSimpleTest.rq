@@ -1,0 +1,5 @@
+select (strdf:isSimple(?g) as ?simple)
+where
+{
+	?x ex:hasGeometry ?g.
+}

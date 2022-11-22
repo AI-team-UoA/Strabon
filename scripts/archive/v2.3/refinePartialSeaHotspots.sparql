@@ -1,0 +1,35 @@
+PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX strdf: <http://strdf.di.uoa.gr/ontology#> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+PREFIX gag: <http://geo.linkedopendata.gr/greekadministrativeregion/ontology#>
+
+
+INSERT { ?h noa:isDiscarded "1"^^xsd:int . 
+	 ?valid rdf:type noa:Hotspot ;
+		noa:hasConfidence ?conf ;
+	        noa:hasGeometry ?dif ;
+	        gag:hasMunicipality ?muni ;
+		noa:hasAcquisitionTime "TIMESTAMP"^^xsd:dateTime ; 
+	        noa:isDerivedFromSensor "SENSOR"^^xsd:string ;
+		noa:hasConfirmation noa:unknown ;
+	        noa:producedFromProcessingChain "PROCESSING_CHAIN"^^xsd:string ; 
+		noa:isProducedBy noa:noa ;
+		noa:isDerivedFromSatellite "SAT"^^xsd:string .
+}
+WHERE { 
+  SELECT ?h  (strdf:intersection(?hGeo, strdf:union(?cGeo)) AS ?dif) (URI(CONCAT(STR(?h),"/refined")) AS ?valid) ?conf ?muni
+  WHERE { 
+?h     noa:hasAcquisitionTime "TIMESTAMP"^^xsd:dateTime; 
+       noa:producedFromProcessingChain "PROCESSING_CHAIN"^^xsd:string ; 
+       noa:isDerivedFromSensor "SENSOR"^^xsd:string ;
+       noa:hasGeometry ?hGeo ;
+       gag:hasMunicipality ?muni ;
+       noa:hasConfidence ?conf .
+?c     rdf:type gag:GeometryPart ;
+       gag:hasGeometry ?cGeo .
+	   FILTER(strdf:mbbIntersects(?hGeo, ?cGeo)) . 
+  }
+  GROUP BY ?h ?hGeo ?conf ?muni
+  HAVING strdf:overlap(?hGeo, strdf:union(?cGeo))
+}

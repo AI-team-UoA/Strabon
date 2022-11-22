@@ -1,0 +1,16 @@
+<http://example.org#A> <http://www.opengis.net/ont/geosparql#hasGeometry> <http://example.org#geomA>.
+<http://example.org#B> <http://www.opengis.net/ont/geosparql#hasGeometry> <http://example.org#geomB>.
+<http://example.org#C> <http://www.opengis.net/ont/geosparql#hasGeometry> <http://example.org#geomC>.
+<http://example.org#D> <http://www.opengis.net/ont/geosparql#hasGeometry> <http://example.org#geomD>.
+<http://example.org#E> <http://www.opengis.net/ont/geosparql#hasGeometry> <http://example.org#geomE>.
+<http://example.org#F> <http://www.opengis.net/ont/geosparql#hasGeometry> <http://example.org#geomF>.
+<http://example.org#G> <http://www.opengis.net/ont/geosparql#hasGeometry> <http://example.org#geomG>.
+<http://example.org#H> <http://www.opengis.net/ont/geosparql#hasGeometry> <http://example.org#geomH>.
+<http://example.org#geomA> <http://www.opengis.net/ont/geosparql#asWKT> "  <http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((0 0, 1 0, 1 1, 0 1, 0 0))  "^^<http://www.opengis.net/ont/geosparql#wktLiteral>.
+<http://example.org#geomB> <http://www.opengis.net/ont/geosparql#asWKT> "  <http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((0 0, 2 0, 2 2, 0 2 , 0 0))  "^^<http://www.opengis.net/ont/geosparql#wktLiteral>.
+<http://example.org#geomC> <http://www.opengis.net/ont/geosparql#asWKT> "  <http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((1 1, 3 1, 3 2, 1 2, 1 1))  "^^<http://www.opengis.net/ont/geosparql#wktLiteral>.
+<http://example.org#geomD> <http://www.opengis.net/ont/geosparql#asWKT> "  <http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((3 1, 4 1, 4 2, 3 2, 3 1))  "^^<http://www.opengis.net/ont/geosparql#wktLiteral>.
+<http://example.org#geomE> <http://www.opengis.net/ont/geosparql#asWKT> "  <http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((3 1, 4 1, 4 2, 3 2, 3 1))  "^^<http://www.opengis.net/ont/geosparql#wktLiteral>.
+<http://example.org#geomF> <http://www.opengis.net/ont/geosparql#asWKT> "  <http://www.opengis.net/def/crs/OGC/1.3/CRS84> Linestring(3 2, 4 0)  "^^<http://www.opengis.net/ont/geosparql#wktLiteral>.
+<http://example.org#geomG> <http://www.opengis.net/ont/geosparql#asWKT> "  <http://www.opengis.net/def/crs/OGC/1.3/CRS84> Point(1 1)  "^^<http://www.opengis.net/ont/geosparql#wktLiteral>.
+<http://example.org#geomH> <http://www.opengis.net/ont/geosparql#asWKT> "  <http://www.opengis.net/def/crs/OGC/1.3/CRS84> Polygon((2.1 1.1, 2.9 1.1, 2.9 1.9, 2.1 1.9, 2.1 1.1))  "^^<http://www.opengis.net/ont/geosparql#wktLiteral>.

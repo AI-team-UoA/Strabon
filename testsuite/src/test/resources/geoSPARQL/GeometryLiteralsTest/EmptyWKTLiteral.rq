@@ -1,0 +1,4 @@
+SELECT (strdf:area(?g1) as ?area)
+WHERE
+{<http://example.org#B> geo:hasGeometry ?geom1.
+?geom1 geo:asWKT ?g1.}

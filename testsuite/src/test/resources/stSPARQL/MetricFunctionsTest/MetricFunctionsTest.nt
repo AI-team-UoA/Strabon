@@ -1,0 +1,8 @@
+<http://example.org#A> <http://example.org#hasGeometry> "Polygon((0 0, 1 0, 1 1, 0 1, 0 0))"^^<http://strdf.di.uoa.gr/ontology#WKT>.
+<http://example.org#B> <http://example.org#hasGeometry> "Polygon((0 0, 2 0, 2 2, 0 2 , 0 0))"^^<http://strdf.di.uoa.gr/ontology#WKT>.
+<http://example.org#C> <http://example.org#hasGeometry> "Polygon((1 1, 3 1, 3 2, 1 2, 1 1))"^^<http://strdf.di.uoa.gr/ontology#WKT>.
+<http://example.org#D> <http://example.org#hasGeometry> "Polygon((3 1, 4 1, 4 2, 3 2, 3 1))"^^<http://strdf.di.uoa.gr/ontology#WKT>.
+<http://example.org#E> <http://example.org#hasGeometry> "Polygon((3 1, 4 1, 4 2, 3 2, 3 1))"^^<http://strdf.di.uoa.gr/ontology#WKT>.
+<http://example.org#F> <http://example.org#hasGeometry> "Linestring(3 2, 4 0)"^^<http://strdf.di.uoa.gr/ontology#WKT>.
+<http://example.org#G> <http://example.org#hasGeometry> "Point(1 1)"^^<http://strdf.di.uoa.gr/ontology#WKT>.
+<http://example.org#H> <http://example.org#hasGeometry> "Polygon((2.1 1.1, 2.9 1.1, 2.9 1.9, 2.1 1.9, 2.1 1.1))"^^<http://strdf.di.uoa.gr/ontology#WKT>.

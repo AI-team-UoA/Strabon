@@ -1,0 +1,6 @@
+<http://ex.org/strdf_2100> <http://strdf.di.uoa.gr/ontology#hasGeometry> "POINT(476083.63 4203777.20);<http://www.opengis.net/def/crs/EPSG/0/2100>"^^<http://strdf.di.uoa.gr/ontology#WKT> .
+<http://ex.org/strdf_crs84> <http://strdf.di.uoa.gr/ontology#hasGeometry> "POINT(23.729359899999963 37.983917)"^^<http://strdf.di.uoa.gr/ontology#WKT> .
+<http://ex.org/strdf_4326> <http://strdf.di.uoa.gr/ontology#hasGeometry> "POINT(37.983917 23.729359899999963);<http://www.opengis.net/def/crs/EPSG/0/4326>"^^<http://strdf.di.uoa.gr/ontology#WKT> .
+<http://ex.org/geosparql_4326> <http://strdf.di.uoa.gr/ontology#hasGeometry> "<http://www.opengis.net/def/crs/EPSG/0/4326> POINT(37.983917 23.729359899999963)"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .
+<http://ex.org/geosparql_crs84> <http://strdf.di.uoa.gr/ontology#hasGeometry> "POINT(23.729359899999963 37.983917)"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .
+<http://ex.org/geosparql_2100> <http://strdf.di.uoa.gr/ontology#hasGeometry> "<http://www.opengis.net/def/crs/EPSG/0/2100> POINT(476083.63 4203777.20)"^^<http://www.opengis.net/ont/geosparql#wktLiteral> .

@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+ 	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>eu.earthobservatory</groupId>
+		<artifactId>strabon</artifactId>
+		<version>3.3.2-SNAPSHOT</version>
+	</parent>
+  
+	<groupId>org.openrdf.sesame</groupId>
+	<artifactId>sesame-sail-generaldb</artifactId>
+	<name>OpenRDF Sesame: GeneralDBStore </name>
+	<description>GeneralDB Store Support</description>
+	<packaging>jar</packaging>
+  
+	<url>http://maven.apache.org</url>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.openrdf.sesame</groupId>
+			<artifactId>sesame-queryalgebra-evaluation-spatial</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openrdf.sesame</groupId>
+			<artifactId>sesame-runtime</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openrdf.sesame</groupId>
+			<artifactId>sesame-sail-rdbms</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openrdf.sesame</groupId>
+			<artifactId>sesame-sail-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openrdf.sesame</groupId>
+			<artifactId>sesame-queryalgebra-evaluation</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openrdf.sesame</groupId>
+			<artifactId>sesame-queryalgebra-model</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openrdf.sesame</groupId>
+			<artifactId>sesame-query</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openrdf.sesame</groupId>
+			<artifactId>sesame-model</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>info.aduna.commons</groupId>
+			<artifactId>aduna-commons-collections</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>info.aduna.commons</groupId>
+			<artifactId>aduna-commons-iteration</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>info.aduna.commons</groupId>
+			<artifactId>aduna-commons-concurrent</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>monetdb</groupId>
+			<artifactId>jdbcclient</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		
+ 		
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!--	    
+		<dependency>
+			<groupId>net.sf</groupId>
+			<artifactId>log4jdbc4</artifactId>
+		</dependency>
+		-->
+
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.4</version>
+		</dependency>
+            
+	</dependencies>
+</project>

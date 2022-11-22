@@ -1,0 +1,7 @@
+select (strdf:distance(strdf:union(?g1, ?g2), ?g3, ogc:metre) as ?dist)
+where
+{
+	ex:A ex:hasGeometry ?g1 .
+	ex:B ex:hasGeometry ?g2 .
+	ex:D ex:hasGeometry ?g3 .
+}

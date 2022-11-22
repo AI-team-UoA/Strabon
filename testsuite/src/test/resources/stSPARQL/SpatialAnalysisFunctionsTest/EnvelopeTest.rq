@@ -1,0 +1,5 @@
+select (strdf:envelope(?g) as ?envelope)
+where
+{
+ex:A ex:hasGeometry ?g.
+}

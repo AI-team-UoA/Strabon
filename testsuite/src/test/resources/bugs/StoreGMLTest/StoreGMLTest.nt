@@ -1,0 +1,4 @@
+<http://example.org/point> <http://strdf.di.uoa.gr/ontology#hasGeometry> _:point.
+_:point <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2003/01/geo/wgs84_pos#Point>.
+_:point <http://www.w3.org/2003/01/geo/wgs84_pos#lat> "55.701".
+_:point <http://www.w3.org/2003/01/geo/wgs84_pos#long> "12.552".

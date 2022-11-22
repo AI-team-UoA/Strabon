@@ -1,0 +1,4 @@
+SELECT (geof:getSRID(?g1) as ?srid)
+WHERE
+{<http://example.org#A> geo:hasGeometry ?geom1.
+?geom1 geo:asWKT ?g1.}

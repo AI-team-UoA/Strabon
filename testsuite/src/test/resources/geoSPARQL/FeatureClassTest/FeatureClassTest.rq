@@ -1,0 +1,4 @@
+SELECT ?type
+WHERE
+{?x geo:hasGeometry ?geo.
+?x rdf:type ?type.}

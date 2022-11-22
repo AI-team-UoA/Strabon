@@ -1,0 +1,53 @@
+#!/bin/bash
+
+sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD 'postgres';"
+
+
+#dpkg -l
+POSTGRES_SQL_PATH=`pg_config --sharedir`'/contrib/';
+mytemp=`ls $POSTGRES_SQL_PATH | grep 'postgis-'`
+
+#check if mytemp is empty, in this case the user must explicitly provide the postgis contrib path
+if [ $mytemp == "" ]
+then
+	echo "Postgis installation could not be found in the default directory. Please state explicitly the full path of your PostGIS installation (e.g. /home/user/...)"
+	read POSTGIS_SQL_PATH;
+else
+	POSTGIS_SQL_PATH=$POSTGRES_SQL_PATH$mytemp
+fi
+
+FILE=$POSTGIS_SQL_PATH'/postgis.sql'
+if [ -f $FILE ];
+then
+   echo "PostGIS installation directory found : $POSTGIS_SQL_PATH "
+else
+   echo "PostGis installation directory not found. Aborting..."
+fi
+
+template_exists=`sudo -u postgres psql -l | grep template_postgis | wc -l`
+if [ $template_exists -eq 1 ]
+then
+	echo "Database template_postgis already exists, aborting...";
+	exit 0
+fi
+
+sudo -u postgres createdb -E UTF8 -T template0 template_postgis
+sudo -u postgres createlang -d  template_postgis plpgsql
+sudo -u postgres  psql -d template_postgis -f $POSTGIS_SQL_PATH/postgis.sql
+sudo -u postgres  psql -d template_postgis -f $POSTGIS_SQL_PATH/spatial_ref_sys.sql
+
+sudo -u postgres psql -d template_postgis -c "GRANT ALL ON geometry_columns TO PUBLIC;"
+sudo -u postgres psql -d template_postgis -c "GRANT ALL ON geography_columns TO PUBLIC;"
+sudo -u postgres psql -d template_postgis -c "GRANT ALL ON spatial_ref_sys TO PUBLIC;"
+
+sudo -u postgres psql -d template_postgis -c "VACUUM FULL;"
+sudo -u postgres psql -d template_postgis -c "VACUUM FREEZE;"
+
+sudo -u postgres psql -d postgres -c "UPDATE pg_database SET datistemplate='true' WHERE datname='template_postgis';"
+sudo -u postgres psql -d postgres -c "UPDATE pg_database SET datallowconn='false' WHERE datname='template_postgis';"
+
+endpoint_exists=`sudo -u postgres psql -l | grep endpoint | wc -l`
+if [ $template_exists -eq 0 ]
+then
+	sudo -u postgres createdb endpoint -T template_postgis
+fi

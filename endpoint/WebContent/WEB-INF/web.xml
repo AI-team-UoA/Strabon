@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="2.5"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:base="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+	<!-- Uncomment the following lines to enable ip filtering--> 
+	<!-- 
+	<filter>
+		<filter-name>Remote Address Filter</filter-name>
+		<filter-class>org.apache.catalina.filters.RemoteAddrFilter</filter-class>
+		<init-param> 
+			<param-name>allow</param-name>
+			<param-value>(195\.134\.(67|71)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))|(88\.197\.4[4-7]\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))|(195\.134\.105\.([01]?[0-9][0-9]?))</param-value> 
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>Remote Address Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>       
+	-->
+	
+	<display-name>StrabonEndpoint</display-name>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>WEB-INF/beans.xml</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener> 
+
+	<servlet>
+		<display-name>Query</display-name>
+		<servlet-name>Query</servlet-name>
+		<servlet-class>eu.earthobservatory.org.StrabonEndpoint.QueryBean</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Query</servlet-name>
+		<url-pattern>/Query</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<display-name>Store</display-name>
+		<servlet-name>Store</servlet-name>
+		<servlet-class>eu.earthobservatory.org.StrabonEndpoint.StoreBean</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Store</servlet-name>
+		<url-pattern>/Store</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<display-name>Update</display-name>
+		<servlet-name>Update</servlet-name>
+		<servlet-class>eu.earthobservatory.org.StrabonEndpoint.UpdateBean</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Update</servlet-name>
+		<url-pattern>/Update</url-pattern>
+	</servlet-mapping>
+
+    <servlet>
+		<display-name>Describe</display-name>
+		<servlet-name>Describe</servlet-name>
+		<servlet-class>eu.earthobservatory.org.StrabonEndpoint.DescribeBean</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Describe</servlet-name>
+		<url-pattern>/Describe</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<display-name>DBConnect</display-name>
+		<servlet-name>DBConnect</servlet-name>
+		<servlet-class>eu.earthobservatory.org.StrabonEndpoint.ConnectionBean</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DBConnect</servlet-name>
+		<url-pattern>/DBConnect</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<display-name>ChangeConnection</display-name>
+		<servlet-name>ChangeConnection</servlet-name>
+		<servlet-class>eu.earthobservatory.org.StrabonEndpoint.ChangeConnectionBean</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ChangeConnection</servlet-name>
+		<url-pattern>/ChangeConnection</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<display-name>Browse</display-name>
+		<servlet-name>Browse</servlet-name>
+		<servlet-class>eu.earthobservatory.org.StrabonEndpoint.BrowseBean</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Browse</servlet-name>
+		<url-pattern>/Browse</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<display-name>Capabilities</display-name>
+		<servlet-name>Capabilities</servlet-name>
+		<servlet-class>eu.earthobservatory.org.StrabonEndpoint.capabilities.CapabilitiesBean</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Capabilities</servlet-name>
+		<url-pattern>/Capabilities</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>query.jsp</servlet-name>
+		<jsp-file>/query.jsp</jsp-file>
+	</servlet>
+		
+	<servlet>
+		<servlet-name>store.jsp</servlet-name>
+		<jsp-file>/store.jsp</jsp-file>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>describe.jsp</servlet-name>
+		<jsp-file>/describe.jsp</jsp-file>
+	</servlet>
+ 
+ 	<servlet>
+		<servlet-name>connection.jsp</servlet-name>
+		<jsp-file>/connection.jsp</jsp-file>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>browse.jsp</servlet-name>
+		<jsp-file>/browse.jsp</jsp-file>
+	</servlet>
+	
+   	<mime-mapping>
+       	<extension>kml</extension>
+       	<mime-type>application/vnd.google-earth.kml+xml</mime-type>
+   	</mime-mapping>
+   	<mime-mapping>
+       	<extension>kmz</extension>
+       	<mime-type>application/vnd.google-earth.kmz</mime-type>
+   	</mime-mapping>
+	
+	<session-config>
+		<session-timeout>60</session-timeout>
+	</session-config>
+	
+	<welcome-file-list>
+		<welcome-file>query.jsp</welcome-file>
+	</welcome-file-list>
+
+<!-- 	<servlet> -->
+<!-- 		<display-name>QueryServlet</display-name> -->
+<!-- 		<servlet-name>QueryServlet</servlet-name> -->
+<!-- 		<servlet-class>eu.earthobservatory.QueryServlet</servlet-class> -->
+<!-- 		<load-on-startup>1</load-on-startup> -->
+<!-- 	</servlet> -->
+<!-- 	<servlet-mapping> -->
+<!-- 		<servlet-name>QueryServlet</servlet-name> -->
+<!-- 		<url-pattern>/QueryServlet</url-pattern> -->
+<!-- 	</servlet-mapping> -->
+</web-app>

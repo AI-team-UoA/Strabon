@@ -1,0 +1,45 @@
+PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX strdf: <http://strdf.di.uoa.gr/ontology#> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+PREFIX gag: <http://geo.linkedopendata.gr/greekadministrativeregion/ontology#>
+
+INSERT {
+	?newHotspot rdf:type noa:Hotspot ;
+				noa:hasConfidence ?hConfidence ;
+				noa:hasGeometry ?hGeometry1 ;
+				noa:hasAcquisitionTime "TIMESTAMP"^^xsd:dateTime ; 
+				noa:isDerivedFromSensor "SENSOR"^^xsd:string ;
+				noa:hasConfirmation noa:unknown ;
+				noa:producedFromProcessingChain "PROCESSING_CHAIN-TimePersistence"^^xsd:string ; 
+				noa:isProducedBy noa:noa ;
+				gag:hasMunicipality ?hMunicipality1 ;
+				noa:isDerivedFromSatellite "SAT"^^xsd:string .
+}
+WHERE {
+	SELECT  (URI(CONCAT(STR(MAX(?h1)),"/virtual/NEW_HOTSPOT")) AS ?newHotspot)
+			(SUM(?hConfidence1)/ACQUISITIONS_IN_HALF_AN_HOUR AS ?hConfidence)
+			?hGeometry1 ?hMunicipality1
+  WHERE {
+    ?h1 noa:hasConfidence ?hConfidence1 ;
+        noa:hasGeometry ?hGeometry1 ;
+        gag:hasMunicipality ?hMunicipality1 ;
+        noa:hasAcquisitionTime ?hAcquisitionTime1 ;
+        noa:isDerivedFromSensor "SENSOR"^^xsd:string ;
+        noa:producedFromProcessingChain "PROCESSING_CHAIN"^^xsd:string .
+    OPTIONAL { ?h1 noa:isDiscarded ?z } .
+    FILTER (!BOUND(?z)) .
+    FILTER( "MIN_ACQUISITION_TIME"^^xsd:dateTime <= ?hAcquisitionTime1 && ?hAcquisitionTime1 < "TIMESTAMP"^^xsd:dateTime ) .
+    OPTIONAL {
+      ?h2 noa:hasGeometry ?hGeometry2 ;
+          noa:hasAcquisitionTime "TIMESTAMP"^^xsd:dateTime ;
+          noa:isDerivedFromSensor "SENSOR"^^xsd:string ;
+          noa:producedFromProcessingChain ?hProcessingChain2 .
+      FILTER(("PROCESSING_CHAIN"^^xsd:string = ?hProcessingChain2)||("PROCESSING_CHAIN-TimePersistence"^^xsd:string = ?hProcessingChain2)).
+      FILTER( strdf:mbbEquals(?hGeometry1, ?hGeometry2) ) .
+    }
+    FILTER( !BOUND(?h2) ) .
+  }
+  GROUP BY ?hGeometry1 ?hMunicipality1
+  HAVING(SUM(?hConfidence1)>0.0)
+}

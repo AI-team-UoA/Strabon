@@ -1,0 +1,23 @@
+PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX strdf: <http://strdf.di.uoa.gr/ontology#> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+PREFIX clc: <http://geo.linkedopendata.gr/corine/ontology#>
+
+INSERT {?h noa:isDiscarded "1"^^xsd:int ;
+           noa:refinedBy noa:clcInconsistency .
+} 
+WHERE {
+	SELECT ?h WHERE 
+	{
+		?h  noa:hasAcquisitionTime "TIMESTAMP"^^xsd:dateTime ;
+			noa:producedFromProcessingChain "PROCESSING_CHAIN"^^xsd:string ;
+			noa:isDerivedFromSensor "SENSOR"^^xsd:string ;
+			noa:hasGeometry ?hGeo.
+		?a  rdf:type   clc:ExcludeArea;
+			clc:hasGeometry ?aGeo.
+		FILTER(strdf:mbbIntersects(?hGeo,?aGeo)).
+	} 
+	GROUP BY ?h ?hGeo
+	HAVING strdf:contains(strdf:union(?aGeo),?hGeo)
+}

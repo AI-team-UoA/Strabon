@@ -1,0 +1,13 @@
+SELECT ?x ?y
+WHERE
+{
+?x geo:hasGeometry ?geom1 .
+?geom1 geo:asWKT ?g1 .
+
+?y geo:hasGeometry ?geom2 .
+?geom2 geo:asWKT ?g2 .
+
+FILTER(str(?x)  < str(?y))
+}
+ORDER BY DESC(strdf:distance(?g1, ?g2, ogc:degree))
+LIMIT 2

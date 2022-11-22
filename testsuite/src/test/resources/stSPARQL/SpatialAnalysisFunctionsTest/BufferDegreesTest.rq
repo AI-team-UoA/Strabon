@@ -1,0 +1,5 @@
+select (strdf:buffer(?g, 1, ogc:degree) as ?buffer)
+where
+{
+ex:A ex:hasGeometry ?g.
+}

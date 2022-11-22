@@ -1,0 +1,5 @@
+select (strdf:convexHull(?g) as ?convexHull)
+where
+{
+ex:A ex:hasGeometry ?g.
+}

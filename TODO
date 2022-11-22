@@ -1,0 +1,25 @@
+Tests in MonetDB that fail or throw exception:
+
+SimpleTests
+	- testComplexFilter
+	- testNotExistingPredicate
+
+SPARQL11Tests
+	- testRetrieveEveryEntry
+	- testBind
+	- testConcat
+	- testOptionalFilter
+	- testMinus
+	- testQuerySumGroupByHaving
+	- testRegex
+	- testRegexI
+	- testUnionWithCommonObject
+	- testUnionWithDifferentObject
+
+GenralTests
+	- testQueryRelate (Conversion not allowed)
+	- testQueryThematicUnion (Union ?)
+	- testQuery6_real (Optional ?)
+	- testQuery6_real_union (Optional + Union ?)
+	- testQueryNegation (Optional)
+	- testQueryNegation2 (Optaional)

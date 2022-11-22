@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<sparql xmlns='http://www.w3.org/2005/sparql-results#'>
+	<head>
+		<variable name='union'/>
+	</head>
+	<results>
+		<result>
+			<binding name='union'>
+				<literal datatype='http://strdf.di.uoa.gr/ontology#WKT'>MULTIPOLYGON (((1 1, 1 0, 0 0, 0 1, 1 1)), ((1 1, 1 2, 3 2, 3 1, 1 1)))</literal>
+			</binding>
+		</result>
+	</results>
+</sparql>

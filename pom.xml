@@ -1,0 +1,1062 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>eu.earthobservatory</groupId>
+	<artifactId>strabon</artifactId>
+	<version>3.3.2-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<parent>
+		<groupId>org.openrdf</groupId>
+		<artifactId>openrdf-root-pom</artifactId>
+		<version>5</version>
+	</parent>
+
+	<name>Strabon</name>
+	<description>Strabon is a storage and query evaluation module for stRDF/stSPARQL.</description>
+	<url>http://www.strabon.di.uoa.gr/</url>
+	<inceptionYear>2008</inceptionYear>
+	
+	<organization>
+		<name>Strabon Team - Team Pyravlos</name>
+		<url>http://www.strabon.di.uoa.gr/</url>
+	</organization>
+	
+	<licenses>
+		<license>
+		<name>Mozilla Public License, v. 2.0</name>
+		<url>http://www.strabon.di.uoa.gr/license</url>
+		<distribution>repo</distribution>
+		</license>
+	</licenses>
+	
+	<developers>
+		<developer>
+			<id>manolee</id>
+			<name>Manos Karpathiotakis</name>
+			<email>manos.karpathiotakis@epfl.ch</email>
+			<url>http://people.epfl.ch/manos.karpathiotakis</url>
+			<organization>Data-Intensive Applications and Systems Laboratory, Institute of Core Computing Science, School of Computer and Communication Sciences, Ecole polytechnique fédérale de Lausanne
+			</organization>
+			<organizationUrl>http://search.epfl.ch/ubrowse.action?acro=DIAS</organizationUrl>
+			<timezone>+1</timezone>
+			<properties>
+				<picUrl>http://people.epfl.ch/cgi-bin/people/getPhoto?id=222383</picUrl>
+			</properties>
+		</developer>
+		<developer>
+			<id>kk</id>
+			<name>Kostis Kyzirakos</name>
+			<email>kk@di.uoa.gr</email>
+			<url>http://www.di.uoa.gr/~kkyzir</url>
+			<organization>Management of Data, Information and Knowledge Group, Dept. of Informatics and Telecommunications, School of Sciences, National and Kapodistrian University of Athens</organization>
+			<organizationUrl>http://www.madgik.di.uoa.gr/</organizationUrl>
+			<timezone>+2</timezone>
+			<properties>
+				<picUrl>http://cgi.di.uoa.gr/~kkyzir/images/me.jpg</picUrl>
+			</properties>
+		</developer>
+		<developer>
+			<id>charnik</id>
+			<name>Charalampos Nikolaou</name>
+			<email>charnik@di.uoa.gr</email>
+			<url>http://www.di.uoa.gr/~charnik</url>
+			<organization>Management of Data, Information and Knowledge Group, Dept. of Informatics and Telecommunications, School of Sciences, National and Kapodistrian University of Athens</organization>
+			<organizationUrl>http://www.madgik.di.uoa.gr/</organizationUrl>
+			<timezone>+2</timezone>
+			<properties>
+				<picUrl>http://www.madgik.di.uoa.gr/sites/default/files/imagecache/profile_image/madgik-photo-charnik_0.jpg</picUrl>
+			</properties>
+		</developer>
+		<developer>
+			<id>ggarbis</id>
+			<name>Giorgos Garbis</name>
+			<email>ggarbis@di.uoa.gr</email>
+			<organization>Management of Data, Information and Knowledge Group, Dept. of Informatics and Telecommunications, School of Sciences, National and Kapodistrian University of Athens</organization>
+			<organizationUrl>http://www.madgik.di.uoa.gr/</organizationUrl>
+			<timezone>+2</timezone>
+		</developer>
+		<developer>
+			<id>kbereta</id>
+			<name>Konstantina Bereta</name>
+			<email>konstantina.bereta@di.uoa.gr</email>
+			<url>http://cgi.di.uoa.gr/~grad1110/</url>
+			<organization>Management of Data, Information and Knowledge Group, Dept. of Informatics and Telecommunications, School of Sciences, National and Kapodistrian University of Athens</organization>
+			<organizationUrl>http://www.madgik.di.uoa.gr/</organizationUrl>
+			<timezone>+2</timezone>
+		</developer>
+		<developer>
+			<id>sgian</id>
+			<name>Stella Gianakopoulou</name>
+			<email>sgian@di.uoa.gr</email>
+			<organization>Management of Data, Information and Knowledge Group, Dept. of Informatics and Telecommunications, School of Sciences, National and Kapodistrian University of Athens</organization>
+			<organizationUrl>http://www.madgik.di.uoa.gr/</organizationUrl>
+			<timezone>+2</timezone>
+		</developer>
+		<developer>
+			<id>psmeros</id>
+			<name>Panayiotis Smeros</name>
+			<email>psmeros@di.uoa.gr</email>
+			<url>http://users.uoa.gr/~psmeros/</url>
+			<organization>Management of Data, Information and Knowledge Group, Dept. of Informatics and Telecommunications, School of Sciences, National and Kapodistrian University of Athens</organization>
+			<organizationUrl>http://www.madgik.di.uoa.gr/</organizationUrl>
+			<timezone>+2</timezone>
+			<properties>
+				<picUrl>http://users.uoa.gr/~psmeros/images/psmeros.jpg</picUrl>
+			</properties>
+		</developer>
+		<developer>
+			<id>roi</id>
+			<name>Kallirroi Dogani</name>
+			<email>kallirroi@di.uoa.gr</email><url>http://www.di.uoa.gr/~charnik</url>
+			<organization>Management of Data, Information and Knowledge Group, Dept. of Informatics and Telecommunications, School of Sciences, National and Kapodistrian University of Athens</organization>
+			<organizationUrl>http://www.madgik.di.uoa.gr/</organizationUrl>
+			<timezone>+2</timezone>
+		</developer>
+		<developer>
+			<id>koubarak</id>
+			<name>Manolis Koubarakis</name>
+			<email>koubarak@di.uoa.gr</email>
+			<url>http://www.di.uoa.gr/~koubarak</url>
+			<organization>Dept. of Informatics and Telecommunications, School of Sciences, National and Kapodistrian University of Athens</organization>
+			<organizationUrl>http://www.di.uoa.gr/</organizationUrl>
+			<timezone>+2</timezone>
+		</developer>
+	</developers>
+
+	<modules>
+		<module>evaluation</module>
+		<module>runtime</module>
+		<module>postgis</module>
+		<module>monetdb</module>
+		<module>generaldb</module>
+		<module>resultio-spatial</module>
+		<module>endpoint</module>
+		<module>endpoint-client</module>
+		<module>endpoint-exec</module>
+		<module>testsuite</module>
+		<module>vocab</module>
+	</modules>
+
+	<properties>
+        <eu.earthobservatory.version>3.3.2-SNAPSHOT</eu.earthobservatory.version>
+		<sesame.version>4.0.0</sesame.version>
+		<aduna.appbase.version>3.11.0</aduna.appbase.version>
+		<!--slf4j.version>1.5.8</slf4j.version-->
+		<slf4j.version>1.6.4</slf4j.version>
+		<spring.version>2.5.6</spring.version>
+		<jts.version>1.13</jts.version>
+		<jts.core.version>1.15.0</jts.core.version>
+		<geotools.version>24.1</geotools.version>
+		<ogc.tools.gml.version>3.1.1</ogc.tools.gml.version>
+		<xml.bind.version>2.1.7</xml.bind.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.build.targetEncoding>UTF-8</project.build.targetEncoding>
+		<skipTests>true</skipTests>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- Strabon dependencies -->			
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>sesame-queryalgebra-evaluation-spatial</artifactId>
+				<version>${eu.earthobservatory.version}</version>
+			</dependency>
+
+
+		<!-- queryresultio-spatial dependencies-->
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>sesame-queryresultio-spatial-api</artifactId>
+				<version>${eu.earthobservatory.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>sesame-queryresultio-spatial-sparqlgeojson</artifactId>
+				<version>${eu.earthobservatory.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>sesame-queryresultio-spatial-sparqlhtml</artifactId>
+				<version>${eu.earthobservatory.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>sesame-queryresultio-spatial-sparqlkml</artifactId>
+				<version>${eu.earthobservatory.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>sesame-queryresultio-spatial-sparqlxml</artifactId>
+				<version>${eu.earthobservatory.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>sesame-queryresultio-spatial-text</artifactId>
+				<version>${eu.earthobservatory.version}</version>
+			</dependency>
+		<!-- queryresultio-spatial dependencies-->
+
+		<!-- sesame queryresultio dependencies -->
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>sesame-queryresultio-api</artifactId>
+				<version>${sesame.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>sesame-queryresultio-sparqlxml</artifactId>
+				<version>${sesame.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>sesame-queryresultio-text</artifactId>
+				<version>${sesame.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>sesame-queryresultio-binary</artifactId>
+				<version>${sesame.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>sesame-queryresultio-sparqljson</artifactId>
+				<version>${sesame.version}</version>
+			</dependency>
+		<!-- sesame queryresultio dependencies -->
+
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>sesame-sail-generaldb</artifactId>
+				<version>${eu.earthobservatory.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>sesame-sail-monetdb</artifactId>
+				<version>${eu.earthobservatory.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>strabon-runtime</artifactId>
+				<version>${eu.earthobservatory.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>strabon-endpoint</artifactId>
+				<version>${eu.earthobservatory.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>strabon-endpoint-client</artifactId>
+				<version>${eu.earthobservatory.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>eu.earthobservatory</groupId>
+				<artifactId>strabon-vocabulary</artifactId>
+				<version>${eu.earthobservatory.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>eu.earthobservatory</groupId>
+				<artifactId>strabon-testsuite</artifactId>
+				<version>${eu.earthobservatory.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>sesame-sail-postgis</artifactId>
+				<version>${eu.earthobservatory.version}</version>
+			</dependency>
+
+			<!-- Sesame dependencies -->
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>sesame-sail-memory</artifactId>
+				<version>${sesame.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>sesame-repository-sail</artifactId>
+				<version>${sesame.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>eu.earthobservatory</groupId>
+				<artifactId>strabon-runtime</artifactId>
+				<version>${eu.earthobservatory.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>sesame-queryalgebra</artifactId>
+				<version>${sesame.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>sesame-queryalgebra-evaluation</artifactId>
+				<version>${sesame.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>sesame-queryalgebra-model</artifactId>
+				<version>${sesame.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>sesame-queryparser-api</artifactId>
+				<version>${sesame.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>sesame-queryparser-sparql</artifactId>
+				<version>${sesame.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>sesame-model</artifactId>
+				<version>${sesame.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>sesame-sail-api</artifactId>
+				<version>${sesame.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>sesame-query</artifactId>
+				<version>${sesame.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>sesame-sail-rdbms</artifactId>
+				<version>2.9.0</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>sesame-repository-sparql</artifactId>
+				<version>${sesame.version}</version>
+			</dependency>
+
+			<!-- Aduna Commons -->
+			<dependency>
+				<groupId>info.aduna.appbase</groupId>
+				<artifactId>aduna-appbase</artifactId>
+				<version>${aduna.appbase.version}</version>
+				<type>pom</type>
+			</dependency>
+			
+			<dependency>
+				<groupId>info.aduna.commons</groupId>
+				<artifactId>aduna-commons-collections</artifactId>
+				<version>2.7.0</version>
+			</dependency>
+
+			<dependency>
+				<groupId>info.aduna.commons</groupId>
+				<artifactId>aduna-commons-concurrent</artifactId>
+				<version>2.7.0</version>
+			</dependency>
+
+			<dependency>
+				<groupId>info.aduna.commons</groupId>
+				<artifactId>aduna-commons-i18n</artifactId>
+				<version>1.4.0</version>
+			</dependency>
+
+			<dependency>
+				<groupId>info.aduna.commons</groupId>
+				<artifactId>aduna-commons-iteration</artifactId>
+				<version>2.10.0</version>
+			</dependency>
+
+			<dependency>
+				<groupId>info.aduna.commons</groupId>
+				<artifactId>aduna-commons-net-http-server-embedded</artifactId>
+				<version>2.5.0</version>
+			</dependency>
+
+			<!-- RIO -->
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>sesame-rio-api</artifactId>
+				<version>${sesame.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>sesame-rio-rdfxml</artifactId>
+				<version>${sesame.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>sesame-rio-ntriples</artifactId>
+				<version>${sesame.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>sesame-rio-turtle</artifactId>
+				<version>${sesame.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>sesame-rio-trig</artifactId>
+				<version>${sesame.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>sesame-rio-trix</artifactId>
+				<version>${sesame.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>sesame-rio-n3</artifactId>
+				<version>${sesame.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>sesame-rio-binary</artifactId>
+				<version>${sesame.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.openrdf.sesame</groupId>
+				<artifactId>sesame-runtime</artifactId>
+				<version>${sesame.version}</version>
+			</dependency>
+
+
+			<!-- GeoTools -->
+			<dependency>
+				<groupId>org.geotools</groupId>
+				<artifactId>gt-geojson</artifactId>
+				<version>${geotools.version}</version>
+			</dependency>
+	
+			<dependency>
+				<groupId>org.geotools.xsd</groupId>
+				<artifactId>gt-xsd-kml</artifactId>
+				<version>${geotools.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.geotools</groupId>
+				<artifactId>gt-xml</artifactId>
+				<version>${geotools.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.geotools</groupId>
+				<artifactId>gt-epsg-hsql</artifactId>
+				<version>${geotools.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.geotools</groupId>
+				<artifactId>gt-shapefile</artifactId>
+				<version>${geotools.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.geotools</groupId>
+				<artifactId>gt-referencing</artifactId>
+				<version>${geotools.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.geotools</groupId>
+				<artifactId>gt-jts-wrapper</artifactId>
+				<version>${geotools.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.geotools</groupId>
+				<artifactId>gt-opengis</artifactId>
+				<version>${geotools.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.geotools</groupId>
+				<artifactId>gt-process-feature</artifactId>
+				<version>${geotools.version}</version>
+			</dependency>
+
+			<!-- https://mvnrepository.com/artifact/org.geotools/gt-data -->
+			<dependency>
+				<groupId>org.geotools</groupId>
+				<artifactId>gt-data</artifactId>
+				<version>20.5</version>
+			</dependency>
+
+
+			<!--
+			     One epsg jar file suffices. Read this: http://docs.geotools.org/latest/userguide/faq.html#q-how-to-choose-an-epsg-authority
+			<dependency>
+				<groupId>org.geotools</groupId>
+				<artifactId>gt-epsg-wkt</artifactId>
+				<version>${geotools.version}</version>
+			</dependency>
+			-->
+
+			<dependency>
+				<groupId>org.geotools</groupId>
+				<artifactId>gt-geometry</artifactId>
+				<version>${geotools.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.geotools</groupId>
+				<artifactId>gt-data</artifactId>
+				<version>${geotools.version}</version>
+			</dependency>		
+
+			<dependency>
+				<groupId>org.geotools</groupId>
+				<artifactId>gt-swing</artifactId>
+				<version>${geotools.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.opengis</groupId>
+				<artifactId>geoapi-pending</artifactId>
+				<version>2.3-M1</version>
+			</dependency>
+
+			<!-- JTS -->
+			<dependency>
+				<groupId>com.vividsolutions</groupId>
+				<artifactId>jts</artifactId>
+				<version>${jts.version}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.locationtech.jts</groupId>
+				<artifactId>jts-core</artifactId>
+				<version>${jts.core.version}</version>
+			</dependency>
+
+			<!-- JDBC Drivers -->
+			<dependency>
+				<groupId>monetdb</groupId>
+				<artifactId>jdbcclient</artifactId>
+				<version>3.4.0</version>
+			</dependency>
+
+<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.1.4.jre7</version>
+		</dependency>
+
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>5.1.15</version>
+			</dependency>
+
+			<!--
+			<dependency>
+				<groupId>net.sf</groupId>
+				<artifactId>log4jdbc4</artifactId>
+				<version>1.2</version>
+			</dependency>
+			-->
+
+			<!--  LOG4J -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			
+			<!-- Apache Commons -->
+			<dependency>
+				<groupId>commons-cli</groupId>
+				<artifactId>commons-cli</artifactId>
+				<version>1.2</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-dbcp</groupId>
+				<artifactId>commons-dbcp</artifactId>
+				<version>1.3</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-fileupload</groupId>
+				<artifactId>commons-fileupload</artifactId>
+				<version>1.2.1</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+
+				<version>1.3.2</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-httpclient</groupId>
+				<artifactId>commons-httpclient</artifactId>
+				<version>3.1</version>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+					<exclusion>
+						<!-- httpclient includes older codec -->
+						<groupId>commons-codec</groupId>
+						<artifactId>commons-codec</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-codec</groupId>
+				<artifactId>commons-codec</artifactId>
+				<version>1.4</version>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-validator</groupId>
+				<artifactId>commons-validator</artifactId>
+				<version>1.3.1</version>
+			</dependency>
+
+			<!-- Spring framework -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-aop</artifactId>
+				<version>${spring.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-webmvc</artifactId>
+				<version>${spring.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<!-- Apache CXF framework -->
+			<!--
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-frontend-jaxws</artifactId>
+				<version>2.2.5</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-transports-http</artifactId>
+				<version>2.2.5</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-transports-http-jetty</artifactId>
+				<version>2.2.5</version>
+			</dependency>
+			-->
+			<!-- Compliance tests -->
+			<dependency>
+				<groupId>edu.lehigh.swat.bench</groupId>
+				<artifactId>uba</artifactId>
+				<version>1.7</version>
+			</dependency>
+
+			<dependency>
+				<groupId>edu.lehigh.swat.bench</groupId>
+				<artifactId>ubt</artifactId>
+				<version>1.1</version>
+			</dependency>
+
+			<!-- Testing: JUnit -->
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.7</version>
+				<scope>test</scope>
+			</dependency>
+
+			<!-- Various -->
+			<dependency>
+				<groupId>cglib</groupId>
+				<artifactId>cglib</artifactId>
+				<version>2.2</version>
+			</dependency>
+
+			<!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+			<dependency>
+				<groupId>commons-codec</groupId>
+				<artifactId>commons-codec</artifactId>
+				<version>1.15</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>org.jvnet.ogc</groupId>
+				<artifactId>ogc-tools-gml-jts</artifactId>
+				<version>1.0.2</version>
+			</dependency>
+			<dependency>
+				<groupId>com.sun.xml.bind</groupId>
+				<artifactId>jaxb-impl</artifactId>
+				<version>2.1.1</version>
+			</dependency>
+
+			<dependency>
+				<groupId>javax</groupId>
+				<artifactId>javaee-web-api</artifactId>
+				<version>8.0</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>3.0.0</version>
+				</plugin>
+				
+				<!-- The following plugin is for being able to run tomcat6/7:run -->
+				<plugin>
+					<groupId>org.apache.tomcat.maven</groupId>
+					<artifactId>tomcat7-maven-plugin</artifactId>
+					<version>2.0</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<source>11</source>
+					<target>11</target>
+					<encoding>utf8</encoding>
+				</configuration>
+			</plugin>
+			<!-- <plugin> <groupId>ch.elca.el4j.maven.plugins</groupId> <artifactId>maven-depgraph-plugin</artifactId> 
+				<configuration> <outDir>target/site/images</outDir> <dotFile>${pom.artifactId}.dot</dotFile> 
+				<outFile>${pom.artifactId}.png</outFile> <filterEmptyArtifacts>true</filterEmptyArtifacts> 
+				</configuration> </plugin> -->
+			<plugin>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>3.0.0-M1</version>
+				<configuration>
+					<tagNameFormat>v@{project.version}</tagNameFormat>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+				</configuration>
+			</plugin>
+			<!-- The following plugin is to enable skipTest (see also properties) -->
+			<plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-surefire-plugin</artifactId>
+		        <version>2.14</version>
+		        <configuration>
+		        <skipTests>${skipTests}</skipTests>
+			    </configuration>
+		    </plugin>
+
+<!--			<plugin>
+                                <artifactId>jdeb</artifactId>
+                                <groupId>org.vafer</groupId>
+                                <version>1.3</version>
+                                <executions>
+                                        <execution>
+                                                <phase>package</phase>
+                                                <goals>
+                                                        <goal>jdeb</goal>
+                                                </goals>
+                                        <configuration>
+                                                <dataSet>
+                                                        <data>
+                                                                <src>${project.build.directory}/${project.build.finalName}.jar</src>
+                                                                <type>file</type>
+                                                                <mapper>
+                                                                        <type>perm</type>
+                                                                        <prefix>/usr/share/jdeb/lib</prefix>
+                                                                </mapper>
+                                                        </data>
+                                                        <data>
+                                                                <src>${project.build.directory}/strabon-endpoint</src>
+                                                                <type>file</type>
+                                                                <mapper>
+                                                                        <type>perm</type>
+                                                                        <prefix>/usr/local/bin</prefix>
+                                                                        <user>root</user>
+                                                                        <group>root</group>
+                                                                        <filemode>755</filemode>
+                                                                </mapper>
+                                                        </data>
+                                                </dataSet>
+                                        </configuration>
+                                </execution>
+                        </executions>
+                        </plugin>
+-->
+		</plugins>
+	</build>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.0.0</version>
+				<configuration>
+					<source>11</source>
+					<encoding>utf8</encoding>
+				</configuration>
+			</plugin>
+			<!--
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<reportSets>
+					<reportSet>
+						<id>uml</id>
+						<configuration>
+							<doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>
+							<docletArtifact>
+								<groupId>org.umlgraph</groupId>
+								<artifactId>doclet</artifactId>
+								<version>5.1</version>
+							</docletArtifact>
+							<additionalparam>-views</additionalparam>
+							<destDir>target/uml</destDir>
+							<show>private</show>
+						</configuration>
+						<reports>
+						<report>javadoc</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+			-->
+		</plugins>
+	</reporting>
+
+
+	<!-- <pluginRepositories> <pluginRepository> <id>elca-services</id> <url>http://el4.elca-services.ch/el4j/maven2repository</url> 
+		<releases> <enabled>true</enabled> </releases> </pluginRepository> </pluginRepositories> -->
+	
+	<pluginRepositories>
+		<!-- The following repository is for being able to run tomcat7:run -->
+		<pluginRepository>
+			<id>apache.snapshots</id>
+			<name>Apache Snapshots</name>
+			<url>http://people.apache.org/repo/m2-snapshot-repository</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+
+	</pluginRepositories>
+
+	<scm>
+		<connection>scm:hg:http://hg.strabon.di.uoa.gr/Strabon/</connection>
+		<developerConnection>scm:hg:ssh://hg.strabon.di.uoa.gr//opt/hg/Strabon/</developerConnection>
+		<url>http://hg.strabon.di.uoa.gr/Strabon/</url>
+	</scm>
+	
+	<issueManagement>
+		<system>Trac</system>
+		<url>http://bug.strabon.di.uoa.gr/</url>
+	</issueManagement>
+
+	<!-- TODO: update this
+	<ciManagement>
+		<system>Jekins - Continuous Integration System</system>
+		<url>http://test.strabon.di.uoa.gr/cis</url>
+	</ciManagement>
+	-->
+	
+	<mailingLists>
+		<mailingList>
+			<name>User List</name>
+			<subscribe>strabon-users-request@di.uoa.gr</subscribe>
+			<unsubscribe>strabon-users-request@di.uoa.gr</unsubscribe>
+			<post>strabon-users@di.uoa.gr</post>
+			<archive>http://cgi.di.uoa.gr/~mailman/pipermail/strabon-users/</archive>
+		</mailingList>
+		<mailingList>
+			<name>Developers List</name>
+			<subscribe>strabon-devel-request@di.uoa.gr</subscribe>
+			<unsubscribe>strabon-devel-request@di.uoa.gr</unsubscribe>
+			<post>strabon-devel@di.uoa.gr</post>
+			<archive>http://cgi.di.uoa.gr/~mailman/pipermail/strabon-devel/</archive>
+		</mailingList>
+	</mailingLists>
+
+	<repositories>
+		<!--
+		<repository>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<id>strabon.testing</id>
+			<name>Strabon - maven repository</name>
+			<url>http://maven.strabon.di.uoa.gr/content/repositories/testing</url>
+		</repository>
+		-->
+		<repository>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<id>strabon</id>
+			<name>Strabon - maven repository</name>
+			<url>http://maven.strabon.di.uoa.gr/content/repositories/releases</url>
+		</repository>
+		<repository>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<id>strabon.snapshot</id>
+			<name>Strabon - maven repository - snapshots</name>
+			<url>http://maven.strabon.di.uoa.gr/content/repositories/snapshots</url>
+		</repository>
+	        <repository>
+	            <releases>
+	                <enabled>true</enabled>
+	            </releases>
+	            <snapshots>
+	                <enabled>false</enabled>
+	            </snapshots>
+	            <id>strabon.sesame</id>
+	            <name>Strabon - maven repository - sesame artifacts (temporary)</name>
+	            <url>http://maven.strabon.di.uoa.gr/content/repositories/strabon.sesame/</url>
+	        </repository>
+		<repository>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<id>aduna-opensource.releases</id>
+			<name>Aduna Open Source - Maven releases</name>
+			<url>http://repo.aduna-software.org/maven2/releases</url>
+		</repository>
+		<repository>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<id>aduna-opensource.snapshots</id>
+			<name>Aduna Open Source - Maven snapshots</name>
+			<url>http://repo.aduna-software.org/maven2/snapshots</url>
+		</repository>
+		<repository>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<id>opengeo</id>
+			<name>OpenGeo Maven Repository</name>
+			<!-- <url>http://download.osgeo.org/webdav/geotools/</url> -->
+			<url>https://repo.osgeo.org/repository/release/</url>
+		</repository>
+		<!--
+		<repository>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<id>umlgraph</id>
+			<name>UMLGraph binaries provider</name>
+			<url>http://mirrors.ibiblio.org/pub/mirrors/maven2/</url>
+		</repository>
+		-->
+                <repository>
+                        <releases>
+                                <enabled>true</enabled>
+                        </releases>
+                        <snapshots>
+                                <enabled>false</enabled>
+                        </snapshots>
+                        <id>aduna-mirror-ontotext</id>
+                        <name>Aduna Maven Repository - Ontotext Mirror</name>
+                        <url>http://maven.ontotext.com/content/repositories/aduna/</url>
+                </repository>
+
+				<!-- Newer geotool libraries -->
+				<repository>
+					<id>osgeo</id>
+					<name>OSGeo Release Repository</name>
+					<url>https://repo.osgeo.org/repository/release/</url>
+					<snapshots><enabled>false</enabled></snapshots>
+					<releases><enabled>true</enabled></releases>
+				</repository>
+				<repository>
+					<id>osgeo-snapshot</id>
+					<name>OSGeo Snapshot Repository</name>
+					<url>https://repo.osgeo.org/repository/snapshot/</url>
+					<snapshots><enabled>true</enabled></snapshots>
+					<releases><enabled>false</enabled></releases>
+				</repository>
+	</repositories>
+
+	<distributionManagement>
+		<repository>
+			<id>strabon</id>
+			<name>Strabon maven repo</name>
+			<url>http://maven.strabon.di.uoa.gr/content/repositories/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>strabon.snapshot</id>
+			<name>Strabon maven repo</name>
+			<url>http://maven.strabon.di.uoa.gr/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+</project>

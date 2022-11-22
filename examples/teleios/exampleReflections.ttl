@@ -1,0 +1,74 @@
+# Παράδειγμα για το deleteReflections.rq
+# Έχει hotspots σε 4 περιοχές.
+# Το πρώτο (h11-h14) δεν έχει γείτονες και είναι αναμένο για μία ώρα. Συνεπώς θεωρείται αντανάκλαση και διαγράφεται.
+# Το δεύτερο (h21-h22) δεν έχει γείτονες αλλά ανάβει μόνο δύο φορές σε μία ώρα. Συνεπώς δεν θεωρείται αντανακλαση.
+# Το τρίτο (h31-h34) είναι αναμένο επί μία ώρα αλλά έχει ένα γείτονα -το τέταρτο hotspots(h41)- άρα επίσης δεν θεωρείται αντανάκλαση.
+
+@prefix lgd: <http://linkedgeodata.org/triplify/> .
+@prefix lgdgeo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix lgdont: <http://linkedgeodata.org/ontology/> .
+@prefix geonames: <http://www.geonames.org/ontology#> .
+@prefix clc: <http://geo.linkedopendata.gr/corine/ontology#> .
+@prefix gag: <http://teleios.di.uoa.gr/ontologies/gagKallikratis.rdf#> .
+@prefix noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#> .
+@prefix dlr: <http://www.earthobservatory.eu/ontologies/dlrOntology-v2.owl#> .
+@prefix strdf: <http://strdf.di.uoa.gr/ontology#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+noa:h11	 	noa:hasAcquisitionTime "2007-08-23T12:00:00"^^xsd:dateTime ;
+			noa:hasGeometry "POLYGON ((0 0, 10 0, 10 10, 0 10, 0 0))"^^<http://strdf.di.uoa.gr/ontology#WKT> ;
+			noa:producedFromProcessingChain "StaticThresholds"^^xsd:string ;
+     		noa:isDerivedFromSensor "MSG2"^^xsd:string .
+
+
+noa:h12		noa:hasAcquisitionTime "2007-08-23T12:15:00"^^xsd:dateTime ;
+        	noa:hasGeometry "POLYGON ((0 0, 10 0, 10 10, 0 10, 0 0))"^^<http://strdf.di.uoa.gr/ontology#WKT> ;
+			noa:producedFromProcessingChain "StaticThresholds"^^xsd:string ;
+     		noa:isDerivedFromSensor "MSG2"^^xsd:string .
+
+noa:h13		noa:hasAcquisitionTime "2007-08-23T12:30:00"^^xsd:dateTime ;
+			noa:hasGeometry "POLYGON ((0 0, 10 0, 10 10, 0 10, 0 0))"^^<http://strdf.di.uoa.gr/ontology#WKT> ;
+			noa:producedFromProcessingChain "StaticThresholds"^^xsd:string ;
+     		noa:isDerivedFromSensor "MSG2"^^xsd:string .
+
+noa:h14		noa:hasAcquisitionTime "2007-08-23T13:00:00"^^xsd:dateTime ;
+	        noa:hasGeometry "POLYGON ((0 0, 10 0, 10 10, 0 10, 0 0))"^^<http://strdf.di.uoa.gr/ontology#WKT> ;
+			noa:producedFromProcessingChain "StaticThresholds"^^xsd:string ;
+     		noa:isDerivedFromSensor "MSG2"^^xsd:string .
+
+noa:h21		noa:hasAcquisitionTime "2007-08-23T12:00:00"^^xsd:dateTime ;
+	        noa:hasGeometry "POLYGON ((20 0, 30 0, 30 10, 20 10, 20 0))"^^<http://strdf.di.uoa.gr/ontology#WKT> ;
+			noa:producedFromProcessingChain "StaticThresholds"^^xsd:string ;
+     		noa:isDerivedFromSensor "MSG2"^^xsd:string .
+
+noa:h22		noa:hasAcquisitionTime "2007-08-23T13:00:00"^^xsd:dateTime ;
+			noa:hasGeometry "POLYGON ((20 0, 30 0, 30 10, 20 10, 20 0))"^^<http://strdf.di.uoa.gr/ontology#WKT> ;
+			noa:producedFromProcessingChain "StaticThresholds"^^xsd:string ;
+     		noa:isDerivedFromSensor "MSG2"^^xsd:string .
+
+noa:h31		noa:hasAcquisitionTime "2007-08-23T12:15:00"^^xsd:dateTime ;
+	        noa:hasGeometry "POLYGON ((40 10, 50 10, 50 20, 40 20, 40 10))"^^<http://strdf.di.uoa.gr/ontology#WKT> ;
+			noa:producedFromProcessingChain "StaticThresholds"^^xsd:string ;
+     		noa:isDerivedFromSensor "MSG2"^^xsd:string .
+
+noa:h41		noa:hasAcquisitionTime "2007-08-23T12:00:00"^^xsd:dateTime ;
+	     	noa:hasGeometry "POLYGON ((40 0, 50 0, 50 10, 40 10, 40 0))"^^<http://strdf.di.uoa.gr/ontology#WKT> ;
+			noa:producedFromProcessingChain "StaticThresholds"^^xsd:string ;
+     		noa:isDerivedFromSensor "MSG2"^^xsd:string .
+
+noa:h42	 	noa:hasAcquisitionTime "2007-08-23T12:15:00"^^xsd:dateTime ;
+	        noa:hasGeometry "POLYGON ((40 0, 50 0, 50 10, 40 10, 40 0))"^^<http://strdf.di.uoa.gr/ontology#WKT> ;
+			noa:producedFromProcessingChain "StaticThresholds"^^xsd:string ;
+    	 	noa:isDerivedFromSensor "MSG2"^^xsd:string .
+
+noa:h43	 	noa:hasAcquisitionTime "2007-08-23T12:30:00"^^xsd:dateTime ;
+        	noa:hasGeometry "POLYGON ((40 0, 50 0, 50 10, 40 10, 40 0))"^^<http://strdf.di.uoa.gr/ontology#WKT> ;
+			noa:producedFromProcessingChain "StaticThresholds"^^xsd:string ;
+     		noa:isDerivedFromSensor "MSG2"^^xsd:string .
+
+noa:h44	 	noa:hasAcquisitionTime "2007-08-23T13:00:00"^^xsd:dateTime ;
+	        noa:hasGeometry "POLYGON ((40 0, 50 0, 50 10, 40 10, 40 0))"^^<http://strdf.di.uoa.gr/ontology#WKT> ;
+			noa:producedFromProcessingChain "StaticThresholds"^^xsd:string ;
+     		noa:isDerivedFromSensor "MSG2"^^xsd:string .

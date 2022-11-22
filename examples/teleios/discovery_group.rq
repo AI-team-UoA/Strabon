@@ -1,0 +1,28 @@
+PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#>
+PREFIX strdf: <http://strdf.di.uoa.gr/ontology#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX gag:<http://geo.linkedopendata.gr/greekadministrativeregion/ontology#>
+ 
+SELECT DISTINCT ?processorname ?tel_event_time ?sensor  ?refinement
+                (strdf:transform(?hGeo,<http://www.opengis.net/def/crs/EPSG/0/4326>) AS ?Geo)
+                (GROUP_CONCAT(?Geo ; separator=";") AS ?pols )
+                (GROUP_CONCAT(?hconf  ; separator=";") AS ?confidenceValues )
+                (GROUP_CONCAT(?muni  ; separator=";") AS ?municipalities )
+WHERE {
+    ?h  noa:hasGeometry ?hGeo ;
+        noa:hasAcquisitionTime ?tel_event_time ;
+        noa:producedFromProcessingChain ?processorname ;
+        noa:isDerivedFromSensor ?sensor ;
+        noa:hasConfidence ?hconf ;
+        gag:hasMunicipality ?muni .
+    OPTIONAL {?h noa:refinedBy ?refinement1 } .
+    OPTIONAL {?h noa:isDiscarded ?disc} .
+    FILTER( !bound(?disc)).
+	FILTER( str(?processorname) = "DynamicThresholds-TimePersistence") .
+	FILTER( str(?tel_event_time) >= "2007-08-23T23:00:00" ) .
+	FILTER( str(?tel_event_time) <= "2007-08-23T23:00:00" )
+}
+GROUP BY ?processorname ?tel_event_time ?sensor  ?refinement
+ORDER BY ?sensor ?tel_event_time ?processorname  ?refinement
+
+

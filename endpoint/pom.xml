@@ -1,0 +1,319 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>eu.earthobservatory</groupId>
+		<artifactId>strabon</artifactId>
+		<version>3.3.2-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>strabon-endpoint</artifactId>
+	<packaging>war</packaging>
+
+	<name>Strabon: Endpoint</name>
+	<description>An endpoint for Strabon</description>
+
+	<properties>
+		<endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-web-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>eu.earthobservatory</groupId>
+			<artifactId>strabon-vocabulary</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>eu.earthobservatory</groupId>
+			<artifactId>strabon-runtime</artifactId>
+			<type>jar</type>
+			<scope>compile</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>servlet-api-2.5</artifactId>
+					<groupId>org.mortbay.jetty</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jsp-api-2.1</artifactId>
+					<groupId>org.mortbay.jetty</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+ 		
+		<!-- GeoTools -->
+		<dependency>
+			<groupId>org.geotools.xsd</groupId>
+			<artifactId>gt-xsd-kml</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-xml</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-epsg-hsql</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-shapefile</artifactId>
+		</dependency>
+
+		<!-- Testing: JUnit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- JDBC Drivers -->
+
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+		</dependency>
+
+		<!-- Spring framework -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>commons-logging</groupId>
+					<artifactId>commons-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-validator</groupId>
+			<artifactId>commons-validator</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>**/version.properties</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+				<excludes>
+					<exclude>**/version.properties</exclude>
+				</excludes>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+					<source>11</source>
+					<target>11</target>
+					<compilerArguments>
+						<endorseddirs>${endorsed.dir}</endorseddirs>
+					</compilerArguments>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>3.0.0</version>
+				<configuration>
+					<webXml>${basedir}/WebContent/WEB-INF/web.xml</webXml>
+					<webResources>
+						<resource>
+							<targetPath>/WEB-INF</targetPath>
+							<directory>${basedir}/WebContent/WEB-INF</directory>
+							<includes>
+								<include>lib/**</include>
+							</includes>
+						</resource>
+
+						<resource>
+							<targetPath>/WEB-INF</targetPath>
+							<directory>${basedir}</directory>
+							<includes>
+								<include>wsdl/**</include>
+							</includes>
+						</resource>
+
+						<resource>
+							<targetPath>/WEB-INF</targetPath>
+							<directory>${basedir}/WebContent/WEB-INF</directory>
+							<includes>
+								<include>beans.xml</include>
+								<include>connection.properties</include>
+								<include>credentials.properties</include>
+							</includes>
+						</resource>
+
+						<resource>
+							<targetPath>/WEB-INF/classes</targetPath>
+							<directory>${basedir}/src</directory>
+							<includes>
+								<include>log4j.properties</include>
+							</includes>
+						</resource>
+
+						<resource>
+							<targetPath>/</targetPath>
+							<directory>${basedir}/WebContent</directory>
+							<includes>
+								<include>style.css</include>
+								<include>style-menu.css</include>
+								<include>store.jsp</include>
+								<include>query.jsp</include>
+								<include>describe.jsp</include>
+								<include>connection.jsp</include>
+								<include>connection.jsp</include>
+								<include>browse.jsp</include>
+								<include>header.html</include>
+							</includes>
+						</resource>
+
+						<resource>
+							<targetPath>/</targetPath>
+							<directory>${basedir}/WebContent</directory>
+							<includes>
+								<include>images/**</include>
+								<include>js/**</include>
+							</includes>
+						</resource>
+					</webResources>
+					<!-- <archive> <manifest> <addClasspath>true</addClasspath> </manifest> 
+						</archive> -->
+				</configuration>
+			</plugin>
+			<!--
+			<plugin>
+				<groupId>org.eclipse.m2e</groupId>
+				<artifactId>lifecycle-mapping</artifactId>
+				<version>1.0.0</version>
+				<configuration>
+					<lifecycleMappingMetadata>
+						<pluginExecutions>
+							<pluginExecution>
+								<pluginExecutionFilter>
+									<groupId>org.apache.maven.plugins</groupId>
+									<artifactId>maven-dependency-plugin</artifactId>
+									<versionRange>[2.1,)</versionRange>
+									<goals>
+										<goal>copy-dependencies</goal>
+									</goals>
+								</pluginExecutionFilter>
+								<action>
+									<ignore />
+								</action>
+							</pluginExecution>
+						</pluginExecutions>
+						</lifecycleMappingMetadata>
+				</configuration>
+			</plugin>
+			-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>3.0.0</version>
+				<executions>
+					<execution>
+						<!-- <phase>validate</phase> -->
+						<phase>package</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${endorsed.dir}</outputDirectory>
+							<silent>true</silent>
+							<artifactItems>
+
+								<!-- <artifactItem>
+									<groupId>javax</groupId>
+									<artifactId>javaee-endorsed-api</artifactId>
+									<version>7.0</version>
+									<type>jar</type>
+								</artifactItem> -->
+
+								<artifactItem>
+									<groupId>com.github.jai-imageio</groupId>
+									<artifactId>jai-imageio-core</artifactId>
+									<version>1.3.0</version>
+								</artifactItem>
+
+
+
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>3.0.0-M1</version>
+				<configuration>
+					<tagNameFormat>v@{project.version}</tagNameFormat>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+				</configuration>
+			</plugin>
+		</plugins>
+
+		<pluginManagement>
+			<plugins>
+				<!-- <plugin> <groupId>org.eclipse.m2e</groupId> <artifactId>lifecycle-mapping</artifactId> 
+					<version>1.0.0</version> <configuration> <lifecycleMappingMetadata> <pluginExecutions> 
+					<pluginExecution> <pluginExecutionFilter> <groupId>org.apache.maven.plugins</groupId> 
+					<artifactId>maven-dependency-plugin</artifactId> <versionRange>[2.3,)</versionRange> 
+					<goals> <goal>copy-dependencies</goal> </goals> </pluginExecutionFilter> 
+					<action> <ignore /> </action> </pluginExecution> </pluginExecutions> </lifecycleMappingMetadata> 
+					</configuration> </plugin> -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.apache.maven.plugins</groupId>
+										<artifactId>maven-dependency-plugin</artifactId>
+										<versionRange>[3.0.0,)</versionRange>
+										<goals>
+											<goal>copy-dependencies</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>

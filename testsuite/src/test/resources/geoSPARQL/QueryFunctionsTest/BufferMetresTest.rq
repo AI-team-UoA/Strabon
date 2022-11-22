@@ -1,0 +1,6 @@
+select (geof:buffer(?g, 55000, ogc:metre) as ?buffer)
+where
+{
+	?x geo:hasGeometry ?geom .
+	?geom geo:asWKT ?g.
+}

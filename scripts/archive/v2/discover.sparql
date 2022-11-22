@@ -1,0 +1,25 @@
+#Discover hotspots depending on their acquisition time, processing chain and sensor
+#Return the hotspot's uri, its geometry and the affected municipalities
+#reference dataset: http://dev.strabon.di.uoa.gr/rdf/Kallikratis-Coastline.ntriples
+
+PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX strdf: <http://strdf.di.uoa.gr/ontology#> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+PREFIX gag: <http://teleios.di.uoa.gr/ontologies/gagKallikratis.rdf#>
+
+SELECT ?h ?geo ?conf (GROUP_CONCAT(?dLabel ; SEPARATOR=', ') AS ?dimoi )
+WHERE { 
+  ?h rdf:type noa:Hotspot ; 
+     noa:hasGeometry ?hGeo ;
+     noa:hasAcquisitionTime "TIMESTAMP"^^xsd:dateTime ; 
+     noa:producedFromProcessingChain "PROCESSING_CHAIN"^^xsd:string ; 
+     noa:isDerivedFromSensor "SENSOR"^^xsd:string ;
+     noa:hasConfidence ?conf .
+  ?d rdf:type gag:Dhmos;
+     strdf:hasGeometry ?dGeo;
+     rdfs:label ?dLabel.
+  FILTER(strdf:mbbIntersects(?dGeo, ?hGeo)).
+}
+GROUP BY ?h (strdf:transform(?hGeo, <http://www.opengis.net/def/crs/EPSG/0/4326>) AS ?geo) ?conf 

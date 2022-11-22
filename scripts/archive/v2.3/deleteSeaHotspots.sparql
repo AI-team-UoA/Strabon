@@ -1,0 +1,16 @@
+PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX strdf: <http://strdf.di.uoa.gr/ontology#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX gag: <http://geo.linkedopendata.gr/greekadministrativeregion/ontology#>
+
+INSERT {?h noa:isDiscarded "1"^^xsd:int} 
+WHERE {
+?h   noa:hasAcquisitionTime "TIMESTAMP"^^xsd:dateTime ;
+     noa:producedFromProcessingChain "PROCESSING_CHAIN"^^xsd:string ;
+     noa:isDerivedFromSensor "SENSOR"^^xsd:string .
+       OPTIONAL {
+    ?h	gag:hasMunicipality ?muni .
+  } 
+  FILTER(!bound(?muni)) .
+}

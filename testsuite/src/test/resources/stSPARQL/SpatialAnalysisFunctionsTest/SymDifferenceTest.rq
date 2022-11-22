@@ -1,0 +1,6 @@
+select (strdf:symDifference(?g1, ?g2) as ?symDifference)
+where
+{
+ex:B ex:hasGeometry ?g1.
+ex:C ex:hasGeometry ?g2.
+}

@@ -1,0 +1,8 @@
+SELECT ?x1 ?x2
+WHERE
+{
+  ?x1 geo:asWKT ?g1 .
+  ?x2 geo:asWKT ?g2 .
+  BIND(strdf:intersection(?g1, ?g2) as ?inter)
+  FILTER(strdf:area(?inter)  > 0.001)
+}

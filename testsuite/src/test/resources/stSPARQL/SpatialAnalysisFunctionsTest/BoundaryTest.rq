@@ -1,0 +1,5 @@
+select (strdf:boundary(?g) as ?boundary)
+where
+{
+ex:A ex:hasGeometry ?g.
+}

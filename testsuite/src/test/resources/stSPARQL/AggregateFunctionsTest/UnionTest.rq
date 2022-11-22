@@ -1,0 +1,5 @@
+select (strdf:union(?g) as ?union)
+where
+{
+	?x ex:hasGeometry ?g.
+}

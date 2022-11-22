@@ -1,0 +1,2 @@
+<http://example.org#A> <http://www.opengis.net/ont/geosparql#hasGeometry> <http://example.org#geom>.
+<http://example.org#A> <http://www.opengis.net/ont/geosparql#hasDefaultGeometry> <http://example.org#defGeom>.

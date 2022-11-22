@@ -1,0 +1,428 @@
+#!/bin/bash
+
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#
+# Copyright (C) 2010, 2011, 2012, Pyravlos Team
+#
+# http://www.strabon.di.uoa.gr/
+#
+
+#
+# Script for executing SPARQL queries and SPARQL Update queries 
+# as well as storing RDF triples on a Strabon Endpoint.
+#
+# Author: Charalampos (Babis) Nikolaou <charnik@di.uoa.gr>
+# Author: Panayiotis Smeros <psmeros@di.uoa.gr>
+#
+
+# absolute directory name of this command
+LOC="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# this command
+CMD="$(basename ${0})"
+
+# Filename containing the prefixes to be included in SPARQL queries
+PREFIXES_FILE="${LOC}/prefixes.sparql"
+
+function help() {
+	echo "Usage: ${CMD} [OPTIONS] COMMAND ENDPOINT ARGS"
+	echo
+	echo "Execute SPARQL and SPARQL Update queries as well as store RDF triples on a Strabon endpoint."
+	echo
+	echo "	COMMAND	 : one of query, queryfile, update, store, describe, or help"
+	echo "	ENDPOINT : the URL of the Strabon Endpoint (e.g., http://localhost:8080/StrabonEndpoint)"
+	echo "	ARGS	 : arguments according to selected command"
+	echo 
+	echo "OPTIONS can be any of the following"
+	echo "	-d	 : don't run, just print what shall be executed"
+	echo "	-i	 : include URI prefixes in the SPARQL query. Prefixes are taken from file"
+	echo "		  \`prefixes.sparql'"
+}
+
+function help_query() {
+	echo "Usage: ${CMD} query ENDPOINT SPARQL_QUERY [RESULT_FORMAT]"
+	echo
+	echo "	ENDPOINT	: the URL of Strabon Endpoint (e.g., http://localhost:8080/StrabonEndpoint/)"
+	echo "	SPARQL_QUERY	: the SPARQL query to execute or the alias name corresponding to a"
+	echo "			  predefined query such as:"
+	echo "				\`size': SELECT (count(*) as ?c) WHERE {?s ?p ?o}"
+	echo "	RESULT_FORMAT	: the format of the result. Possible values are \`XML' (default), \`KML', \`KMZ', \`GeoJSON', \`HTML', or \`TSV'"
+}
+
+function help_queryfile() {
+        echo "Usage: ${CMD} queryfile ENDPOINT SPARQL_QUERY_FILE [RESULT_FORMAT]"
+        echo
+        echo "  ENDPOINT          : the URL of Strabon Endpoint (e.g., http://localhost:8080/StrabonEndpoint/)"
+        echo "  SPARQL_QUERY_FILE : the file that contain the SPARQL query to execute"
+        echo "  RESULT_FORMAT     : the format of the result. Possible values are \`KMLMAP\, \`GEOJSON', "
+        echo "                      \`HTML', \`KMZMAP', \`XML' (default), or \`KML'."
+}
+
+function help_update() {
+	echo "Usage: ${CMD} update ENDPOINT SPARQL_QUERY"
+	echo
+	echo "	ENDPOINT     : the URL of Strabon Endpoint (e.g., http://localhost:8080/StrabonEndpoint/)"
+	echo "	SPARQL_QUERY : the SPARQL update query to execute or the alias name corresponding to a"
+	echo "		       predefined query such as:"
+	echo "				\`clear': DELETE {?s ?p ?o} WHERE {?s ?p ?o}"
+}
+
+function help_store() {
+	echo "Usage: ${CMD} store ENDPOINT FORMAT [-g NAMED_GRAPH] [--inference] -t TRIPLES|-u TRIPLES_URL"
+	echo
+	echo "	ENDPOINT    : the URL of Strabon Endpoint (e.g., http://localhost:8080/StrabonEndpoint/)"
+	echo "	FORMAT	    : the RDF format of the input (one of RDF/XML, N-Triples, Turtle, N3, TriX, TriG, or BinaryRDF)"
+	echo "	TRIPLES	    : the RDF triples to store"
+	echo "	TRIPLES_URL : the URL containing the RDF triples to store"
+	echo "  NAMED_GRAPH : the URI of the named graph into which the RDF files shall be stored"
+	echo "	              (defaults to the default graph)."
+	echo "	--inference : enables inference."
+}
+
+function help_describe() {
+	echo "Usage: ${CMD} describe ENDPOINT DESCRIBE_QUERY [RESULT_FORMAT]"
+	echo
+	echo "	ENDPOINT	: the URL of Strabon Endpoint (e.g., http://localhost:8080/StrabonEndpoint/)"
+	echo "	DESCRIBE_QUERY	: the SPARQL DESCRIBE query to execute"
+	echo "	RESULT_FORMAT	: the format of the result. Possible values are \`N-Triples' (default)"
+	echo "			  \`RDM/XML', \`N3', \`TURTLE', \`TRIG', \`TRIX', and \`BinaryRDF'"
+}
+
+CURL_OPTS="-w HTTP_CODE='%{http_code}\n' -H \"Content-Type:application/x-www-form-urlencoded\" -H \"Accept:text/xml\""
+
+# if set to 1, then only the command to be executed is printed
+DEBUG=0
+# set default limit
+MAXLIMIT=0
+while test $# -gt 0 -a "X${1:0:1}" == "X-"; do
+	case "${1}" in
+		-d)
+			shift
+			DEBUG=1
+			;;
+		-i)
+			shift
+			PREFIXES="$(cat ${PREFIXES_FILE})"
+			;;
+		-l)
+			MAXLIMIT="${2}"	
+			shift
+			shift
+			;;
+	esac
+done
+
+case "${1}" in
+	help)
+		shift
+		if test $# -eq 1; then
+			case "${1}" in
+				query)
+					help_query
+					;;
+				queryfile)
+					help_queryfile
+					;;
+				update)
+					help_update
+					;;
+				store)
+					help_store
+					;;
+				describe)
+					help_describe
+					;;
+				*)
+					help
+					;;
+			esac
+			exit 1
+		fi
+		help
+		exit 0
+		;;
+	query)
+		shift
+		if ! test $# -ge 2; then
+			help_query
+			exit 1
+		fi
+		URL="${1}/Query"
+		QUERY="${2}"
+
+		shift
+		shift
+		# predefined queries
+		case "${QUERY}" in
+			size)
+				QUERY="SELECT (count(*) as ?c) WHERE {?s ?p ?o}"
+				;;
+		esac
+
+		# set default format
+		FORMAT="XML"
+		if test $# -eq 1; then
+			FORMAT="${1}"
+		fi
+
+		case "${FORMAT}" in
+			[Xx][Mm][Ll])
+				MIME_TYPE="application/sparql-results+xml"
+				;;
+			[Tt][sS][vV])
+				MIME_TYPE="text/tab-separated-values"
+				;;
+			[Kk][Mm][Ll])
+				MIME_TYPE="application/vnd.google-earth.kml+xml"
+				;;
+			[Kk][mM][Zz])
+				MIME_TYPE="application/vnd.google-earth.kmz"
+				;;
+			[Hh][Tt][Mm][Ll])
+				MIME_TYPE="text/html"
+				;;
+			[Gg][Ee][Oo][Jj][Ss][Oo][Nn])
+				MIME_TYPE="application/json"
+				;;
+			*)
+				echo "${CMD}: unknown format \"${FORMAT}\"."
+				echo "${CMD}: possible values are \`KML', \`KMZ', \`GeoJSON', \`XML' (default), \`HTML', or \`TSV'"
+				exit 2
+				;;
+		esac
+
+		EXEC="curl -H 'Content-Type:application/x-www-form-urlencoded' -H 'Accept:${MIME_TYPE}' --data-urlencode query='${PREFIXES}${QUERY}' --data maxLimit='${MAXLIMIT}' ${URL}"
+		;;
+	queryfile)
+		shift
+		if ! test $# -ge 2; then
+			help_queryfile
+			exit 1
+		fi
+
+		if ! test -f ${2}; then
+			echo "${CMD}: File not found."
+			exit 2
+		fi
+
+		URL="${1}/Query"
+		QUERY=`cat ${2} | sed 's/\"/\\\"/g'`
+
+		shift
+		shift
+		
+		# set default format
+		FORMAT="XML"
+		if test $# -eq 1; then
+			FORMAT="${1}"
+		fi
+
+		case "${FORMAT}" in
+			[Xx][Mm][Ll])
+				MIME_TYPE="application/sparql-results+xml"
+				;;
+			[Tt][sS][vV])
+				MIME_TYPE="text/tab-separated-values"
+				;;
+			[Kk][Mm][Ll])
+				MIME_TYPE="application/vnd.google-earth.kml+xml"
+				;;
+			[Kk][mM][Zz])
+				MIME_TYPE="application/vnd.google-earth.kmz"
+				;;
+			[Hh][Tt][Mm][Ll])
+				MIME_TYPE="text/html"
+				;;
+			[Gg][Ee][Oo][Jj][Ss][Oo][Nn])
+				MIME_TYPE="application/json"
+				;;
+			*)
+				echo "${CMD}: unknown format \"${FORMAT}\"."
+				echo "${CMD}: possible values are \`KML', \`KMZ', \`GeoJSON', \`XML' (default), \`HTML', or \`TSV'"
+				exit 2
+				;;
+		esac
+
+		EXEC="curl -H 'Content-Type:application/x-www-form-urlencoded' -H 'Accept:${MIME_TYPE}' --data-urlencode query='${PREFIXES}${QUERY}' ${URL}"
+		;;
+
+	update)
+		shift
+		if ! test $# -eq 2; then
+			help_update
+			exit 1
+		fi
+		URL="${1}/Update"
+		QUERY="${2}"
+		
+		# predefined queries
+		case "${QUERY}" in
+			clear)
+				QUERY="DELETE {?s ?p ?o} WHERE {?s ?p ?o}"
+				;;
+		esac
+
+		EXEC="curl -u endpoint:3ndpo1nt ${CURL_OPTS} --data-urlencode query='${PREFIXES}${QUERY}' ${URL}"
+		;;
+	store)
+		shift
+		if ! test $# -ge 4; then
+			help_store
+			exit 1
+		fi
+		URL="${1}/Store"
+		shift
+		FORMAT="${1}"
+		shift
+		MIME_TYPE=
+		case "${FORMAT}" in
+			N-Triples)
+				MIME_TYPE="text/plain"
+				;;
+			RDF/XML)
+				MIME_TYPE="application/rdf+xml"
+				;;
+			N3)
+				MIME_TYPE="text/rdf+n3"
+				;;
+			TURTLE)
+				MIME_TYPE="text/turtle"
+				;;
+			TRIG)
+				MIME_TYPE="application/x-trig"
+				;;
+			TRIX)
+				MIME_TYPE="application/trix"
+				;;
+			BinaryRDF)
+				MIME_TYPE="application/x-binary-rdf"
+				;;
+			*)
+				echo "${CMD}: unknown format \"${FORMAT}\"."
+				echo "${CMD}: possible values are \`N-Triples' (default), \`RDM/XML', \`N3', \`TURTLE', \`TRIG', \`TRIX', and \`BinaryRDF'"
+				exit 2
+				;;
+		esac
+				
+		GRAPH=
+		case "${1}" in
+			 -g)
+				shift
+				if [ "${1}" == "--inference" ]; then
+					help_store
+					exit 1
+				fi
+				if ! test $# -ge 3; then
+					help_store
+					exit 1
+				fi
+				GRAPH="-d graph=${1}"
+				shift
+		esac
+
+		INFERENCE=
+		case "${1}" in
+			 --inference)
+				shift
+				if ! test $# -ge 2; then
+					help_store
+					exit 1
+				fi
+				INFERENCE="-d inference=true"
+		esac
+		
+		case "${1}" in
+			-t)
+				shift
+				if ! test $# -eq 1; then
+					help_store
+					exit 1
+				fi
+				TRIPLES="${1}"
+				EXEC="curl -u endpoint:3ndpo1nt -w '\nHTTP_CODE=%{http_code}\n' -H 'Content-Type:application/x-www-form-urlencoded' -H 'Accept:${MIME_TYPE}' --data-urlencode data='${TRIPLES}' ${GRAPH} ${INFERENCE} ${URL}"
+				;;
+			-u)
+				shift
+				if ! test $# -eq 1; then
+					help_store
+					exit 1
+				fi
+				URL_TRIPLES="${1}"
+				EXEC="curl -u endpoint:3ndpo1nt -w '\nHTTP_CODE=%{http_code}\n' -H 'Content-Type:application/x-www-form-urlencoded' -H 'Accept:${MIME_TYPE}' --data-urlencode url='${URL_TRIPLES}' -d fromurl='' ${GRAPH} ${INFERENCE} ${URL}"
+				;;
+			 *)
+				help_store
+				exit 1
+				;;
+		esac
+		;;
+	describe)
+		shift
+		if ! test $# -ge 2; then
+			help_describe
+			exit 1
+		fi
+		URL="${1}/Describe"
+		QUERY="${2}"
+
+		shift
+		shift
+
+		# set default format
+		FORMAT="N-Triples"
+		if test $# -eq 1; then
+			FORMAT="${1}"
+		fi
+
+		MIME_TYPE=
+		case "${FORMAT}" in
+			N-Triples)
+				MIME_TYPE="text/plain"
+				;;
+			RDF/XML)
+				MIME_TYPE="application/rdf+xml"
+				;;
+			N3)
+				MIME_TYPE="text/rdf+n3"
+				;;
+			TURTLE)
+				MIME_TYPE="text/turtle"
+				;;
+			TRIG)
+				MIME_TYPE="application/x-trig"
+				;;
+			TRIX)
+				MIME_TYPE="application/trix"
+				;;
+			BinaryRDF)
+				MIME_TYPE="application/x-binary-rdf"
+				;;
+			*)
+				echo "${CMD}: unknown format \"${FORMAT}\"."
+				echo "${CMD}: possible values are \`N-Triples' (default), \`RDM/XML', \`N3', \`TURTLE', \`TRIG', \`TRIX', and \`BinaryRDF'"
+				exit 2
+				;;
+		esac
+
+		EXEC="curl -H 'Content-Type:application/x-www-form-urlencoded' -H 'Accept:${MIME_TYPE}' --data-urlencode query='${PREFIXES}${QUERY}' ${URL}"
+		;;
+	*) 
+		help
+		echo
+		echo "${CMD}: unknown command \"${1}\"."
+		exit 1
+		;;
+esac
+
+# execute or debug
+if test $DEBUG -eq 1; then
+	echo "${CMD}: Debug is ON"
+	echo "${CMD}: Printing command for execution"	
+	echo "	$EXEC"
+else
+	eval "${EXEC}"
+fi
+

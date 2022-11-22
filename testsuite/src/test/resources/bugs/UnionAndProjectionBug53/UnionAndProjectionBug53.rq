@@ -1,0 +1,11 @@
+SELECT ?term (skos:broader as ?b) ?related
+WHERE
+{
+
+    { ?term skos:prefLabel ?label . ?term skos:broader ?related }
+
+UNION
+
+    { ?term rdfs:label ?label . ?term skos:broader ?related }
+
+}

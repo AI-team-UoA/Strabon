@@ -1,0 +1,6 @@
+<http://www.eionet.europa.eu/gemet/concept/11> <http://www.w3.org/2004/02/skos/core#broader> <http://www.eionet.europa.eu/gemet/concept/2457> .
+<http://www.eionet.europa.eu/gemet/concept/11> <http://www.w3.org/2004/02/skos/core#prefLabel> "abiotic factor"@en .
+<http://www.eionet.europa.eu/gemet/concept/20> <http://www.w3.org/2004/02/skos/core#broader> <http://www.eionet.europa.eu/gemet/concept/6033> .
+<http://www.eionet.europa.eu/gemet/concept/20> <http://www.w3.org/2004/02/skos/core#prefLabel> "acceptable risk level"@en .
+<http://www.eionet.europa.eu/gemet/concept/72> <http://www.w3.org/2004/02/skos/core#broader> <http://www.eionet.europa.eu/gemet/concept/11813> .
+<http://www.eionet.europa.eu/gemet/concept/72> <http://www.w3.org/2004/02/skos/core#prefLabel> "activated carbon"@en .

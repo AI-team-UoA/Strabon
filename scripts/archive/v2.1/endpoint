@@ -1,0 +1,234 @@
+#!/bin/bash
+#
+# Script for executing SPARQL queries and SPARQL Update queries 
+# as well as storing RDF triples on a Strabon Endpoint.
+#
+# Author: Charalampos (Babis) Nikolaou <charnik@di.uoa.gr>
+#
+
+# this command
+CMD="$(basename ${0})"
+
+function help() {
+	echo "Usage: ${CMD} [OPTIONS] COMMAND ENDPOINT ARGS"
+	echo
+	echo "Execute SPARQL and SPARQL Update queries as well as store RDF triples on a Strabon endpoint."
+	echo
+	echo "	COMMAND	 : one of query, queryfile, update, store, or help"
+	echo "	ENDPOINT : the URL of the Strabon Endpoint (e.g., http://localhost:8080/StrabonEndpoint)"
+	echo "	ARGS	 : arguments according to selected command"
+	echo 
+	echo "OPTIONS can be any of the following"
+	echo "	-d	 : don't run, just print what shall be executed"
+}
+
+function help_query() {
+	echo "Usage: ${CMD} query ENDPOINT SPARQL_QUERY [RESULT_FORMAT]"
+	echo
+	echo "	ENDPOINT	: the URL of Strabon Endpoint (e.g., http://localhost:8080/StrabonEndpoint/)"
+	echo "	SPARQL_QUERY	: the SPARQL query to execute or the alias name corresponding to a"
+	echo "			  predefined query such as:"
+	echo "				\`size': SELECT (count(*) as ?c) WHERE {?s ?p ?o}"
+	echo "	RESULT_FORMAT	: the format of the result. Possible values are \`KMLMAP\, \`GEOJSON', "
+	echo "			  \`HTML', \`KMZMAP', \`XML' (default), or \`KML'."
+}
+
+function help_queryfile() {
+        echo "Usage: ${CMD} queryfile ENDPOINT SPARQL_QUERY_FILE [RESULT_FORMAT]"
+        echo
+        echo "  ENDPOINT          : the URL of Strabon Endpoint (e.g., http://localhost:8080/StrabonEndpoint/)"
+        echo "  SPARQL_QUERY_FILE : the file that contain the SPARQL query to execute"
+        echo "  RESULT_FORMAT     : the format of the result. Possible values are \`KMLMAP\, \`GEOJSON', "
+        echo "                      \`HTML', \`KMZMAP', \`XML' (default), or \`KML'."
+}
+
+function help_update() {
+	echo "Usage: ${CMD} update ENDPOINT SPARQL_QUERY"
+	echo
+	echo "	ENDPOINT     : the URL of Strabon Endpoint (e.g., http://localhost:8080/StrabonEndpoint/)"
+	echo "	SPARQL_QUERY : the SPARQL update query to execute or the alias name corresponding to a"
+	echo "		       predefined query such as:"
+	echo "				\`clear': DELETE {?s ?p ?o} WHERE {?s ?p ?o}"
+}
+
+function help_store() {
+	echo "Usage: ${CMD} store ENDPOINT FORMAT -t TRIPLES|-u TRIPLES_URL"
+	echo
+	echo "	ENDPOINT    : the URL of Strabon Endpoint (e.g., http://localhost:8080/StrabonEndpoint/)"
+	echo "	FORMAT	    : the RDF format of the input (one of RDF/XML, N-Triples, Turtle, N3, TriX, TriG, or BinaryRDF)"
+	echo "	TRIPLES	    : the RDF triples to store"
+	echo "	TRIPLES_URL : the URL containing the RDF triples to store"
+}
+
+CURL_OPTS="-w HTTP_CODE='%{http_code}\n' -H \"Content-Type:application/x-www-form-urlencoded\" -H \"Accept:text/xml\""
+
+# if set to 1, then only the command to be executed is printed
+DEBUG=0
+
+case "${1}" in
+	-d)
+		shift
+		DEBUG=1
+		;;
+esac
+
+case "${1}" in
+	help)
+		shift
+		if test $# -eq 1; then
+			case "${1}" in
+				query)
+					help_query
+					;;
+				queryfile)
+					help_queryfile
+					;;
+				update)
+					help_update
+					;;
+				store)
+					help_store
+					;;
+				*)
+					help
+					;;
+			esac
+			exit 1
+		fi
+		help
+		exit 0
+		;;
+	query)
+		shift
+		if ! test $# -ge 2; then
+			help_query
+			exit 1
+		fi
+		URL="${1}/Query"
+		QUERY="${2}"
+
+		shift
+		shift
+		# predefined queries
+		case "${QUERY}" in
+			size)
+				QUERY="SELECT (count(*) as ?c) WHERE {?s ?p ?o}"
+				;;
+		esac
+
+		# set default format
+		FORMAT="XML"
+		if test $# -eq 1; then
+			FORMAT="${1}"
+		fi
+
+		case "${FORMAT}" in
+			[Kk][Mm][Ll][Mm][Aa][Pp]|[Gg][Ee][Oo][Jj][Ss][Oo][Nn]|[Hh][Tt][Mm][Ll]|[Kk][mM][Zz][Mm][Aa][Pp]|[Xx][Mm][Ll]|[Kk][Mm][Ll])
+				shift
+				;;
+			*)
+				echo "${CMD}: unknown format \"${FORMAT}\"."
+				echo "${CMD}: possible values are \`KMLMAP\, \`GEOJSON' \`HTML', \`KMZMAP', \`XML' (default), or \`KML'"
+				exit 2
+				;;
+		esac
+
+		EXEC="curl ${CURL_OPTS} -d format='${FORMAT}' --data-urlencode SPARQLQuery='${QUERY}' ${URL}"
+		;;
+	queryfile)
+		shift
+		if ! test $# -ge 2; then
+			help_queryfile
+			exit 1
+		fi
+
+		if [ ! -f ${2} ];
+		then
+			echo "${CMD}: File not found."
+			exit 2
+		fi
+
+		URL="${1}/Query"
+		QUERY=`cat ${2} | sed 's/\"/\\\"/g'`
+
+		shift
+		shift
+		
+		# set default format
+		FORMAT="XML"
+		if test $# -eq 1; then
+			FORMAT="${1}"
+		fi
+
+		case "${FORMAT}" in
+			[Kk][Mm][Ll][Mm][Aa][Pp]|[Gg][Ee][Oo][Jj][Ss][Oo][Nn]|[Hh][Tt][Mm][Ll]|[Kk][mM][Zz][Mm][Aa][Pp]|[Xx][Mm][Ll]|[Kk][Mm][Ll])
+				shift
+				;;
+			*)
+				echo "${CMD}: unknown format \"${FORMAT}\"."
+				echo "${CMD}: possible values are \`KMLMAP\, \`GEOJSON' \`HTML', \`KMZMAP', \`XML' (default), or \`KML'"
+				exit 2
+				;;
+		esac
+
+		EXEC="curl ${CURL_OPTS} -d format='${FORMAT}' --data-urlencode SPARQLQuery='${QUERY}' ${URL}"
+		;;
+
+	update)
+		shift
+		if ! test $# -eq 2; then
+			help_update
+			exit 1
+		fi
+		URL="${1}/Update"
+		QUERY="${2}"
+		
+		# predefined queries
+		case "${QUERY}" in
+			clear)
+				QUERY="DELETE {?s ?p ?o} WHERE {?s ?p ?o}"
+				;;
+		esac
+
+		EXEC="curl ${CURL_OPTS} --data-urlencode SPARQLQuery='${QUERY}' ${URL}"
+		;;
+	store)
+		shift
+		if ! test $# -eq 4; then
+			help_store
+			exit 1
+		fi
+		URL="${1}/Store"
+		FORMAT="${2}"
+		case "${3}" in
+			-t)
+				TRIPLES="${4}"
+				EXEC="curl ${CURL_OPTS} -d format='${FORMAT}' --data-urlencode data='${TRIPLES}' ${URL}"
+				;;
+			-u)
+				URL_TRIPLES="${4}"
+				EXEC="curl ${CURL_OPTS} -d format='${FORMAT}' --data-urlencode url='${URL_TRIPLES}' -d fromurl='' ${URL}"
+				;;
+			 *)
+				help_store
+				exit 1
+				;;
+		esac
+		;;
+	*) 
+		help
+		echo
+		echo "${CMD}: unknown command \"${1}\"."
+		exit 1
+		;;
+esac
+
+# execute or debug
+if test $DEBUG -eq 1; then
+	echo "${CMD}: Debug is ON"
+	echo "${CMD}: Printing command for execution"	
+	echo "	$EXEC"
+else
+	eval ${EXEC}
+fi
+

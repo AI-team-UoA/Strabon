@@ -1,0 +1,6 @@
+select (strdf:difference(?g1, ?g2) as ?difference)
+where
+{
+ex:B ex:hasGeometry ?g1.
+ex:A ex:hasGeometry ?g2.
+}

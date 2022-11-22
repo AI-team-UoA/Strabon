@@ -1,0 +1,3 @@
+SELECT ?o
+WHERE {?s strdf:hasGeometry ?geo.
+?geo lgdgeo:lat ?o.}

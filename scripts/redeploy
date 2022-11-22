@@ -1,0 +1,116 @@
+#! /bin/bash
+
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+#
+# Copyright (C) 2010, 2011, 2012, Pyravlos Team
+#
+# http://www.strabon.di.uoa.gr/
+#
+
+# this command
+CMD="$(basename ${0})"
+
+function print_help() {
+	echo "Usage ${CMD} [OPTIONS]"
+	echo
+	echo "Redeploy endpoint on tomcat"
+	echo
+	echo "OPTIONS"
+	echo " -w, --webapps:       path to tomcat webapps folder (default: /var/lib/tomcat7/webapss)"
+	echo " -t, --tomcat:        the version of the installed tomcat (default: tomcat7)"
+	echo " -c, --catalina: 		value of CATALINA_BASE (use only if tomcat works in standalone version)"
+	echo "                      when -c is specified -t must not be specified and vice versa"
+	echo " -p, --postgres:      the version of the installed tomcat (default: postgresql)"
+	echo " -e, --endpoint:      the name of the finally deployed war (default: endpoint)"
+	echo " -b:                  not only redeploy the war but also rebuild it (mvn clean package)"
+	echo " -o:                  mvn will build the new endpoint working in offline mode"
+	echo " -h, --help:          print this message"
+}
+
+
+# Default values of arguments
+webapps="/var/lib/tomcat7/webapps"
+tomcat=""
+catalina=""
+postgres="postgresql"
+endpoint="endpoint"
+
+# Parse arguments
+temp=`getopt -o hbow:t:p:e:c: --long help,webapps:,tomcat:,postgres:,endpoint:,catalina-base -n 'redeploy' -- "$@"`
+eval set -- "$temp"
+while true; do
+	case "$1" in
+		-w|--webapps)	
+				webapps=`echo $2 | sed 's#\/$##g'`; shift 2;;
+		-t|--tomcat) 	
+				tomcat=$2; shift 2;;
+		-p|--postgres) 	
+				postgres=$2; shift 2;;
+		-e|--endpoint) 	
+				endpoint=$2; shift 2;;
+		-b)				
+				build=true; shift;;
+		-o)						
+				offline=true; shift;;
+		-c|--catalina-base)
+				catalina=`echo $2 | sed 's#\/$##g'`; shift 2;;
+		-h|--help)			
+				print_help; exit 0;;
+		--)
+				shift; break;;
+		*) 
+				echo "Interanl error!"; exit 1;;
+	esac
+done
+
+if [ "${catalina}" != "" -a "${tomcat}" != "" ]; then
+	echo "You cannot specify both catalina and tomcat options at the same time!"
+	exit -1
+elif [ "${catalina}" == "" -a "${tomcat}" == "" ]; then
+	tomcat="tomcat7"
+fi
+
+# Build package
+if [ $build ]; then
+	if [ $offline ]; then
+		mvn -o clean package
+	else
+		mvn clean package
+	fi
+fi
+
+if [ ! -f endpoint/target/strabon-endpoint-*.war ]; then
+	echo "File endpoint/target/strabon-endpoint-*.war cannot be found."
+	echo "This script must be executed in Strabon folder"
+	exit -1
+fi
+
+if [ "`ls ${webapps}|grep war|grep -v ${endpoint}.war`" != "" ];then
+	echo "WARNING: there are other war applications in ${webapps}"
+fi
+
+#echo "Stand alone: ${tomcatStandalone}"
+## Redeploy
+#test -e ${tomcatStandalone}
+#cond=$?
+#if [ ${cond} -eq 1 ]; then
+if [ "${catalina}" != "" ]; then
+	${catalina}/bin/shutdown.sh && 
+	sudo service ${postgres} stop &&
+	sudo rm -f ${webapps}/${endpoint}.war &&
+	sudo rm -rf ${webapps}/${endpoint} &&
+	sudo cp endpoint/target/strabon-endpoint-*.war ${webapps}/${endpoint}.war  &&
+	sudo service ${postgres} start &&
+	${catalina}/bin/startup.sh  start 
+else
+	sudo service ${tomcat} stop && 
+	sudo service ${postgres} stop &&
+	sudo rm -f ${webapps}/${endpoint}.war &&
+	sudo rm -rf ${webapps}/${endpoint} &&
+	sudo cp endpoint/target/strabon-endpoint-*.war ${webapps}/${endpoint}.war  &&
+	sudo service ${postgres} start &&
+	sudo service ${tomcat}  start 
+fi

@@ -1,0 +1,6 @@
+select (geof:buffer("<http://www.opengis.net/def/crs/EPSG/0/2100> POLYGON((0 0, 1 0, 1 1, 0 1, 0 0))"^^<http://strdf.di.uoa.gr/ontology#WktLiteral>, 1, ogc:degree) as ?buffer)
+where
+{
+	<http://example.org#A> geo:hasGeometry ?geom .
+	?geom geo:asWKT ?g.
+}

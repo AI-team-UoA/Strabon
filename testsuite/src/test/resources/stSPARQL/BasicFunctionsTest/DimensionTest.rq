@@ -1,0 +1,5 @@
+select (strdf:dimension(?g) as ?dimension)
+where
+{
+	ex:polygon1 ex:hasGeometry ?g.
+}

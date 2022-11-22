@@ -1,0 +1,7 @@
+SELECT ?x
+WHERE
+{
+?x geo:hasGeometry ?geom1.
+?geom1 geo:asWKT ?g
+}
+ORDER BY DESC(strdf:area(?g))

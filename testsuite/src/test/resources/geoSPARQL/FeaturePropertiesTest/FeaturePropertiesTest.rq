@@ -1,0 +1,4 @@
+SELECT ?geom ?defGeom
+WHERE 
+{?g geo:hasGeometry ?geom.
+?g geo:hasDefaultGeometry ?defGeom}

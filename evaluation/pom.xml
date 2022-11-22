@@ -1,0 +1,84 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>eu.earthobservatory</groupId>
+		<artifactId>strabon</artifactId>
+		<version>3.3.2-SNAPSHOT</version>
+	</parent>
+
+	<groupId>org.openrdf.sesame</groupId>
+	<artifactId>sesame-queryalgebra-evaluation-spatial</artifactId>
+	<name>OpenRDF Sesame: Query algebra - evaluation - spatial</name>
+	<description>Spatial Extension Functions - stSPARQL </description>
+	<packaging>jar</packaging>
+
+	<dependencies>
+	
+		<dependency>
+			<groupId>eu.earthobservatory</groupId>
+			<artifactId>strabon-vocabulary</artifactId>
+		</dependency>
+			
+		<dependency>
+			<groupId>org.openrdf.sesame</groupId>
+			<artifactId>sesame-queryalgebra-evaluation</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openrdf.sesame</groupId>
+			<artifactId>sesame-queryalgebra-model</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openrdf.sesame</groupId>
+			<artifactId>sesame-model</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-opengis</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-referencing</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-jts-wrapper</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-xml</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.geotools</groupId>
+			<artifactId>gt-process-feature</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+	<groupId>org.jvnet.ogc</groupId>
+	<artifactId>ogc-tools-gml-jts</artifactId>
+</dependency>
+<dependency>
+	<groupId>com.sun.xml.bind</groupId>
+	<artifactId>jaxb-impl</artifactId>
+</dependency>
+	</dependencies>
+	<modules>
+	</modules>
+</project>
+

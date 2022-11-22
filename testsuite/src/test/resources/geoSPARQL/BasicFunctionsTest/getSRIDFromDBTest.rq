@@ -1,0 +1,14 @@
+SELECT (geof:getSRID(?g1) as ?strdf_2100) 
+       (geof:getSRID(?g2) as ?strdf_crs84)
+       (geof:getSRID(?g3) as ?strdf_4326)
+       (geof:getSRID(?g4) as ?geo_4326) 
+       (geof:getSRID(?g5) as ?geo_crs84)
+       (geof:getSRID(?g6) as ?geo_2100)
+WHERE {
+   <http://ex.org/strdf_2100>       ?p ?g1 .
+   <http://ex.org/strdf_crs84>      ?p ?g2 .
+   <http://ex.org/strdf_4326>       ?p ?g3 .
+   <http://ex.org/geosparql_4326>   ?p ?g4 .
+   <http://ex.org/geosparql_crs84>  ?p ?g5 .
+   <http://ex.org/geosparql_2100>   ?p ?g6 .
+}

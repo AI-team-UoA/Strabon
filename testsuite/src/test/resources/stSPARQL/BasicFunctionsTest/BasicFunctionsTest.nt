@@ -1,0 +1,3 @@
+<http://example.org#polygon1> <http://example.org#hasGeometry> "Polygon((0 0, 1 0, 1 1, 0 1, 0 0))"^^<http://strdf.di.uoa.gr/ontology#WKT> .
+<http://example.org#polygon2> <http://example.org#hasGeometry> "Linestring(0 0, 1 0, 0 1, 1 1, 0 0)"^^<http://strdf.di.uoa.gr/ontology#WKT> .
+<http://example.org#polygon3> <http://example.org#hasGeometry> ""^^<http://strdf.di.uoa.gr/ontology#WKT> .

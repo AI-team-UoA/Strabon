@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<sparql xmlns='http://www.w3.org/2005/sparql-results#'>
+	<head>
+		<variable name='geom'/>
+		<variable name='defGeom'/>
+	</head>
+	<results>
+		<result>
+			<binding name='geom'>
+				<uri>http://example.org#geom</uri>
+			</binding>
+			<binding name='defGeom'>
+				<uri>http://example.org#defGeom</uri>
+			</binding>
+		</result>
+	</results>
+</sparql>

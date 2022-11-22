@@ -1,0 +1,7 @@
+select ?x ?y
+where
+{
+	?x ex:hasGeometry ?g1 .
+	?y ex:hasGeometry ?g2 .
+	FILTER(strdf:distance(?g1, ?g2, ogc:degree) > 2)
+}

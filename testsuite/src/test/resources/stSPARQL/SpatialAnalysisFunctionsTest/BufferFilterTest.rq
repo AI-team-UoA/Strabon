@@ -1,0 +1,6 @@
+select ?g
+where
+{
+	ex:A ex:hasGeometry ?g.
+	FILTER(strdf:within(?g, strdf:buffer(?g, 30, ogc:metre)))
+}

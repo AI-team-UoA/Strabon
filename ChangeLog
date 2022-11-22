@@ -1,0 +1,384 @@
+Tue Mar 06 13:45:29 2018 +0200
+
+  * Added support for posing ASK queries.
+  * Added option to store results in file using QueryOp
+
+Wed Oct 04 11:55:13 2017 +0300
+
+        * Bug #82 fixed : Added capability to Endpoint for the user to supply 
+          and store his unique Google Maps API Key. The context path of the 
+          endpoint is not restricted when a Key is provided. Users that do not 
+          supply a key can still run the application as before.
+
+Wed Mar 11 21:02:48 2015   Pyravlos Team
+	
+	* Bug #73, modified appendBuffer function to take the srid into
+	  consideration even if the argument is a constant (wktLiteral
+	  or strdf literal)
+
+	* Update jar references on scripts used by the debian packaging.
+	  Previously these references pointed only (incorrectly) to
+	  SNAPSHOTs.
+
+	* Updated package names (since repositories cannot include capital
+	  letters + runtime and endpoint-exec must have different names
+
+	* Version 3.3.1 released.
+
+	* Bug #58, added script that is invoked my maven to also update the
+	  version described in the deb/control file of the runtime and
+	  endpoint-exec components.
+
+	* Related to bug #58, but it generally enhances Strabon; The runtime
+	  component has also been debianized. Dependencies are added to
+	  /usr/share/jdeb/lib/strabon-runtime. ClassPath and strabon script
+	  have also been updated accordingly (strabon-cmd)
+
+	* Bug #58: Maven creates the debian package conditionally. Use
+	  -Ddebian=true in the mvn package command. 
+
+	* Bug #58: Added dependencies - java, postgresql, tomcat. Also, added
+	  a strabon-init script that detects the postgis installation path
+	  and sets up the template_postgis. Finally the script creates a db
+	  called "endpoint" (assuming it does not already exist) that is used
+	  for the strabon-endpoint command.
+	
+	* Fixed an issue that returned null SRID when unmarshalling GML geometries if
+	  the SRID did not follow one of the supported formats by GML-JTS. To fix that
+	  we added a function that handles these cases by reading the userData variable
+	  that JTS provides.
+
+	* Fixed a bug that would return no results when a variable that results 
+	  from a BIND clause appears in the FILTER or in the projection of a
+	  query and is inside a spatial function.
+	  (bug #78: http://bug.strabon.di.uoa.gr/ticket/78)
+
+	* Fixed the precision of the geometry literals in GeoJSON writer. Now,
+	  this defaults to the precision model of JTS (equals to 16). Prior to
+	  this it was fixed to 4.
+
+	* Now the GeoJSON writer is aware of the kind of typed literals (e.g.,
+	  numeric, boolean, calendar, etc.) and prints the corresponding
+	  values according to these types. 
+
+	* Fixed a bug that would not return the correct result or would fail 
+	  when a spatial function involved a constant and a variable.
+	  (bug #74: http://bug.strabon.di.uoa.gr/ticket/74)
+
+	* Fixed a bug that would not return the correct spatial datatype of a
+	  projected geometry literal stored in the database.
+	  (bug #71: http://bug.strabon.di.uoa.gr/ticket/71)
+
+	* Now, geometries expressed in CRS84 and a `geo:wktLiteral' datatype
+	  are assigned the correct CRS, i.e., EPSG:4326 with a longitude
+	  latitude axis order.
+
+	* Now, we report a parse error when a constant geometry given in a
+	  SELECT or HAVING clause is not well-formed according to the WKT
+	  specification.
+	  (bug #69: http://bug.strabon.di.uoa.gr/ticket/69)
+
+	* Function `geof:convexHull' is now supported in a Having clause.
+
+	* Fixed older implementation of `strdf:distance' that would expect two
+	  arguments instead of three when present in a HAVING clause.
+
+	* Fixed a bug that would cause a class cast exception for grounded
+	  expressions with function nesting in the SELECT or HAVING clause.
+
+	* Fixed a bug in which `postgis:ST_Centroid' did not work in the SELECT
+	  clause with input geometries from the database.
+
+	* Fixed a bug that `geof:getSRID' would return an integer instead of a
+	  the URI corrresponding to the CRS that the input geometry was
+	  expressed.
+	  (bug #32:  http://bug.strabon.di.uoa.gr/ticket/32)
+
+	* Fixed a bug that would raise an exception for queries involving two
+	  UNION graph patterns and a projection to a predicate or a URI in
+	  general.
+	  (bug #53: http://bug.strabon.di.uoa.gr/ticket/53)
+
+Wed Sep 17 20:14:12 2014   Pyravlos Team
+
+	* Version 3.2.10 released.
+
+	* The test suite of Strabon has now reached a mature level. It
+	  contains tests for both stSPARQL and GeoSPARQL query languages and
+	  most of the compliance tests covered in the specification of
+	  GeoSPARQL (well, only those tests for the components that we have
+	  chosen to implement). 
+
+	* The endpoint now parses Accept headers with multiple values and uses
+	  the first mimetype corresponding to a valid stSPARQLQueryResultFormat.
+	  (bug #64: http://bug.strabon.di.uoa.gr/ticket/64)
+
+	* The endpoint now registers a handler for SIGTERM signals, so that if
+	  it is run from the command-line (endpoint-exec), then the closing of
+	  the connection will be ultimately called.
+	  (bug #40: http://bug.strabon.di.uoa.gr/ticket/40)
+
+	* Strabon goes debian v1. the endpoint-exec jar is now given in a .deb 
+          format. By dpkg-ing it, one can run a stand alone strabon endpoint
+          locally.
+	  (bug #45 http://bug.strabon.di.uoa.gr/ticket/58)
+
+	* Fixed a bug in which Strabon hanged when a unary spatial construct 
+	  had a ternary spatial construct as argument. 
+	  (bug #45 http://bug.strabon.di.uoa.gr/ticket/45)
+
+	* Fixed a bug according to which spatial functions in ORDER BY were not
+	  evaluated at all.
+	  (bug #62: http://bug.strabon.di.uoa.gr/ticket/62)
+
+	* Fixed a bug according to which spatial boolean functions appearing
+	  in the SELECT clause were raising a NULL pointer exception.
+	  (bug #34: http://bug.strabon.di.uoa.gr/ticket/34)
+
+	* Fixed a bug in queries that contain variables that exist inside 
+	  spatial functions in select and do not exist in the where clause 
+	  made Strabon throw a NULL pointer exception.
+	  (bug #51 https://bug.strabon.di.uoa.gr/ticket/51)
+
+	* Various changes in the interface and behavior of Strabon Endpoint:
+	  - Revised the logos and the sample queries.
+	  - Results query limit is set to zero (unlimited).
+	  - Users can now store RDF data that is present in a file on the
+	    client side (the file is uploaded to the server).
+	  - Credentials are now required for uploading files or executing
+	    UPDATE queries, unless Strabon Endpoint runs locally (localhost).
+	  - When viewing the results of queries in HTML, any URI is now an
+	    active link to itself. Previously, that URI was being DESCRIBEd
+	    and one was being transferred to a page viewing the result of the
+	    DESCRIBE query.
+	  - The DESCRIBE functionality can now be accessed through the menu bar.
+	
+	* Fixed a bug where strdf:intersection function did not work as an
+	  aggregate when used without 'GROUP BY'.
+	  (bug #46 https://bug.strabon.di.uoa.gr/ticket/46)
+
+
+Sat Oct 19 23:37:23 2013   Pyravlos Team
+
+	* Version 3.2.9 released.
+
+	* Added support for the following google chart types: PieChart, 
+	AreaChart and ColumnChart to strabon endpoint. 
+	
+	* Added Timemap as new results format in Strabon endpoint. This 
+	option displays results in a map and a timeline on the same time, 
+	using the Timemap js library (http://code.google.com/p/timemap/).
+	The KMLWriter has been extended for that purpose, by transforming
+	dateTime values that are included in the result set into the respective
+	TimeStamp KML primitive (https://developers.google.com/kml/documentation/time). 
+	In the "temporals" branch, the values of the strdf:period datatype 
+	are converted into the respective KML TimeSpan primitive. 
+	
+	* Added extension function <http://postgis.net/ST_Centroid> which is
+	mapped to the ST_Centroid(geometry) extension function of PostGIS.
+	See also: <http://postgis.org/docs/ST_Centroid.html>.
+
+	* Added extension function <http://postgis.net/ST_MakeLine> which is
+	mapped to the ST_MakeLine(geometry, geometry) extension function of
+	PostGIS. See also: <http://postgis.org/docs/ST_MakeLine.html>.
+
+	* Added PostGIS vocabulary class.
+
+	* Added support of all SPARQL result types provided by Sesame (json,
+	xml, csv, tsv, binary). To get the respective writer, just prepend the
+	string "SPARQL/", e.g., "SPARQL/JSON". This is to ensure that we
+	support all SPARQL result formats of the SPARQL Protocol.
+
+	* Fixed a bug where a non-implemented extension function would make
+	Strabon throw a NULL pointer exception. Now we get away with it
+	through a warning.
+
+	* Strabon endpoint now publishes the URIs of the supported units of
+	measure for use in strdf:distance and geof:distance functions of
+	stSPARQL and GeoSPARQL, respectively. The URIs are those defined by
+	OGC Units of Measure 1.0 specification which may be found at
+	http://www.opengis.net/def/uom/OGC/1.0/. Strabon endpoint publishes
+	the URIs at http://localhost:8080/endpoint/Capabilities.
+
+	* Created new module with name 'vocab` and artifactId
+	'strabon-vocabulary` and moved GeoConstants.java there. Other
+	vocabularies have been added as well, such as Simple Features, and
+	GeoSPARQL.
+
+	* Strabon endpoint now publishes the URIs of the supported extension
+	functions for stSPARQL and GeoSPARQL. One should access them by
+	hitting the link http://localhost:8080/endpoint/Capabilities.
+
+	* Support for parsing EPSG URIs in geometry literals with datatype
+	geo:wktLiteral.
+	(bug #33: http://bug.strabon.di.uoa.gr/ticket/33)
+
+	* Endpoint Client now supports querying of Virtuoso and Parliament endpoints.
+
+	* Endpoint Client now supports store and update operations, but only
+	for Strabon Endpoints.
+
+	* GeoSPARQL functions sfCrosses, sfOverlaps, ehOverlaps do not use the 
+	ST_Relate PostGIS function (bug #24: http://bug.strabon.di.uoa.gr/ticket/24)
+
+	* All Simple Features functions of GeoSPARQL do not use the ST_Relate 
+	PostGIS function
+
+	* Added diffTime function. This function performs the difference 
+	between two literals of xsd:time datatype and returns a literal of
+	the xsd:time datatype as well.
+	
+	* Added a testsuite package in default branch. Full tester guide can be found
+	in README. Among other, most of GeoSPARQL compliance tests  
+	(https://portal.opengeospatial.org/files/?artifact_id=47664, pg. 53) have been 
+	implemented.
+
+	* Changed the definition and implementation of strdf:distance function, by
+	adopting the definition of GeoSPARQL.
+	(bug #23: http://bug.strabon.di.uoa.gr/ticket/23) 
+
+	* Changed the definition and implementation of strdf:buffer function, by
+        adopting the definition of GeoSPARQL.
+        (bug #35: http://bug.strabon.di.uoa.gr/ticket/35)
+
+	* Added geof:distance and geof:buffer functions, which have the same definition
+	with strdf:distance and strdf:buffer respectively.
+	(bug #32: http://bug.strabon.di.uoa.gr/ticket/32)
+
+	* Added a download button when performing describe and construct queries at the
+        endpoint.
+        (bug #38: http://bug.strabon.di.uoa.gr/ticket/38)
+
+	* Fixed a bug, where XMLWriter and TSVWriter did not return geometries with the
+	SRID.
+	(bug #47: http://bug.strabon.di.uoa.gr/ticket/47)
+
+	* Fixed a bug where the GeoSPARQL construct functions did not return the datatype 
+	geo:wktLiteral datatype but strdf:WKT.
+
+Tue Mar 26 13:28:26 2013   Pyravlos Team
+
+	* Version 3.2.8 released.
+
+	* Added support for handling (storing/querying) GeoSPARQL datatypes.
+	(bug #31: http://bug.strabon.di.uoa.gr/ticket/31)
+
+	* Fixed a bug in StoreOp that wouldn't close the connection, neither
+	rollback the transaction upon an exception. This had as a side effect
+	the abnormal termination of StoreOp (through for example the use of
+	Ctrl-C signal) which was leaving the database locked.
+
+	* Fixed bug where spatial aggregates (e.g., union) didn't work as
+	expected when the query didn't contain a `GROUP BY' clause.
+	(bug #22: http://bug.strabon.di.uoa.gr/ticket/22)
+
+	* Updated GeoSPARQL namespaces and fixed function names to comply with
+	the GeoSPARQL specification.
+	(bug #25: http://bug.strabon.di.uoa.gr/ticket/25)
+
+Wed Jan 09 18:06:41 2013   Pyravlos Team
+
+	* Version 3.2.7 released.
+
+	* Add an extension function 
+	<http://strdf.di.uoa.gr/extensions/ontology#diffDateTime> for computing the
+	span (in milliseconds) between two timestamps.
+
+	* Added an <endpoint-exec> module. This module builds an executable jar file 
+	with an embedded Apache Tomcat 7. To create and run the executable jar just 
+	type:
+		$ mvn clean package
+		$ java -jar endpoint-exec/target/strabon-endpoint-executable-*.jar
+
+	* Modified strabon script and postgis/monetdb.StoreOP class to get an
+	option for storing a RDF file in a named graph. Moreover, the RDF
+	format of the input RDF file now is given as an option (still, if it
+	is missing, it is assumed that the input is in N-TRIPLES format). The
+	option for the format is -f and the option for the named graph is -g
+	(takes a URI as an argument).
+
+	* Modified the names of the stSPARQL extension functions that
+	utilize the minimum bounding boxes of the involved geometries.
+
+Tue Dec 11 19:33:45 2012   Pyravlos Team
+
+	* Version 3.2.6 released.
+
+	* Modified the names of the stSPARQL extension functions to comply  
+	with the OGC Simple Features Access standard.
+
+Tue Dec 11 00:11:43 2012   Pyravlos Team
+
+	* Version 3.2.5 released.
+
+	* Added support for querying temporal information. This functionality
+	may be found in the `temporals' branch. 
+	
+		The datatypes <http://strdf.di.uoa.gr/ontology#period> and
+		<http://www.w3.org/2001/XMLSchema#dateTime> are used to
+		represent periods and instants respectively.
+	
+		The valid time time of triples is represented using quadtruples,
+		with the valid time annotation(instant or period) being the
+		fourth element of the quad. In the same way, temporal triple
+		patterns are used in queries to retrieve the valid time of
+		triples.
+		
+		Some functions have been renamed (their URIs have changed) to
+		follow the names of the respective relations of Allen's
+		interval algebra and other functions have been added. 
+		
+		The following temporal functions are supported:
+		during, periodOverlaps, equalsPeriod, nequalsPeriod, adjacent,
+		before, after, overleft, overright, meets, starts, finishes, 
+		period_intersect, period_union, preceding_period, and
+		succeeding_period.
+	
+	* Changed behaviour of Strabon and Strabon Endpoint for connecting to
+	a spatially-enabled database. Only one instance of Strabon is allowed
+	at a time.
+
+	* Implemented a Java client for Strabon Endpoint. The client should be
+	used only with endpoint versions >=3.2.5. The implementation may be
+	found int the `endpoint-client' submodule of maven. Currently, only
+	querying of Strabon Endpoints is supported.
+
+	* Added support for requesting the capabilities of Strabon Endpoint
+	(fixes Bug #20 <http://bug.strabon.di.uoa.gr/ticket/20>). See
+	changesets f840796400bf and ?<TBC>? for specific details and how you
+	can determine the capabilities of older endpoints (versions <= 3.2.4).
+
+	* Updated KML writer to include the projected variables of an stSPARQL
+	query in "ExtendedData" and "Data" tags. This is the proper way to
+	do it if we need to convert a KML to a ESRI shapefile and also include
+	such information as attributes for a feature. See related pages from
+	KML specification:
+		<https://developers.google.com/kml/documentation/kmlreference#extendeddata>
+		<https://developers.google.com/kml/documentation/extendeddata>
+
+	* Added user authentication for storing RDF data through Strabon
+	Endpoint. The credentials are specified in
+	WEB-INF/credentials.properties file.
+
+	* Strabon Endpoints now limits the number of the results to a maximum
+	one. The maximum number is specified in the beans.xml file. This
+	corresponds to parameter "maxLimit". The endpoint script has also been
+	updated correspondingly; the limit can be given using the option "-l".
+	One can disable limiting of query results, by setting the "maxLimit"
+	parameter to 0. Addresses Bug #6
+	(<http://bug.strabon.di.uoa.gr/ticket/6>).
+
+	* Added "Known Issues" section to README.
+
+	* Added -m (more memory) and -M (much more memory) options in strabon
+	script for out-of-memory exceptions.
+
+	* Fixed Bug #10 (<http://bug.strabon.di.uoa.gr/ticket/10>). Now
+	KMLWriter handles more geometric types (other than polygons). See
+	changeset 9a3bfee64a39.
+
+	* Menu and navigation in Strabon Endpoint has changed to use jquery.
+	The menu is now populated using the queries placed inside the beans.xml.
+
+	* Added BrowseBean and browse.jsp for browsing the RDF data using the
+	Strabon Endpoint.

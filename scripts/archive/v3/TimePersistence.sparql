@@ -1,0 +1,46 @@
+PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX strdf: <http://strdf.di.uoa.gr/ontology#> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+
+INSERT {
+  ?newHotspot rdf:type noa:Hotspot ;
+	      noa:hasConfidence ?hConfidence ;
+	      noa:hasGeometry ?hGeometry1 ;
+	      noa:hasAcquisitionTime "TIMESTAMP"^^xsd:dateTime ;
+	      noa:isDerivedFromSensor "SENSOR"^^xsd:string ;
+	      noa:hasConfirmation noa:unknown ;
+ 	      noa:producedFromProcessingChain "PROCESSING_CHAIN-TimePersistence"^^xsd:string ;
+	      noa:isProducedBy noa:noa ;
+          noa:isDiscarded "0"^^xsd:int
+}
+WHERE {
+  SELECT (BNODE() AS ?newHotspot)
+  (SUM(?hConfidence1)/ACQUISITIONS_IN_HALF_AN_HOUR AS ?hConfidence)
+  ?hGeometry1
+  WHERE {
+    ?H1 rdf:type noa:Hotspot .
+    ?H1 noa:hasConfidence ?hConfidence1 .
+    ?H1 noa:hasGeometry ?hGeometry1 .
+    ?H1 noa:hasAcquisitionTime ?hAcquisitionTime1 .
+    ?H1 noa:isDerivedFromSensor "SENSOR"^^xsd:string .
+    ?H1 noa:hasConfirmation noa:unknown .
+    ?H1 noa:producedFromProcessingChain "PROCESSING_CHAIN"^^xsd:string .
+    ?H1 noa:isDiscarded "0"^^xsd:int .
+    ?H1 noa:isProducedBy noa:noa .
+    FILTER( "MIN_ACQUISITION_TIME"^^xsd:dateTime <= ?hAcquisitionTime1 && ?hAcquisitionTime1 < "TIMESTAMP"^^xsd:dateTime ) .
+    OPTIONAL {
+      ?H2 rdf:type noa:Hotspot .
+      ?H2 noa:hasGeometry ?HGEO2 .
+      ?H2 noa:hasAcquisitionTime ?hAcquisitionTime2 .
+      ?H2 noa:isDerivedFromSensor "SENSOR"^^xsd:string .
+      ?H2 noa:producedFromProcessingChain ?hProcessingChain2 .
+      FILTER(regex("PROCESSING_CHAIN"^^xsd:string, ?hProcessingChain2)).
+      FILTER( strdf:equals(?hGeometry1, ?HGEO2) ) .
+      FILTER(?hAcquisitionTime2 = "TIMESTAMP"^^xsd:dateTime) .
+    }
+    FILTER( !BOUND(?H2) ) .
+  }
+  GROUP BY ?hGeometry1
+  HAVING(SUM(?hConfidence1)>0.0)
+}

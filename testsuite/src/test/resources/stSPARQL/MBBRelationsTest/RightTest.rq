@@ -1,0 +1,7 @@
+SELECT ?x ?y
+WHERE
+{
+?x ex:hasGeometry ?g1.
+?y ex:hasGeometry ?g2.
+
+FILTER((?x != ?y) && (strdf:right(?g1, ?g2)))}

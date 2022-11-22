@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<sparql xmlns='http://www.w3.org/2005/sparql-results#'>
+	<head>
+		<variable name='x1'/>
+		<variable name='x2'/>
+	</head>
+	<results>
+		<result>
+			<binding name='x1'>
+				<uri>http://example.org#geomA</uri>
+			</binding>
+			<binding name='x2'>
+				<uri>http://example.org#geomB</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='x1'>
+				<uri>http://example.org#geomA</uri>
+			</binding>
+			<binding name='x2'>
+				<uri>http://example.org#geomA</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='x1'>
+				<uri>http://example.org#geomB</uri>
+			</binding>
+			<binding name='x2'>
+				<uri>http://example.org#geomC</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='x1'>
+				<uri>http://example.org#geomB</uri>
+			</binding>
+			<binding name='x2'>
+				<uri>http://example.org#geomB</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='x1'>
+				<uri>http://example.org#geomB</uri>
+			</binding>
+			<binding name='x2'>
+				<uri>http://example.org#geomA</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='x1'>
+				<uri>http://example.org#geomC</uri>
+			</binding>
+			<binding name='x2'>
+				<uri>http://example.org#geomC</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='x1'>
+				<uri>http://example.org#geomC</uri>
+			</binding>
+			<binding name='x2'>
+				<uri>http://example.org#geomB</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='x1'>
+				<uri>http://example.org#geomD</uri>
+			</binding>
+			<binding name='x2'>
+				<uri>http://example.org#geomE</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='x1'>
+				<uri>http://example.org#geomE</uri>
+			</binding>
+			<binding name='x2'>
+				<uri>http://example.org#geomE</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='x1'>
+				<uri>http://example.org#geomD</uri>
+			</binding>
+			<binding name='x2'>
+				<uri>http://example.org#geomD</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='x1'>
+				<uri>http://example.org#geomE</uri>
+			</binding>
+			<binding name='x2'>
+				<uri>http://example.org#geomD</uri>
+			</binding>
+		</result>
+	</results>
+</sparql>

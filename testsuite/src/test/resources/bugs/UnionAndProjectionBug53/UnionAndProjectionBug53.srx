@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<sparql xmlns='http://www.w3.org/2005/sparql-results#'>
+	<head>
+		<variable name='term'/>
+		<variable name='b'/>
+		<variable name='related'/>
+	</head>
+	<results>
+		<result>
+			<binding name='term'>
+				<uri>http://www.eionet.europa.eu/gemet/concept/11</uri>
+			</binding>
+			<binding name='b'>
+				<uri>http://www.w3.org/2004/02/skos/core#broader</uri>
+			</binding>
+			<binding name='related'>
+				<uri>http://www.eionet.europa.eu/gemet/concept/2457</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='term'>
+				<uri>http://www.eionet.europa.eu/gemet/concept/20</uri>
+			</binding>
+			<binding name='b'>
+				<uri>http://www.w3.org/2004/02/skos/core#broader</uri>
+			</binding>
+			<binding name='related'>
+				<uri>http://www.eionet.europa.eu/gemet/concept/6033</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='term'>
+				<uri>http://www.eionet.europa.eu/gemet/concept/72</uri>
+			</binding>
+			<binding name='b'>
+				<uri>http://www.w3.org/2004/02/skos/core#broader</uri>
+			</binding>
+			<binding name='related'>
+				<uri>http://www.eionet.europa.eu/gemet/concept/11813</uri>
+			</binding>
+		</result>				
+	</results>
+</sparql>

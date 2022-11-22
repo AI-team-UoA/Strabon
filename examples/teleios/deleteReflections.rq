@@ -1,0 +1,52 @@
+# Θεωρούμε ότι εαν ένα πολύγωνο παραμένει ενεργό για μεγάλο χρονικό
+# διάστημα, χωρίς παράλληλα να ενεργοποιείται κάποιο γειτονικό του, τότε
+# αυτό το πολύγωνο είναι θόρυβος.
+# Συγκεκριμένα, για όλο το χρονικό διάστημα ενδιαφέροντος και για κάθε grid:
+# - Υπολογίζω την χρονική διαφορά της τελευταίας από την πρώτη καταγραφή.
+# - Εαν αυτή είναι μεγαλύτερη της μίας ώρας &
+# - Για όλο αυτό το διάστημα δεν υπάρχουν γειτονικα πολύγωνα ενεργά
+# (adjacent polygons)
+# - Τότε οι συγκεκριμένες καταγραφές διαγράφονται
+
+PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX strdf: <http://strdf.di.uoa.gr/ontology#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+INSERT {?h1 noa:isDiscarded "1"^^xsd:int ;
+			noa:refinedBy noa:reflections .
+}
+WHERE {
+    SELECT ?h1 (count(?h2) as ?h2Count)
+    WHERE {
+        # Retrieve a hotspot of the current acquisition
+        ?h1 noa:hasAcquisitionTime "TIMESTAMP"^^xsd:dateTime ; #"2007-08-23T13:00:00"^^xsd:dateTime ; 
+            noa:hasGeometry ?geo ;
+		    noa:producedFromProcessingChain "PROCESSING_CHAIN"^^xsd:string ; #"StaticThresholds"^^xsd:string ;
+         	noa:isDerivedFromSensor "SENSOR"^^xsd:string . # "MSG2"^^xsd:string .
+
+        # Retrieve all hotspots with the same geometry detected at most an hour ago
+        ?h2	noa:hasAcquisitionTime ?h2Time ;
+	        noa:hasGeometry ?geo ;
+	        noa:producedFromProcessingChain "PROCESSING_CHAIN"^^xsd:string ; #"StaticThresholds"^^xsd:string ;
+         	noa:isDerivedFromSensor "SENSOR"^^xsd:string . # "MSG2"^^xsd:string .
+    	FILTER("MIN_ACQUISITION_TIME"^^xsd:dateTime <= ?h2Time && ?h2Time <= "TIMESTAMP"^^xsd:dateTime ) .
+#        FILTER("2007-08-23T12:00:00"^^xsd:dateTime <= ?h2Time && ?h2Time <= "2007-08-23T13:00:00"^^xsd:dateTime) .
+
+		# Filter the results so that the above hotspots have no neighbours
+        OPTIONAL {
+            ?h3	noa:hasAcquisitionTime ?h3Time ;
+	            noa:hasGeometry ?h3Geo ;
+	            noa:producedFromProcessingChain "PROCESSING_CHAIN"^^xsd:string ; #"StaticThresholds"^^xsd:string ;
+             	noa:isDerivedFromSensor "SENSOR"^^xsd:string . # "MSG2"^^xsd:string .
+        	FILTER("MIN_ACQUISITION_TIME"^^xsd:dateTime <= ?h3Time && ?h3Time <= "TIMESTAMP"^^xsd:dateTime ) .
+#            FILTER("2007-08-23T12:00:00"^^xsd:dateTime <= ?h3Time && ?h3Time <= "2007-08-23T13:00:00"^^xsd:dateTime) .
+	        FILTER(strdf:touch(?geo, ?h3Geo)).
+        }
+        FILTER(!bound(?h3)) .
+    }
+	# Select every hotspot of the current acquisition which has no neighbours since an hour ago until now
+	# and is "on" during all this time (MSG2 can have 333 detections during an hour)
+    GROUP BY ?h1
+    HAVING (?h2Count >= ACQUISITIONS_IN_AN_HOUR)
+}

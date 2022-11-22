@@ -1,0 +1,2 @@
+<http://example.org/Area1> <http://strdf.di.uoa.gr/ontology#hasGeometry> "POLYGON((34.80 19.37,41.74 19.37,41.74 29.64 ,34.80 29.64,34.80 19.37));http://www.opengis.net/def/crs/EPSG/0/4326"^^<http://strdf.di.uoa.gr/ontology#WKT> .
+<http://example.org/Area1> <http://strdf.di.uoa.gr/ontology#hasGeometry> "POLYGON((34.80 19.37,41.74 19.37,41.74 29.64 ,34.80 29.64,34.80 19.37));http://www.opengis.net/def/crs/EPSG/0/32630"^^<http://strdf.di.uoa.gr/ontology#WKT> .

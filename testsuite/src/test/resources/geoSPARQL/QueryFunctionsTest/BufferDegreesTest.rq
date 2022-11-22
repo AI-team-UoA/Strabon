@@ -1,0 +1,6 @@
+select (geof:buffer(?g, 1, ogc:degree) as ?buffer)
+where
+{
+	?x geo:hasGeometry ?geom .
+	?geom geo:asWKT ?g.
+}

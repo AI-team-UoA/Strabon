@@ -1,0 +1,35 @@
+PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#> 
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX strdf: <http://strdf.di.uoa.gr/ontology#> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+
+
+INSERT { ?h noa:isDiscarded "1"^^xsd:int . 
+	 ?valid rdf:type noa:Hotspot ;
+		noa:hasConfidence ?conf ;
+	        noa:hasGeometry ?dif ;
+		noa:hasAcquisitionTime "TIMESTAMP"^^xsd:dateTime ; 
+	        noa:isDerivedFromSensor "SENSOR"^^xsd:string ;
+		noa:hasConfirmation noa:unknown ;
+	        noa:producedFromProcessingChain "PROCESSING_CHAIN"^^xsd:string ; 
+		noa:isProducedBy noa:noa ;
+		noa:isDerivedFromSatellite ?sat .
+}
+WHERE { 
+  SELECT DISTINCT ?h ?hGeo (strdf:intersection(?hGeo, strdf:union(?cGeo)) AS ?dif) (BNODE() AS ?valid) ?conf ?sat
+  WHERE { 
+    ?h rdf:type noa:Hotspot ; 
+       noa:hasAcquisitionTime ?hAcqTime ; 
+       noa:producedFromProcessingChain "PROCESSING_CHAIN"^^xsd:string ; 
+       noa:isDerivedFromSensor "SENSOR"^^xsd:string ;
+       noa:hasGeometry ?hGeo ;
+       noa:hasConfidence ?conf ;
+       noa:isDerivedFromSatellite ?sat .
+    FILTER("TIMESTAMP"^^xsd:dateTime = ?hAcqTime) .
+    ?c rdf:type noa:Coastline ;
+       noa:hasGeometry ?cGeo .
+    FILTER(strdf:mbbIntersects(?hGeo, ?cGeo)) . 
+  }
+  GROUP BY ?h ?hGeo ?conf ?sat
+  HAVING strdf:overlap(?hGeo, strdf:union(?cGeo))
+}

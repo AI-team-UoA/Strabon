@@ -1,0 +1,18 @@
+PREFIX lgd:<http://linkedgeodata.org/triplify/>
+PREFIX lgdgeo:<http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX lgdont:<http://linkedgeodata.org/ontology/>
+PREFIX geonames:<http://www.geonames.org/ontology#>
+PREFIX clc: <http://geo.linkedopendata.gr/corine/ontology#>
+PREFIX gag: <http://geo.linkedopendata.gr/greekadministrativeregion/ontology#>
+PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#>
+PREFIX dlr: <http://www.earthobservatory.eu/ontologies/dlrOntology-v2.owl#>
+PREFIX strdf: <http://strdf.di.uoa.gr/ontology#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX ogc: <http://www.opengis.net/def/uom/OGC/1.0/>
+PREFIX ex: <http://example.org#>
+PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+

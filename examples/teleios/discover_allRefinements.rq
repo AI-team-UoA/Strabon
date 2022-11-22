@@ -1,0 +1,12 @@
+# return the refinements took place for a hotspot
+PREFIX noa: <http://teleios.di.uoa.gr/ontologies/noaOntology.owl#>
+PREFIX strdf: <http://strdf.di.uoa.gr/ontology#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT (strdf:transform(?hGeo, <http://www.opengis.net/def/crs/EPSG/0/4326>) AS ?geo) (GROUP_CONCAT(?refinement; separator=", ") AS ?refinements)
+WHERE { 
+    ?h   noa:hasGeometry ?hGeo ;
+         noa:hasAcquisitionTime "TIMESTAMP"^^xsd:dateTime ;
+         noa:refinedBy ?refinement .
+}
+GROUP BY ?geo

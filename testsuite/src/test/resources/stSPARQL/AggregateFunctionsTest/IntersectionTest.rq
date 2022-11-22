@@ -1,0 +1,5 @@
+select (strdf:intersection(?g) as ?intersection)
+where
+{
+	?x ex:hasGeometry ?g.
+}
