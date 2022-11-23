@@ -548,7 +548,7 @@ public class HashManager extends ManagerBase {
 	throws SQLException, InterruptedException,NullPointerException,IllegalArgumentException
 	{
 		/***********************************************/
-		//FIXME den xerw kata poso boleyei edw i eisagwgi tis diaxeirisis tou neou pinaka
+		//FIXME den xerw kata poso boleyei edw i eisagwgi tis diaxeURIsis tou neou pinaka
 		//den exei kopei akoma se kommatia
 		//System.out.println("I am in hash manager, "+value.toString());
 		/***********************************************/

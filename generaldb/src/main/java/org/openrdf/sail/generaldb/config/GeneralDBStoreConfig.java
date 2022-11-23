@@ -15,11 +15,11 @@ import static org.openrdf.sail.generaldb.config.GeneralDBStoreSchema.USER;
 import org.openrdf.model.Model;
 import org.openrdf.model.Literal;
 import org.openrdf.model.Resource;
-import org.openrdf.model.IRI;
+import org.openrdf.model.URI;
 import org.openrdf.model.ValueFactory;
 import org.openrdf.model.util.GraphUtilException;
 import org.openrdf.sail.config.SailConfigException;
-import org.openrdf.sail.config.AbstractSailImplConfig;
+import org.openrdf.sail.config.SailImplConfigBase;
 
 /**
  * Holds the JDBC Driver, URL, user and password, as well as the database
@@ -27,7 +27,7 @@ import org.openrdf.sail.config.AbstractSailImplConfig;
  * 
  * @author James Leigh
  */
-public class GeneralDBStoreConfig extends AbstractSailImplConfig {
+public class GeneralDBStoreConfig extends SailImplConfigBase {
 
 	/*-----------*
 	 * Variables *
@@ -108,7 +108,6 @@ public class GeneralDBStoreConfig extends AbstractSailImplConfig {
 	}
 
 
-	@Override
 	public Resource export(Model graph) {
 		Resource implNode = super.export(graph);
 
@@ -131,7 +130,6 @@ public class GeneralDBStoreConfig extends AbstractSailImplConfig {
 		return implNode;
 	}
 
-	@Override
 	public void parse(Model graph, Resource implNode)
 		throws SailConfigException
 	{

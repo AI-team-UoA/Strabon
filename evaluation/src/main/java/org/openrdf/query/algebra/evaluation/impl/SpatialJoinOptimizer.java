@@ -561,7 +561,7 @@ public class SpatialJoinOptimizer
 
 		private boolean isRelevantSpatialFunc(FunctionCall functionCall)
 		{
-			Function function = FunctionRegistry.getInstance().get(functionCall.getURI()).get();
+			Function function = FunctionRegistry.getInstance().get(functionCall.getURI());
 			if(function instanceof SpatialConstructFunc)
 			{
 				//TODO may have to comment this part again

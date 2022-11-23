@@ -10,7 +10,7 @@ import static org.openrdf.sail.generaldb.algebra.base.GeneralDBExprSupport.unsup
 import static org.openrdf.sail.rdbms.managers.LiteralManager.getCalendarValue;
 
 import org.openrdf.model.Literal;
-import org.openrdf.model.IRI;
+import org.openrdf.model.URI;
 import org.openrdf.model.URI;
 import org.openrdf.model.Value;
 import org.openrdf.model.datatypes.XMLDatatypeUtil;
@@ -100,7 +100,7 @@ public class GeneralDBTimeExprFactory extends QueryModelVisitorBase<UnsupportedR
 	private GeneralDBSqlExpr valueOf(Value value) {
 		if (value instanceof Literal) {
 			Literal lit = (Literal)value;
-			IRI dt = lit.getDatatype();
+			URI dt = lit.getDatatype();
 			if (dt != null && XMLDatatypeUtil.isCalendarDatatype(dt)) {
 				try {
 					return new GeneralDBNumberValue(getCalendarValue(lit.calendarValue()));

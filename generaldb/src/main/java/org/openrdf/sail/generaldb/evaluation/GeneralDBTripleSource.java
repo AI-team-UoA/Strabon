@@ -9,7 +9,7 @@ import info.aduna.iteration.CloseableIteration;
 
 import org.openrdf.model.Resource;
 import org.openrdf.model.URI;
-import org.openrdf.model.IRI;
+import org.openrdf.model.URI;
 import org.openrdf.model.Value;
 import org.openrdf.query.QueryEvaluationException;
 import org.openrdf.query.algebra.evaluation.TripleSource;
@@ -41,7 +41,7 @@ public class GeneralDBTripleSource implements TripleSource {
 	}
 
 	@Override
-	public CloseableIteration getStatements(Resource subj, IRI pred, Value obj, Resource... contexts)
+	public CloseableIteration getStatements(Resource subj, URI pred, Value obj, Resource... contexts)
 		throws QueryEvaluationException
 	{
 		try {

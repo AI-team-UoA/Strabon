@@ -216,7 +216,7 @@ public class GeneralDBBooleanExprFactory extends QueryModelVisitorBase<Unsupport
 
 		if(left instanceof FunctionCall)
 		{
-			Function function = FunctionRegistry.getInstance().get(((FunctionCall)left).getURI()).get();
+			Function function = FunctionRegistry.getInstance().get(((FunctionCall)left).getURI());
 			if(function instanceof SpatialMetricFunc)
 			{
 				leftSql = spatialMetricFunction((FunctionCall) left, function);
@@ -252,7 +252,7 @@ public class GeneralDBBooleanExprFactory extends QueryModelVisitorBase<Unsupport
 
 		if(right instanceof FunctionCall)
 		{
-			Function function = FunctionRegistry.getInstance().get(((FunctionCall)right).getURI()).get();
+			Function function = FunctionRegistry.getInstance().get(((FunctionCall)right).getURI());
 			if(function instanceof SpatialMetricFunc)
 			{
 				rightSql = spatialMetricFunction((FunctionCall) right, function);
@@ -617,7 +617,7 @@ public class GeneralDBBooleanExprFactory extends QueryModelVisitorBase<Unsupport
 	@Override
 	public void meet(FunctionCall functionCall) throws UnsupportedRdbmsOperatorException
 	{
-		Function function = FunctionRegistry.getInstance().get(functionCall.getURI()).get();
+		Function function = FunctionRegistry.getInstance().get(functionCall.getURI());
 
 		if(function instanceof SpatialConstructFunc)
 		{
@@ -782,7 +782,7 @@ public class GeneralDBBooleanExprFactory extends QueryModelVisitorBase<Unsupport
 	 */
 	public GeneralDBSqlExpr dateTimeFunction(FunctionCall functionCall) throws UnsupportedRdbmsOperatorException
 	{
-		Function function = FunctionRegistry.getInstance().get(functionCall.getURI()).get();
+		Function function = FunctionRegistry.getInstance().get(functionCall.getURI());
 		if(function instanceof DateTimeMetricFunc) //1 argument
 		{
 			return dateTimeMetricFunction(functionCall,function);	
@@ -792,7 +792,7 @@ public class GeneralDBBooleanExprFactory extends QueryModelVisitorBase<Unsupport
 	
 	public GeneralDBSqlExpr spatialFunction(FunctionCall functionCall) throws UnsupportedRdbmsOperatorException
 	{
-		Function function = FunctionRegistry.getInstance().get(functionCall.getURI()).get();
+		Function function = FunctionRegistry.getInstance().get(functionCall.getURI());
 		if(function instanceof SpatialConstructFunc)
 		{
 			return spatialConstructFunction(functionCall,function);	

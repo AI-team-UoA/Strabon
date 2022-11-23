@@ -6,9 +6,9 @@
 package org.openrdf.sail.generaldb.config;
 
 import org.openrdf.model.URI;
-import org.openrdf.model.IRI;
+import org.openrdf.model.URI;
 import org.openrdf.model.ValueFactory;
-import org.openrdf.model.impl.SimpleValueFactory;
+import org.openrdf.model.impl.ValueFactoryImpl;
 
 /**
  * Vocabulary for the RDBMS configuration.
@@ -20,22 +20,22 @@ public class GeneralDBStoreSchema {
 
 	public static final String NAMESPACE = "http://www.openrdf.org/config/sail/rdbms#";
 
-	public final static IRI JDBC_DRIVER;
+	public final static URI JDBC_DRIVER;
 
-	public final static IRI URL;
+	public final static URI URL;
 
-	public final static IRI USER;
+	public final static URI USER;
 
-	public final static IRI PASSWORD;
+	public final static URI PASSWORD;
 
-	public final static IRI MAX_TRIPLE_TABLES;
+	public final static URI MAX_TRIPLE_TABLES;
 
 	static {
-		ValueFactory factory = SimpleValueFactory.getInstance();
-		JDBC_DRIVER = factory.createIRI(NAMESPACE, "jdbcDriver");
-		URL = factory.createIRI(NAMESPACE, "url");
-		USER = factory.createIRI(NAMESPACE, "user");
-		PASSWORD = factory.createIRI(NAMESPACE, "password");
-		MAX_TRIPLE_TABLES = factory.createIRI(NAMESPACE, "maxTripleTables");
+		ValueFactory factory = ValueFactoryImpl.getInstance();
+		JDBC_DRIVER = factory.createURI(NAMESPACE, "jdbcDriver");
+		URL = factory.createURI(NAMESPACE, "url");
+		USER = factory.createURI(NAMESPACE, "user");
+		PASSWORD = factory.createURI(NAMESPACE, "password");
+		MAX_TRIPLE_TABLES = factory.createURI(NAMESPACE, "maxTripleTables");
 	}
 }

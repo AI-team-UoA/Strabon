@@ -109,7 +109,7 @@ public interface Capabilities {
 	
 	/**
 	 * Return a list of URIs corresponding to the units of measure
-	 * that can be used in an extension function requiring such an
+	 * that can be used in an extension function requURIng such an
 	 * argument.
 	 * 
 	 * @return

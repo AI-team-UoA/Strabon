@@ -861,7 +861,7 @@ jQuery.ready.promise = function( obj ) {
 
 		// If IE event model is used
 		} else {
-			// Ensure firing before onload, maybe late but safe also for iframes
+			// Ensure fURIng before onload, maybe late but safe also for iframes
 			document.attachEvent( "onreadystatechange", DOMContentLoaded );
 
 			// A fallback to window.onload, that will always work
@@ -950,14 +950,14 @@ jQuery.Callbacks = function( options ) {
 		memory,
 		// Flag to know if list was already fired
 		fired,
-		// Flag to know if list is currently firing
-		firing,
+		// Flag to know if list is currently fURIng
+		fURIng,
 		// First callback to fire (used internally by add and fireWith)
-		firingStart,
-		// End of the loop when firing
-		firingLength,
-		// Index of currently firing callback (modified by remove if needed)
-		firingIndex,
+		fURIngStart,
+		// End of the loop when fURIng
+		fURIngLength,
+		// Index of currently fURIng callback (modified by remove if needed)
+		fURIngIndex,
 		// Actual callback list
 		list = [],
 		// Stack of fire calls for repeatable lists
@@ -966,17 +966,17 @@ jQuery.Callbacks = function( options ) {
 		fire = function( data ) {
 			memory = options.memory && data;
 			fired = true;
-			firingIndex = firingStart || 0;
-			firingStart = 0;
-			firingLength = list.length;
-			firing = true;
-			for ( ; list && firingIndex < firingLength; firingIndex++ ) {
-				if ( list[ firingIndex ].apply( data[ 0 ], data[ 1 ] ) === false && options.stopOnFalse ) {
+			fURIngIndex = fURIngStart || 0;
+			fURIngStart = 0;
+			fURIngLength = list.length;
+			fURIng = true;
+			for ( ; list && fURIngIndex < fURIngLength; fURIngIndex++ ) {
+				if ( list[ fURIngIndex ].apply( data[ 0 ], data[ 1 ] ) === false && options.stopOnFalse ) {
 					memory = false; // To prevent further calls using add
 					break;
 				}
 			}
-			firing = false;
+			fURIng = false;
 			if ( list ) {
 				if ( stack ) {
 					if ( stack.length ) {
@@ -1008,13 +1008,13 @@ jQuery.Callbacks = function( options ) {
 						});
 					})( arguments );
 					// Do we need to add the callbacks to the
-					// current firing batch?
-					if ( firing ) {
-						firingLength = list.length;
-					// With memory, if we're not firing then
+					// current fURIng batch?
+					if ( fURIng ) {
+						fURIngLength = list.length;
+					// With memory, if we're not fURIng then
 					// we should call right away
 					} else if ( memory ) {
-						firingStart = start;
+						fURIngStart = start;
 						fire( memory );
 					}
 				}
@@ -1027,13 +1027,13 @@ jQuery.Callbacks = function( options ) {
 						var index;
 						while( ( index = jQuery.inArray( arg, list, index ) ) > -1 ) {
 							list.splice( index, 1 );
-							// Handle firing indexes
-							if ( firing ) {
-								if ( index <= firingLength ) {
-									firingLength--;
+							// Handle fURIng indexes
+							if ( fURIng ) {
+								if ( index <= fURIngLength ) {
+									fURIngLength--;
 								}
-								if ( index <= firingIndex ) {
-									firingIndex--;
+								if ( index <= fURIngIndex ) {
+									fURIngIndex--;
 								}
 							}
 						}
@@ -1076,7 +1076,7 @@ jQuery.Callbacks = function( options ) {
 				args = args || [];
 				args = [ context, args.slice ? args.slice() : args ];
 				if ( list && ( !fired || stack ) ) {
-					if ( firing ) {
+					if ( fURIng ) {
 						stack.push( args );
 					} else {
 						fire( args );
@@ -2849,7 +2849,7 @@ jQuery.event = {
 			type = event.type || event,
 			namespaces = [];
 
-		// focus/blur morphs to focusin/out; ensure we're not firing them right now
+		// focus/blur morphs to focusin/out; ensure we're not fURIng them right now
 		if ( rfocusMorph.test( type + jQuery.event.triggered ) ) {
 			return;
 		}

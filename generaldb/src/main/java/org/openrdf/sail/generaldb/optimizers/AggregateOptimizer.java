@@ -64,7 +64,7 @@ public class AggregateOptimizer extends GeneralDBQueryModelVisitorBase<RuntimeEx
 	{
 		if(expr instanceof FunctionCall)
 		{
-			Function function = FunctionRegistry.getInstance().get(((FunctionCall) expr).getURI()).get();
+			Function function = FunctionRegistry.getInstance().get(((FunctionCall) expr).getURI());
 			if((!(function instanceof UnionFunc) || !(((FunctionCall) expr).getArgs().size()==1))
 					&& (!(function instanceof IntersectionFunc) || !(((FunctionCall) expr).getArgs().size()==1))
 					&&!(function instanceof ExtentFunc))

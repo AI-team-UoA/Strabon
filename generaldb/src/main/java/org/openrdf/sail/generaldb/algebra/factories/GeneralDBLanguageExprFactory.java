@@ -100,7 +100,7 @@ public class GeneralDBLanguageExprFactory extends QueryModelVisitorBase<Unsuppor
 	private GeneralDBSqlExpr valueOf(Value value) {
 		if (value instanceof Literal) {
 			Literal lit = (Literal)value;
-			return str(lit.getLanguage().get());
+			return str(lit.getLanguage());
 		}
 		return sqlNull();
 	}

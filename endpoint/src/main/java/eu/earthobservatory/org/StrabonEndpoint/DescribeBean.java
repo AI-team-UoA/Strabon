@@ -198,7 +198,7 @@ public class DescribeBean extends HttpServlet{
 		
 		// get the RDF format (we check only the Accept header)
         //RDFFormat format = RDFFormat.forMIMEType(request.getHeader("accept"));
-		RDFFormat format = Rio.getParserFormatForMIMEType(request.getHeader("accept")).get();
+		RDFFormat format = Rio.getParserFormatForMIMEType(request.getHeader("accept"));
 
         // get the query
 		String query = request.getParameter("query");

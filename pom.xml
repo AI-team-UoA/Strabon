@@ -141,7 +141,7 @@
 
 	<properties>
         <eu.earthobservatory.version>3.3.2-SNAPSHOT</eu.earthobservatory.version>
-		<sesame.version>4.0.0</sesame.version>
+		<sesame.version>2.9.0</sesame.version>
 		<aduna.appbase.version>3.11.0</aduna.appbase.version>
 		<!--slf4j.version>1.5.8</slf4j.version-->
 		<slf4j.version>1.6.4</slf4j.version>

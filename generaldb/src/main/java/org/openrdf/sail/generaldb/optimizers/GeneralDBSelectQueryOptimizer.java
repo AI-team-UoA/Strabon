@@ -29,7 +29,7 @@ import org.openrdf.model.BNode;
 import org.openrdf.model.Literal;
 import org.openrdf.model.Resource;
 import org.openrdf.model.URI;
-import org.openrdf.model.IRI;
+import org.openrdf.model.URI;
 import org.openrdf.model.Value;
 import org.openrdf.query.BindingSet;
 import org.openrdf.query.Dataset;
@@ -892,7 +892,7 @@ public class GeneralDBSelectQueryOptimizer extends GeneralDBQueryModelVisitorBas
 	public void meet(FunctionCall node)
 			throws RuntimeException
 	{
-		Function function = FunctionRegistry.getInstance().get(node.getURI()).get();
+		Function function = FunctionRegistry.getInstance().get(node.getURI());
 
 		super.meet(node);
 
@@ -1002,7 +1002,7 @@ public class GeneralDBSelectQueryOptimizer extends GeneralDBQueryModelVisitorBas
 				//we evaluate it in java
 				if(!evaluateInJava(expr) && !varInBind(expr))
 				{
-					Function function = FunctionRegistry.getInstance().get(((FunctionCall) expr).getURI()).get();
+					Function function = FunctionRegistry.getInstance().get(((FunctionCall) expr).getURI());
 					if(function instanceof SpatialPropertyFunc  || function instanceof SpatialRelationshipFunc ||
 					   function instanceof SpatialConstructFunc || function instanceof SpatialMetricFunc)
 					{
@@ -1118,7 +1118,7 @@ public class GeneralDBSelectQueryOptimizer extends GeneralDBQueryModelVisitorBas
 		{
 			if(expr instanceof FunctionCall)
 			{
-				Function function = FunctionRegistry.getInstance().get(((FunctionCall) expr).getURI()).get();
+				Function function = FunctionRegistry.getInstance().get(((FunctionCall) expr).getURI());
 				if(function instanceof SpatialMetricFunc)
 				{
 					return false;
@@ -1235,7 +1235,7 @@ public class GeneralDBSelectQueryOptimizer extends GeneralDBQueryModelVisitorBas
 	{
 		if(expr instanceof FunctionCall)
 		{
-			Function function = FunctionRegistry.getInstance().get(((FunctionCall) expr).getURI()).get();
+			Function function = FunctionRegistry.getInstance().get(((FunctionCall) expr).getURI());
 			if((!(function instanceof UnionFunc) || !(((FunctionCall) expr).getArgs().size()==1))
 					&&(!(function instanceof IntersectionFunc) || !(((FunctionCall) expr).getArgs().size()==1))
 					&&!(function instanceof ExtentFunc))
@@ -1569,7 +1569,7 @@ public class GeneralDBSelectQueryOptimizer extends GeneralDBQueryModelVisitorBas
 				return new Resource[] { (Resource)ctxValue };
 			return new Resource[0];
 		}
-		Set<IRI> graphs = getGraphs(sp);
+		Set<URI> graphs = getGraphs(sp);
 		if (graphs.isEmpty())
 			return null; // Search zero contexts
 		if (ctxValue == null)
@@ -1581,7 +1581,7 @@ public class GeneralDBSelectQueryOptimizer extends GeneralDBQueryModelVisitorBas
 		return null;
 	}
 
-	private Set<IRI> getGraphs(StatementPattern sp) {
+	private Set<URI> getGraphs(StatementPattern sp) {
 		if (sp.getScope() == Scope.DEFAULT_CONTEXTS)
 			return dataset.getDefaultGraphs();
 		return dataset.getNamedGraphs();
@@ -1805,7 +1805,7 @@ public class GeneralDBSelectQueryOptimizer extends GeneralDBQueryModelVisitorBas
 		{
 			if(expr instanceof FunctionCall)
 			{
-				Function function = FunctionRegistry.getInstance().get(((FunctionCall) expr).getURI()).get();
+				Function function = FunctionRegistry.getInstance().get(((FunctionCall) expr).getURI());
 				//Aggregate Function
 				if(((function instanceof UnionFunc) && (((FunctionCall) expr).getArgs().size()==1))
 						|| ((function instanceof IntersectionFunc) && (((FunctionCall) expr).getArgs().size()==1))

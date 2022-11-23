@@ -20,7 +20,7 @@ import org.openrdf.model.Namespace;
 import org.openrdf.model.Resource;
 import org.openrdf.model.Statement;
 import org.openrdf.model.URI;
-import org.openrdf.model.IRI;
+import org.openrdf.model.URI;
 import org.openrdf.model.Value;
 import org.openrdf.query.BindingSet;
 import org.openrdf.query.Dataset;
@@ -31,7 +31,7 @@ import org.openrdf.query.impl.EmptyBindingSet;
 import org.openrdf.sail.SailConnection;
 import org.openrdf.sail.SailException;
 import org.openrdf.sail.helpers.DefaultSailChangedEvent;
-import org.openrdf.sail.helpers.AbstractSailConnection;
+import org.openrdf.sail.helpers.SailConnectionBase;
 import org.openrdf.sail.generaldb.evaluation.GeneralDBEvaluationFactory;
 import org.openrdf.sail.generaldb.iteration.NamespaceIteration;
 import org.openrdf.sail.generaldb.iteration.GeneralDBResourceIteration;
@@ -49,7 +49,7 @@ import org.openrdf.sail.rdbms.model.RdbmsValue;
  * @author Manos Karpathiotakis <mk@di.uoa.gr>
  * 
  */
-public class GeneralDBConnection extends AbstractSailConnection {
+public class GeneralDBConnection extends SailConnectionBase {
 
 	private GeneralDBStore sail;
 
@@ -91,7 +91,7 @@ public class GeneralDBConnection extends AbstractSailConnection {
 	}
 
 	@Override
-	protected void addStatementInternal(Resource subj, IRI pred, Value obj, Resource... contexts)
+	protected void addStatementInternal(Resource subj, URI pred, Value obj, Resource... contexts)
 		throws SailException
 	{
 		try {
@@ -168,7 +168,7 @@ public class GeneralDBConnection extends AbstractSailConnection {
 
 	@Override
 	protected CloseableIteration<? extends Statement, SailException> getStatementsInternal(Resource subj,
-			IRI pred, Value obj, boolean includeInferred, Resource... contexts)
+			URI pred, Value obj, boolean includeInferred, Resource... contexts)
 		throws SailException
 	{
 		RdbmsResource s = vf.asRdbmsResource(subj);
@@ -179,7 +179,7 @@ public class GeneralDBConnection extends AbstractSailConnection {
 	}
 
 	@Override
-	protected void removeStatementsInternal(Resource subj, IRI pred, Value obj, Resource... contexts)
+	protected void removeStatementsInternal(Resource subj, URI pred, Value obj, Resource... contexts)
 		throws SailException
 	{
 		RdbmsResource s = vf.asRdbmsResource(subj);

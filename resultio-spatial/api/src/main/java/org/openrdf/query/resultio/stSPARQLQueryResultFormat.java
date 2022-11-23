@@ -106,7 +106,7 @@ public class stSPARQLQueryResultFormat extends TupleQueryResultFormat {
 	 * @param format
 	 */
 	public static void register(stSPARQLQueryResultFormat format) {
-		//TupleQueryResultFormat.register(format);
+		TupleQueryResultFormat.register(format);
 		VALUES.add(format);
 	}
 	
@@ -131,9 +131,8 @@ public class stSPARQLQueryResultFormat extends TupleQueryResultFormat {
 	 * Returns all known/registered tuple query result formats.
 	 * @return
 	 */
-	public static List<stSPARQLQueryResultFormat> values() {
-		//return TupleQueryResultFormat.values();
-		return VALUES;
+	public static Collection<TupleQueryResultFormat> values() {
+		return TupleQueryResultFormat.values();
 	}
 	
 	public static stSPARQLQueryResultFormat forMIMEType(String mimeType) {
@@ -141,7 +140,7 @@ public class stSPARQLQueryResultFormat extends TupleQueryResultFormat {
 	}
 	
 	public static stSPARQLQueryResultFormat forMIMEType(String mimeType, stSPARQLQueryResultFormat fallback) {
-		return matchMIMEType(mimeType, VALUES).get();
+		return matchMIMEType(mimeType, VALUES);
 	}
 	
 	public stSPARQLQueryResultFormat(String name, String mimeType, String fileExt) {

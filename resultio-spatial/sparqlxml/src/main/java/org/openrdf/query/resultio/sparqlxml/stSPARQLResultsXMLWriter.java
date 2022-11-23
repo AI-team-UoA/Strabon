@@ -205,7 +205,7 @@ public class stSPARQLResultsXMLWriter implements TupleQueryResultWriter {
 		throws IOException
 	{
 		if (literal.getLanguage() != null) {
-			xmlWriter.setAttribute(LITERAL_LANG_ATT, literal.getLanguage().get());
+			xmlWriter.setAttribute(LITERAL_LANG_ATT, literal.getLanguage());
 		}
 		else if (literal.getDatatype() != null) {
 			URI datatype = literal.getDatatype();

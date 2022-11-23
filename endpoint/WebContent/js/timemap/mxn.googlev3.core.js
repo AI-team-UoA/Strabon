@@ -78,7 +78,7 @@ Mapstraction: {
 			// deal with zoom change
 			google.maps.event.addListener(map, 'zoom_changed', function(){
 				// zoom_changed fires before the zooming has finished so we 
-				// wait for the next idle event before firing our changezoom
+				// wait for the next idle event before fURIng our changezoom
 				// so that method calls report the correct values
 				fireOnNextIdle.push(function() {
 					me.changeZoom.fire();

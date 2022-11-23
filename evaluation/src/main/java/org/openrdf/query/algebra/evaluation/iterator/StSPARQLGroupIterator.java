@@ -32,7 +32,7 @@ import org.openrdf.model.vocabulary.XMLSchema;
 import org.openrdf.query.BindingSet;
 import org.openrdf.query.QueryEvaluationException;
 import org.openrdf.query.algebra.AggregateOperator;
-import org.openrdf.query.algebra.AbstractAggregateOperator;
+import org.openrdf.query.algebra.AggregateOperatorBase;
 import org.openrdf.query.algebra.Avg;
 import org.openrdf.query.algebra.Compare;
 import org.openrdf.query.algebra.Count;
@@ -407,7 +407,7 @@ public class StSPARQLGroupIterator extends CloseableIteratorIteration<BindingSet
 				StrabonPolyhedron leftArg = null;
 				StrabonPolyhedron rightArg = null;
 
-				Function function = FunctionRegistry.getInstance().get(((FunctionCall) expr).getURI()).get();
+				Function function = FunctionRegistry.getInstance().get(((FunctionCall) expr).getURI());
 
 				if(function instanceof UnionFunc)
 				{
@@ -537,7 +537,7 @@ public class StSPARQLGroupIterator extends CloseableIteratorIteration<BindingSet
 		{
 			if(expr instanceof FunctionCall)
 			{
-				Function function = FunctionRegistry.getInstance().get(((FunctionCall) expr).getURI()).get();
+				Function function = FunctionRegistry.getInstance().get(((FunctionCall) expr).getURI());
 				boolean condition = ((!(function instanceof UnionFunc) || !(((FunctionCall) expr).getArgs().size()==1))
 						&& (!(function instanceof IntersectionFunc) || !(((FunctionCall) expr).getArgs().size()==1))
 						&&!(function instanceof ExtentFunc));
@@ -755,7 +755,7 @@ public class StSPARQLGroupIterator extends CloseableIteratorIteration<BindingSet
 
 		private final ValueExpr arg;
 
-		public Aggregate(AbstractAggregateOperator operator) {
+		public Aggregate(AggregateOperatorBase operator) {
 			this.arg = operator.getArg();
 			if (operator.isDistinct()) {
 				distinct = new HashSet<Value>();

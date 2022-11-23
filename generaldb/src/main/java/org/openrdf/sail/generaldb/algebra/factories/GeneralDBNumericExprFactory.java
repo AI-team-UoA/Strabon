@@ -30,7 +30,7 @@ import static org.openrdf.sail.generaldb.algebra.base.GeneralDBExprSupport.unsup
 
 import org.openrdf.model.Literal;
 import org.openrdf.model.URI;
-import org.openrdf.model.IRI;
+import org.openrdf.model.URI;
 import org.openrdf.model.Value;
 import org.openrdf.model.datatypes.XMLDatatypeUtil;
 import org.openrdf.query.algebra.Datatype;
@@ -137,7 +137,7 @@ public class GeneralDBNumericExprFactory extends QueryModelVisitorBase<Unsupport
 
 		if(node.getLeftArg() instanceof FunctionCall)
 		{
-			Function function = FunctionRegistry.getInstance().get(((FunctionCall)node.getLeftArg()).getURI()).get();
+			Function function = FunctionRegistry.getInstance().get(((FunctionCall)node.getLeftArg()).getURI());
 
 
 			left  = exportSpatialOperand((FunctionCall) node.getLeftArg(),function); 
@@ -152,7 +152,7 @@ public class GeneralDBNumericExprFactory extends QueryModelVisitorBase<Unsupport
 
 		if(node.getRightArg() instanceof FunctionCall)
 		{
-			Function function = FunctionRegistry.getInstance().get(((FunctionCall)node.getRightArg()).getURI()).get();
+			Function function = FunctionRegistry.getInstance().get(((FunctionCall)node.getRightArg()).getURI());
 
 			right  = exportSpatialOperand((FunctionCall) node.getRightArg(),function); 
 
@@ -198,7 +198,7 @@ public class GeneralDBNumericExprFactory extends QueryModelVisitorBase<Unsupport
 	private GeneralDBSqlExpr valueOf(Value value) {
 		if (value instanceof Literal) {
 			Literal lit = (Literal)value;
-			IRI dt = lit.getDatatype();
+			URI dt = lit.getDatatype();
 			if (dt != null && XMLDatatypeUtil.isNumericDatatype(dt)) {
 				try {
 					return new GeneralDBDoubleValue(lit.doubleValue());
@@ -262,7 +262,7 @@ public class GeneralDBNumericExprFactory extends QueryModelVisitorBase<Unsupport
 	 */
 	public GeneralDBSqlExpr dateTimeFunction(FunctionCall functionCall) throws UnsupportedRdbmsOperatorException
 	{
-		Function function = FunctionRegistry.getInstance().get(functionCall.getURI()).get();
+		Function function = FunctionRegistry.getInstance().get(functionCall.getURI());
 		if(function instanceof DateTimeMetricFunc)
 		{
 			return dateTimeMetricFunction(functionCall,function);	
@@ -274,7 +274,7 @@ public class GeneralDBNumericExprFactory extends QueryModelVisitorBase<Unsupport
 	
 	public GeneralDBSqlExpr spatialFunction(FunctionCall functionCall) throws UnsupportedRdbmsOperatorException
 	{
-		Function function = FunctionRegistry.getInstance().get(functionCall.getURI()).get();
+		Function function = FunctionRegistry.getInstance().get(functionCall.getURI());
 		if(function instanceof SpatialConstructFunc)
 		{
 			return spatialConstructFunction(functionCall,function);	

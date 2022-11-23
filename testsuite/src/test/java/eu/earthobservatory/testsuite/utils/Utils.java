@@ -153,8 +153,8 @@ public class Utils
 		
 		//Check if the results of the query are the expected
 		compareResults(queryFile, orderOn, 
-					   QueryResultIO.parseTuple(Utils.class.getResourceAsStream(resultsFile), TupleQueryResultFormat.SPARQL),
-					   QueryResultIO.parseTuple((new ByteArrayInputStream(resultsStream.toByteArray())), TupleQueryResultFormat.SPARQL));
+					   QueryResultIO.parse(Utils.class.getResourceAsStream(resultsFile), TupleQueryResultFormat.SPARQL),
+					   QueryResultIO.parse((new ByteArrayInputStream(resultsStream.toByteArray())), TupleQueryResultFormat.SPARQL));
 	}
 	
 	protected static void compareResults(String queryFile, boolean orderOn, 

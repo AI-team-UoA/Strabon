@@ -23,7 +23,7 @@ import java.util.Set;
 import org.openrdf.model.Literal;
 import org.openrdf.model.Value;
 import org.openrdf.model.ValueFactory;
-import org.openrdf.model.impl.BooleanLiteral;
+import org.openrdf.model.impl.BooleanLiteralImpl;
 import org.openrdf.model.impl.LiteralImpl;
 import org.openrdf.model.impl.URIImpl;
 import org.openrdf.model.impl.ValueFactoryImpl;
@@ -290,7 +290,7 @@ public abstract class GeneralDBEvaluation extends EvaluationStrategyImpl {
 		}
 
 		// get the function corresponding to the function call
-		Function function = FunctionRegistry.getInstance().get(fc.getURI()).get();
+		Function function = FunctionRegistry.getInstance().get(fc.getURI());
 		
 		if (function == null) {
 			throw new UnsupportedExtensionFunctionException("Extension function " + fc.getURI()+ " is not supported.");
@@ -463,7 +463,7 @@ public abstract class GeneralDBEvaluation extends EvaluationStrategyImpl {
 					funcResult = leftGeom.getEnvelope().equals(rightConverted.getEnvelope());
 				}
 
-				return funcResult ? BooleanLiteral.TRUE : BooleanLiteral.FALSE;
+				return funcResult ? BooleanLiteralImpl.TRUE : BooleanLiteralImpl.FALSE;
 			}
 			
 			//

@@ -17,7 +17,7 @@ import java.sql.SQLException;
 import org.openrdf.model.BNode;
 import org.openrdf.model.Literal;
 import org.openrdf.model.URI;
-import org.openrdf.model.IRI;
+import org.openrdf.model.URI;
 import org.openrdf.model.Value;
 import org.openrdf.model.vocabulary.RDF;
 
@@ -134,7 +134,7 @@ public abstract class IdSequence {
 			if (lit.getDatatype() != null)
 				return hash(digest, lit.getDatatype().stringValue());
 			if (lit.getLanguage() != null)
-				return hash(digest, lit.getLanguage().get());
+				return hash(digest, lit.getLanguage());
 		}
 		return 0;
 	}
@@ -159,8 +159,8 @@ public abstract class IdSequence {
 	}
 
 	protected ValueType valueOf(Literal lit) {
-		String lang = lit.getLanguage().get();
-		IRI dt = lit.getDatatype();
+		String lang = lit.getLanguage();
+		URI dt = lit.getDatatype();
 		int length = lit.stringValue().length();
 		if (lang != null) {
 			// language
