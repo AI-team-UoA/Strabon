@@ -8,7 +8,7 @@ import org.openrdf.query.algebra.evaluation.function.spatial.StrabonPolyhedron;
 import org.openrdf.query.algebra.evaluation.function.spatial.WKTHelper;
 import org.openrdf.sail.rdbms.model.RdbmsValue;
 
-import org.locationtech.jts.io.ParseException;
+import com.vividsolutions.jts.io.ParseException;
 
 /**
  * 

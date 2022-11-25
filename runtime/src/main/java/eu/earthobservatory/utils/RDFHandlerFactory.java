@@ -35,19 +35,19 @@ public class RDFHandlerFactory {
 		RDFHandler handler = null;
 		//RDFFomrat rdfFormat = RDFFormat.valueOf(format);
 		RDFFormat rdfFormat;
-		if(format.equals("n3"))
+		if(format.equals("text/n3") || format.equals("N3") || format.equals(RDFFormat.N3.getName()))
 			rdfFormat = RDFFormat.N3;
-		else if(format.equals("rdfxml"))
+		else if(format.equals("application/rdf+xml") || format.equals("RDFXML") || format.equals(RDFFormat.RDFXML.getName()))
 			rdfFormat = RDFFormat.RDFXML;
-		else if(format.equals("turtle"))
+		else if(format.equals("text/turtle") || format.equals("TURTLE") || format.equals(RDFFormat.TURTLE.getName()))
 			rdfFormat = RDFFormat.TURTLE;
-		else if(format.equals("trig"))
+		else if(format.equals("application/trig") || format.equals("TRIG") || format.equals(RDFFormat.TRIG.getName()))
 			rdfFormat = RDFFormat.TRIG;
-		else if(format.equals("trix"))
+		else if(format.equals("application/trix") || format.equals("TRIX") || format.equals(RDFFormat.TRIX.getName()))
 			rdfFormat = RDFFormat.TRIX;
-		else if(format.equals("binary"))
+		else if(format.equals("application/x-binary-rdf") || format.equals("BINARY") || format.equals(RDFFormat.BINARY.getName()))
 			rdfFormat = RDFFormat.BINARY;
-		else if(format.equals("ntriples"))
+		else if(format.equals("application/n-triples") || format.equals("NTRIPLES") || format.equals(RDFFormat.NTRIPLES.getName()))
 			rdfFormat = RDFFormat.NTRIPLES;
 		else
 			rdfFormat = null;

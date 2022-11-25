@@ -9,8 +9,8 @@
  */
 package org.openrdf.query.algebra.evaluation.function.spatial;
 
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.CoordinateFilter;
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.CoordinateFilter;
 
 public class ProjectionsFilter implements CoordinateFilter {
 

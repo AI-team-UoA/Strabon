@@ -63,24 +63,20 @@ public class Common {
 	public static List<String> registeredFormats = new ArrayList<String>();
 
 	static {
+		if(RDFFormat.RDFXML != null)
+			registeredFormats.add(RDFFormat.RDFXML.getName());
 		if(RDFFormat.BINARY != null)
 			registeredFormats.add(RDFFormat.BINARY.getName());
-		if(RDFFormat.JSONLD != null)
-			registeredFormats.add(RDFFormat.JSONLD.getName());
 		if(RDFFormat.N3 != null)
 			registeredFormats.add(RDFFormat.N3.getName());
-		if(RDFFormat.NQUADS != null)
-			registeredFormats.add(RDFFormat.NQUADS.getName());
-		if(RDFFormat.RDFA != null)
-			registeredFormats.add(RDFFormat.RDFA.getName());
-		if(RDFFormat.RDFJSON != null)
-			registeredFormats.add(RDFFormat.RDFJSON.getName());
 		if(RDFFormat.TRIG != null)
 			registeredFormats.add(RDFFormat.TRIG.getName());
 		if(RDFFormat.TRIX != null)
 			registeredFormats.add(RDFFormat.TRIX.getName());
 		if(RDFFormat.TURTLE != null)
 			registeredFormats.add(RDFFormat.TURTLE.getName());
+		if(RDFFormat.NTRIPLES != null)
+			registeredFormats.add(RDFFormat.NTRIPLES.getName());
 	}
 	
 	/**

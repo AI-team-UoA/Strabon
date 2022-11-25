@@ -71,7 +71,7 @@ import org.openrdf.query.algebra.evaluation.util.MathUtil;
 import org.openrdf.query.algebra.evaluation.util.ValueComparator;
 import org.openrdf.query.impl.EmptyBindingSet;
 
-import org.locationtech.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.Geometry;
 
 import eu.earthobservatory.constants.GeoConstants;
 

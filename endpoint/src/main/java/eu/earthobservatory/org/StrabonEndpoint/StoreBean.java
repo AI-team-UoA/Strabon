@@ -160,19 +160,19 @@ public class StoreBean extends HttpServlet {
     	// the format of the data
 		String fstring = request.getParameter(Common.PARAM_FORMAT);
 		RDFFormat formatVal;
-		if(fstring.equals("n3"))
+		if(fstring.equals("text/n3") || fstring.equals("N3") || fstring.equals(RDFFormat.N3.getName()))
 			formatVal = RDFFormat.N3;
-		else if(fstring.equals("rdfxml"))
+		else if(fstring.equals("application/rdf+xml") || fstring.equals("RDFXML") || fstring.equals(RDFFormat.RDFXML.getName()))
 			formatVal = RDFFormat.RDFXML;
-		else if(fstring.equals("turtle"))
+		else if(fstring.equals("text/turtle") || fstring.equals("TURTLE") || fstring.equals(RDFFormat.TURTLE.getName()))
 			formatVal = RDFFormat.TURTLE;
-		else if(fstring.equals("trig"))
+		else if(fstring.equals("application/trig") || fstring.equals("TRIG") || fstring.equals(RDFFormat.TRIG.getName()))
 			formatVal = RDFFormat.TRIG;
-		else if(fstring.equals("trix"))
+		else if(fstring.equals("application/trix") || fstring.equals("TRIX") || fstring.equals(RDFFormat.TRIX.getName()))
 			formatVal = RDFFormat.TRIX;
-		else if(fstring.equals("binary"))
+		else if(fstring.equals("application/x-binary-rdf") || fstring.equals("BINARY") || fstring.equals(RDFFormat.BINARY.getName()))
 			formatVal = RDFFormat.BINARY;
-		else if(fstring.equals("ntriples"))
+		else if(fstring.equals("application/n-triples") || fstring.equals("NTRIPLES") || fstring.equals(RDFFormat.NTRIPLES.getName()))
 			formatVal = RDFFormat.NTRIPLES;
 		else
 			formatVal = null;

@@ -76,12 +76,12 @@
                         <type>jar</type>
                         <scope>compile</scope>
                 </dependency>
-                <dependency>
-                    <groupId>org.locationtech.jts</groupId>
+               <!-- <dependency>
+                    <groupId>com.vividsolutions.jts</groupId>
                     <artifactId>jts-core</artifactId>
                     <type>jar</type>
                     <scope>compile</scope>
-                </dependency>
+                </dependency> -->
 
 	</dependencies>
 </project>
