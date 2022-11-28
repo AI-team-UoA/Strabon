@@ -184,7 +184,7 @@ public abstract class GeneralDBEvaluation extends EvaluationStrategyImpl {
 
 	public GeneralDBEvaluation(GeneralDBQueryBuilderFactory factory, GeneralDBTripleRepository triples, Dataset dataset, IdSequence ids)
 	{
-		super(new GeneralDBTripleSource(triples), dataset,null);
+		super(new GeneralDBTripleSource(triples), dataset);
 		this.factory = factory;
 		this.triples = triples;
 		this.vf = triples.getValueFactory();

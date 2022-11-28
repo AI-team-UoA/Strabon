@@ -694,7 +694,7 @@ public class GeneralDBSelectQueryOptimizer extends GeneralDBQueryModelVisitorBas
 					try {
 						this.reference.addFilter(sql.createBooleanExpr(expr));
 					}
-					catch (UnsupportedRdbmsOperatorException e) {
+					catch (UnsupportedRdbmsOperatorException|NullPointerException e) {
 						if (condition == null) {
 							condition = expr;
 						}

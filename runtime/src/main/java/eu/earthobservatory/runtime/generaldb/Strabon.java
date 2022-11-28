@@ -299,7 +299,6 @@ public abstract class Strabon {
 						return false;
 					}
 
-					System.out.println(resultsFormat + " " + " " + out);
 					tupleQuery.evaluate(resultWriter);
 			}
 		} else {
