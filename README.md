@@ -39,7 +39,7 @@
         
 3. Create a PostGIS extention:
 
-        psql -d test_for_postgis -c "CREATE EXTENSION postgis"  
+        psql -d template_postgis -c "CREATE EXTENSION postgis"  
        
 ### Allow users to alter spatial tables
 
