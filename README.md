@@ -223,7 +223,7 @@ The default settings of Postgres are rather conservative. As a result, parameter
         
 2. Clone the source code from this repository.
 
-3. The source code of the endpoint is located at the folder Strabon of the  source code tree that you just cloned, so `cd` into that directory, e.g. :
+3. The source code of the endpoint is located at the folder Strabon of the  source code tree that you just cloned, so `cd` into that directory, e.g.:
 
        cd Strabon
        
