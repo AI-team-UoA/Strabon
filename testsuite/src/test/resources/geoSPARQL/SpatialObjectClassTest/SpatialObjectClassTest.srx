@@ -6,11 +6,6 @@
 	<results>
 		<result>
 			<binding name='o'>
-				<uri>http://www.opengis.net/ont/geosparql#SpatialObject</uri>
-			</binding>
-		</result>
-		<result>
-			<binding name='o'>
 				<uri>http://www.opengis.net/ont/geosparql#Geometry</uri>
 			</binding>
 		</result>

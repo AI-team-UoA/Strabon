@@ -1,7 +1,0 @@
-select (strdf:intersection(?g) as ?intersection)
-where
-{
-	?x ex:consistsOf ?y .
-	?y ex:hasGeometry ?g .
-}
-group by ?x

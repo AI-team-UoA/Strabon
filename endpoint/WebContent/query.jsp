@@ -30,7 +30,7 @@
                 if (!e) {
                     return true;
                 }
-                if (e.style.display == "none") {
+                if (e.style.display === "none") {
                     e.style.display = "block";
                 } else {
                     e.style.display = "none";

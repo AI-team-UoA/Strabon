@@ -104,7 +104,7 @@ public class Utils
 		}
 		
 		//Connect to server and create the temp database
-		url = "jdbc:postgresql://"+serverName+":"+port;
+		url = "jdbc:postgresql://"+serverName+":"+port+"/";
 		conn = DriverManager.getConnection(url, username, password);
 		
         pst = conn.prepareStatement("SELECT * FROM pg_catalog.pg_database");
@@ -214,7 +214,7 @@ public class Utils
 		
 		//Drop the temp database
 		conn.close();
-		String url = "jdbc:postgresql://"+serverName+":"+port;
+		String url = "jdbc:postgresql://"+serverName+":"+port+"/";
 		conn = DriverManager.getConnection(url, username, password);
 		
 		PreparedStatement pst = conn.prepareStatement("DROP DATABASE "+databaseName);

@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>eu.earthobservatory</groupId>
 		<artifactId>strabon</artifactId>
-		<version>3.3.2-SNAPSHOT</version>
+		<version>3.3.3-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>strabon-endpoint-exec</artifactId>
@@ -29,7 +29,7 @@
 			<plugin>
 				<groupId>org.apache.tomcat.maven</groupId>
 				<artifactId>tomcat7-maven-plugin</artifactId>
-				<version>2.0</version>
+				<version>2.2</version>
 				<executions>
 					<execution>
 						<id>tomcat-run</id>
@@ -41,6 +41,9 @@
 							<path>/</path>
 							<uriEncoding>UTF-8</uriEncoding>
 							<finalName>strabon-endpoint-executable-${project.version}.jar</finalName>
+							<argLine>
+								--illegal-access=permit
+							</argLine>
 							<!-- Override the default server.xml if nessecary
 							<serverXml>src/main/tomcatconf/server.xml</serverXml>
 							-->

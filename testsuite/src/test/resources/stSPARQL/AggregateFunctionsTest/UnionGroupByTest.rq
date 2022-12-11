@@ -1,7 +1,0 @@
-select (strdf:union(?g) as ?union)
-where
-{
-	?x ex:consistsOf ?y .
-	?y ex:hasGeometry ?g .
-}
-group by ?x

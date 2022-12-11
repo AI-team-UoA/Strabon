@@ -1,7 +1,0 @@
-select (strdf:extent(?g) as ?extent)
-where
-{
-	?x ex:consistsOf ?y .
-	?y ex:hasGeometry ?g .
-}
-group by ?x

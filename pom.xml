@@ -4,7 +4,7 @@
 
 	<groupId>eu.earthobservatory</groupId>
 	<artifactId>strabon</artifactId>
-	<version>3.3.2-SNAPSHOT</version>
+	<version>3.3.3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<parent>
@@ -140,14 +140,12 @@
 	</modules>
 
 	<properties>
-        <eu.earthobservatory.version>3.3.2-SNAPSHOT</eu.earthobservatory.version>
-		<sesame.version>2.7.10</sesame.version>
-		<aduna.appbase.version>3.11.0</aduna.appbase.version>
-		<!--slf4j.version>1.5.8</slf4j.version-->
+        <eu.earthobservatory.version>3.3.3-SNAPSHOT</eu.earthobservatory.version>
+		<sesame.version>2.7.2</sesame.version>
+		<aduna.appbase.version>3.5.0</aduna.appbase.version>
 		<slf4j.version>1.6.4</slf4j.version>
-		<spring.version>2.5.6</spring.version>
-		<jts.version>1.13</jts.version>
-		<jts.core.version>1.15.0</jts.core.version>
+		<spring.version>3.2.10.RELEASE</spring.version>
+		<jts.version>1.11</jts.version>
 		<geotools.version>19.3</geotools.version>
 		<ogc.tools.gml.version>3.1.1</ogc.tools.gml.version>
 		<xml.bind.version>2.1.7</xml.bind.version>
@@ -501,13 +499,6 @@
 				<version>${geotools.version}</version>
 			</dependency>
 
-			<!-- https://mvnrepository.com/artifact/org.geotools/gt-data -->
-			<dependency>
-				<groupId>org.geotools</groupId>
-				<artifactId>gt-data</artifactId>
-				<version>20.5</version>
-			</dependency>
-
 
 			<!--
 			     One epsg jar file suffices. Read this: http://docs.geotools.org/latest/userguide/faq.html#q-how-to-choose-an-epsg-authority
@@ -549,11 +540,6 @@
 				<version>${jts.version}</version>
 				<type>jar</type>
 			</dependency>
-			<dependency>
-				<groupId>org.locationtech.jts</groupId>
-				<artifactId>jts-core</artifactId>
-				<version>${jts.core.version}</version>
-			</dependency>
 
 			<!-- JDBC Drivers -->
 			<dependency>
@@ -562,12 +548,12 @@
 				<version>3.4.0</version>
 			</dependency>
 
-<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
-		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>42.1.4.jre7</version>
-		</dependency>
+			<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+			<dependency>
+				<groupId>org.postgresql</groupId>
+				<artifactId>postgresql</artifactId>
+				<version>42.1.4.jre7</version>
+			</dependency>
 
 			<dependency>
 				<groupId>mysql</groupId>
@@ -714,32 +700,25 @@
 			<dependency>
 				<groupId>cglib</groupId>
 				<artifactId>cglib</artifactId>
-				<version>2.2</version>
-			</dependency>
-
-			<!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
-			<dependency>
-				<groupId>commons-codec</groupId>
-				<artifactId>commons-codec</artifactId>
-				<version>1.15</version>
+				<version>3.1</version>
 			</dependency>
 
 
 			<dependency>
 				<groupId>org.jvnet.ogc</groupId>
 				<artifactId>ogc-tools-gml-jts</artifactId>
-				<version>1.0.2</version>
+				<version>1.0.3</version>
 			</dependency>
 			<dependency>
 				<groupId>com.sun.xml.bind</groupId>
 				<artifactId>jaxb-impl</artifactId>
-				<version>2.1.1</version>
+				<version>2.2.7</version>
 			</dependency>
 
 			<dependency>
 				<groupId>javax</groupId>
 				<artifactId>javaee-web-api</artifactId>
-				<version>8.0</version>
+				<version>7.0</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -757,7 +736,12 @@
 				<plugin>
 					<groupId>org.apache.tomcat.maven</groupId>
 					<artifactId>tomcat7-maven-plugin</artifactId>
-					<version>2.0</version>
+					<version>2.2</version>
+					<configuration>
+						<argLine>
+							--illegal-access=permit
+						</argLine>
+					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>
@@ -789,12 +773,24 @@
 			<plugin>
 		        <groupId>org.apache.maven.plugins</groupId>
 		        <artifactId>maven-surefire-plugin</artifactId>
-		        <version>2.14</version>
+		        <version>2.10</version>
 		        <configuration>
-		        <skipTests>${skipTests}</skipTests>
+		        	<skipTests>${skipTests}</skipTests>
+					<argLine>
+						--illegal-access=permit
+					</argLine>
 			    </configuration>
 		    </plugin>
-
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>2.10</version>
+				<configuration>
+					<argLine>
+						--illegal-access=permit
+					</argLine>
+				</configuration>
+			</plugin>
 <!--			<plugin>
                                 <artifactId>jdeb</artifactId>
                                 <groupId>org.vafer</groupId>

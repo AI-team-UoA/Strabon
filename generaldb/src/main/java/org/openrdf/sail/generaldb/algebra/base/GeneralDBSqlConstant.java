@@ -39,6 +39,7 @@ public abstract class GeneralDBSqlConstant<T> extends GeneralDBQueryModelNodeBas
 
 	@Override
 	public GeneralDBSqlConstant<T> clone() {
+		@SuppressWarnings("unchecked")
 		GeneralDBSqlConstant<T> clone = (GeneralDBSqlConstant<T>)super.clone();
 		clone.setValue(value);
 		return clone;

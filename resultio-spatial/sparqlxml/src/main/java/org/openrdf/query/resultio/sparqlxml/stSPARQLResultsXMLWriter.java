@@ -23,6 +23,8 @@ import info.aduna.xml.XMLWriter;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.charset.Charset;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -44,6 +46,7 @@ import org.openrdf.sail.generaldb.model.GeneralDBPolyhedron;
 import org.openrdf.rio.RioSetting;
 import org.openrdf.rio.WriterConfig;
 import org.openrdf.query.resultio.QueryResultFormat;
+import org.openrdf.query.resultio.sparqlxml.SPARQLResultsXMLWriter;
 
 /**
  * A {@link TupleQueryResultWriter} that writes tuple query results in the <a
@@ -68,7 +71,7 @@ public class stSPARQLResultsXMLWriter implements TupleQueryResultWriter {
 	 * The ordered list of binding names of the result.
 	 */
 	private List<String> bindingNames;
-	
+
 	/*--------------*
 	 * Constructors *
 	 *--------------*/
@@ -102,8 +105,8 @@ public class stSPARQLResultsXMLWriter implements TupleQueryResultWriter {
 	{
 		try {
 			// keep the order of binding names
-			this.bindingNames = bindingNames;	
-			
+			this.bindingNames = bindingNames;
+
 			xmlWriter.startDocument();
 
 			xmlWriter.setAttribute("xmlns", NAMESPACE);
@@ -151,9 +154,9 @@ public class stSPARQLResultsXMLWriter implements TupleQueryResultWriter {
 				{
 					xmlWriter.setAttribute(BINDING_NAME_ATT, binding.getName());
 					xmlWriter.startTag(BINDING_TAG);
-	
+
 					writeValue(binding.getValue());
-	
+
 					xmlWriter.endTag(BINDING_TAG);
 				}
 			}
@@ -216,10 +219,12 @@ public class stSPARQLResultsXMLWriter implements TupleQueryResultWriter {
 	}
 
 	@Override
-	public void handleLinks(List<String> linkUrls){}
+	public void handleLinks(List<String> linkUrls){
+	}
 
 	@Override
-	public void handleBoolean(boolean value){}
+	public void handleBoolean(boolean value){
+	}
 
 	@Override
 	public Collection<RioSetting<?>> getSupportedSettings(){return null;}
@@ -234,7 +239,7 @@ public class stSPARQLResultsXMLWriter implements TupleQueryResultWriter {
 	public void startHeader(){}
 
 	@Override
-	public void startDocument() {}
+	public void startDocument(){}
 
 	@Override
 	public void	endHeader(){}
@@ -246,5 +251,7 @@ public class stSPARQLResultsXMLWriter implements TupleQueryResultWriter {
 	public void	handleNamespace(String prefix, String uri) {}
 
 	@Override
-	public QueryResultFormat getQueryResultFormat() {return null;}
+	public QueryResultFormat getQueryResultFormat() {
+		return new QueryResultFormat("XML", Arrays.asList("application/sparql-results+xml", "application/xml"), Charset.forName("UTF-8"), Arrays.asList("xml"));
+	}
 }

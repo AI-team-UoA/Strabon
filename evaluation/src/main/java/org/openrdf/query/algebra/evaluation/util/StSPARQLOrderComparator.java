@@ -82,7 +82,8 @@ public class StSPARQLOrderComparator implements Comparator<BindingSet> {
 						
 						
 						//XXX unfinished
-						
+
+						@SuppressWarnings("unchecked")
 						int compare = cmp.compare(v1, v2);
 
 						if (compare != 0) {
@@ -96,7 +97,7 @@ public class StSPARQLOrderComparator implements Comparator<BindingSet> {
 					v1 = evaluate(element.getExpr(), o1);
 					v2 = evaluate(element.getExpr(), o2);
 
-
+					@SuppressWarnings("unchecked")
 					int compare = cmp.compare(v1, v2);
 
 					if (compare != 0) {
