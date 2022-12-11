@@ -15,15 +15,21 @@
 
 ### Installing PostgreSQL and PostGIS
 
-1. Install PostgreSQL 12.0 :
+1. Install PostgreSQL 9.4 & PostGIS 2.3 :
 
-        sudo apt-get install postgresql-12
+        touch /etc/apt/sources.list.d/pgdg.list \
+        && echo "deb http://apt.postgresql.org/pub/repos/apt xenial-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
+        && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add
+        
+        apt-get update \
+        && apt-get install -y \
+        postgresql-9.4 \
+        postgresql-server-dev-9.4 \
+        postgresql-9.4-postgis-2.3 \
+        && apt-get clean \
+        && rm -rf /var/lib/apt/lists/*
 
-2. Install PostGIS 3.0 :
-
-        sudo apt-get install postgresql-12-postgis-3
-
-3. Provide a password for default user (postgres)
+2. Provide a password for default user (postgres)
 
         sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD 'postgres';"
         
@@ -173,7 +179,7 @@ The default settings of Postgres are rather conservative. As a result, parameter
 
 ## Installing Strabon on Windows
 
-1. First download PostgreSQL database from [here](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads). (try Version 12.13)
+1. First download PostgreSQL database from [here](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads). (try Version 9.4.26)
 
 2. Then install the .exe file
 
@@ -181,7 +187,7 @@ The default settings of Postgres are rather conservative. As a result, parameter
 
 4. For anything else, keep the defaults
 
-5. Then, in the Stack builder select "PostgreSQL 12 on port 5432"
+5. Then, in the Stack builder select "PostgreSQL 9.4 on port 5432"
 
 6. Then check the Spatial Extension PostGIS 3.0 for PostgreSQL 12
 
@@ -195,7 +201,7 @@ The default settings of Postgres are rather conservative. As a result, parameter
 
 11. Now you have PostgreSQL and PostGIS installed
 
-12. Now open pgadmin III (it was installed with postgreSQL)
+12. Now open pgadmin III (it was installed with postgreSQL. If template_postgis was not created, you may create it manually)
 
 13. Create a new database with the name "endpoint" and in the definition select as template the "template_postgis"
 
