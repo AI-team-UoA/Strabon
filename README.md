@@ -9,9 +9,9 @@
 
         sudo apt-get install maven
 
-2. Install Java 11:
+2. Install Java 8:
 
-        sudo apt-get install openjdk-11-jdk openjdk-11-jre
+        sudo apt-get install openjdk-8-jdk openjdk-8-jre
 
 ### Installing PostgreSQL and PostGIS
 
