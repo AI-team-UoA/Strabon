@@ -189,7 +189,7 @@ The default settings of Postgres are rather conservative. As a result, parameter
 
 5. Then, in the Stack builder select "PostgreSQL 9.4 on port 5432"
 
-6. Then check the Spatial Extension PostGIS 3.0 for PostgreSQL 12
+6. Then check the Spatial Extension PostGIS 2.3 for PostgreSQL 9.4
 
 7. Then, in the PostGIS installation, check the option "Create spatial database"
 
@@ -214,7 +214,7 @@ The default settings of Postgres are rather conservative. As a result, parameter
 
 ### Tomcat
 
-1. Install Tomcat compatible with Java 11 (eg. 9.0.68).
+1. Install Tomcat compatible with Java 8 (eg. 9.0.68).
 
 2. Add a new user in the tomcat-users.xml file. This file is usually located in the folder $TOMCAT_HOME/conf. Note that this user should be a member of the manager group. For example, add the following line inside a tomcat-users element to the file tomcat-users.conf and restart tomcat:
 
