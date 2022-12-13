@@ -55,31 +55,31 @@ public class TestSPARQLEndpointWithStrabon {
 
 	/**
 	 * Test method for {@link eu.earthobservatory.org.StrabonEndpoint.client.SPARQLEndpoint#query(java.lang.String, org.openrdf.query.resultio.stSPARQLQueryResultFormat)}.
-     */
-	  @Test
-	  public void testQuery() {
-		  //for (stSPARQLQueryResultFormat format : formats) {
-		  try {
-			  EndpointResult response = endpoint.query(query, stSPARQLQueryResultFormat.XML);
-			  if (response.getStatusCode() != 200) {
-				  System.err.println("Status code ("+response.getStatusCode()+"):" + response.getStatusText());
-			  }
+	 */
+	@Test
+	public void testQuery() {
+		//for (stSPARQLQueryResultFormat format : formats) {
+		try {
+			EndpointResult response = endpoint.query(query, stSPARQLQueryResultFormat.XML);
+			if (response.getStatusCode() != 200) {
+				System.err.println("Status code ("+response.getStatusCode()+"):" + response.getStatusText());
+			}
 
-			  assertTrue(response.getStatusCode() == 200);
+			assertTrue(response.getStatusCode() == 200);
 
-		  } catch (IOException e) {
-			  e.printStackTrace();
-		  }
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-	 	//}
-	 }
+		//}
+	}
 
 	/**
 	 * Test method for testing that method {@link eu.earthobservatory.org.StrabonEndpoint.client.SPARQLEndpoint#query(java.lang.String, org.openrdf.query.resultio.stSPARQLQueryResultFormat)}.
 	 * returns an IOException when it should do so.
 	 */
 	@Test(expected= IOException.class)
-		public void testIOException() throws IOException {
+	public void testIOException() throws IOException {
 		SPARQLEndpoint ep = new SPARQLEndpoint("blabla.dgr", 80, "bla");
 		ep.query(query, formats.get(0));
 	}

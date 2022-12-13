@@ -12,7 +12,7 @@ import static org.openrdf.sail.generaldb.config.GeneralDBStoreSchema.PASSWORD;
 import static org.openrdf.sail.generaldb.config.GeneralDBStoreSchema.URL;
 import static org.openrdf.sail.generaldb.config.GeneralDBStoreSchema.USER;
 
-import org.openrdf.model.Model;
+import org.openrdf.model.Graph;
 import org.openrdf.model.Literal;
 import org.openrdf.model.Resource;
 import org.openrdf.model.URI;
@@ -108,7 +108,7 @@ public class GeneralDBStoreConfig extends SailImplConfigBase {
 	}
 
 
-	public Resource export(Model graph) {
+	public Resource export(Graph graph) {
 		Resource implNode = super.export(graph);
 
 		ValueFactory vf = graph.getValueFactory();
@@ -130,7 +130,7 @@ public class GeneralDBStoreConfig extends SailImplConfigBase {
 		return implNode;
 	}
 
-	public void parse(Model graph, Resource implNode)
+	public void parse(Graph graph, Resource implNode)
 		throws SailConfigException
 	{
 		super.parse(graph, implNode);

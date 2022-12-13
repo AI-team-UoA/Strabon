@@ -171,7 +171,12 @@ public class StSPARQLGroupIterator extends CloseableIteratorIteration<BindingSet
 					break; // closed
 				}
 				Key key = new Key(sol);
+				//Spatial aggregates do not use group by properly
+				Entry spatialEntry = new Entry(sol);
+				if(!spatialEntry.getSpatialAggregates().isEmpty()) key.spatialHash(spatialEntry.getSpatialAggregates(),sol);
+
 				Entry entry = entries.get(key);
+
 
 				if (entry == null) {
 					entry = new Entry(sol);
@@ -198,15 +203,41 @@ public class StSPARQLGroupIterator extends CloseableIteratorIteration<BindingSet
 
 		private BindingSet bindingSet;
 
+		private Set<String> spatialNames;
+
 		private int hash;
 
 		public Key(BindingSet bindingSet) {
+			this.spatialNames = new HashSet<String>();
 			this.bindingSet = bindingSet;
 
 			for (String name : group.getGroupBindingNames()) {
 				Value value = bindingSet.getValue(name);
 				if (value != null) {
-					this.hash ^= value.hashCode();
+					this.hash += value.hashCode();
+				}
+			}
+		}
+
+		//Change hash for spatial aggregates
+		public void spatialHash(Map<String,FunctionCall> spatialAggregates,BindingSet bindingSet){
+			hash=0;
+
+			//Find name of vars in spatial aggregates
+			for (Map.Entry<String,FunctionCall> e : spatialAggregates.entrySet()) {
+				Function function = FunctionRegistry.getInstance().get(((FunctionCall) e.getValue()).getURI());
+				if((function instanceof UnionFunc) || (function instanceof IntersectionFunc) || (function instanceof ExtentFunc)) {
+					for (ValueExpr ve : e.getValue().getArgs()) {
+						String s = ve.toString();
+						this.spatialNames.add(s.substring(s.indexOf("=") + 1, s.indexOf("?")));
+					}
+				}
+			}
+
+			for (String name : group.getGroupBindingNames()) {
+				Value value = bindingSet.getValue(name);
+				if (value != null && !spatialNames.contains(name)) {
+					this.hash += value.hashCode();
 				}
 			}
 		}
@@ -222,11 +253,13 @@ public class StSPARQLGroupIterator extends CloseableIteratorIteration<BindingSet
 				BindingSet otherSolution = ((Key)other).bindingSet;
 
 				for (String name : group.getGroupBindingNames()) {
-					Value v1 = bindingSet.getValue(name);
-					Value v2 = otherSolution.getValue(name);
+					if(!this.spatialNames.contains(name) && !((Key)other).spatialNames.contains(name)) {
+						Value v1 = bindingSet.getValue(name);
+						Value v2 = otherSolution.getValue(name);
 
-					if (!ObjectUtil.nullEquals(v1, v2)) {
-						return false;
+						if (!ObjectUtil.nullEquals(v1, v2)) {
+							return false;
+						}
 					}
 				}
 
@@ -246,7 +279,11 @@ public class StSPARQLGroupIterator extends CloseableIteratorIteration<BindingSet
 		private Map<String, FunctionCall> spatialAggregates;
 
 		private Map<FunctionCall, Geometry> spatialAggregatesResult;
-		
+
+		public Map<String, FunctionCall> getSpatialAggregates() {
+			return spatialAggregates;
+		}
+
 		/**
 		 * Map holding the datatypes of the geometries. We do not use
 		 * a single map (like StrabonPolyhedron) for safety reasons of
@@ -590,7 +627,7 @@ public class StSPARQLGroupIterator extends CloseableIteratorIteration<BindingSet
 					}
 					poly = (StrabonPolyhedron) val;
 					Geometry aggr = this.spatialAggregatesResult.get(expr);
-					
+
 					if(aggr==null)
 					{
 

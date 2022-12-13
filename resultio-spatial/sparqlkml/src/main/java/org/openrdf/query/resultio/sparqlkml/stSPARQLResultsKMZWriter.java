@@ -22,9 +22,6 @@ import org.openrdf.query.resultio.TupleQueryResultFormat;
 import org.openrdf.query.resultio.TupleQueryResultWriter;
 import org.openrdf.query.resultio.stSPARQLQueryResultFormat;
 import org.openrdf.query.resultio.sparqlkml.stSPARQLResultsKMLWriter;
-import org.openrdf.rio.RioSetting;
-import org.openrdf.rio.WriterConfig;
-import org.openrdf.query.resultio.QueryResultFormat;
 
 /**
  * @author Charalampos Nikolaou <charnik@di.uoa.gr>
@@ -106,38 +103,5 @@ public class stSPARQLResultsKMZWriter implements TupleQueryResultWriter {
 	public TupleQueryResultFormat getTupleQueryResultFormat() {
 		return stSPARQLQueryResultFormat.KMZ;
 	}
-
-	@Override
-	public void handleLinks(List<String> linkUrls){}
-
-	@Override
-	public void handleBoolean(boolean value){}
-
-	@Override
-	public Collection<RioSetting<?>> getSupportedSettings(){return null;}
-
-	@Override
-	public WriterConfig	getWriterConfig(){ return null;}
-
-	@Override
-	public void	setWriterConfig(WriterConfig config) {}
-
-	@Override
-	public void startHeader(){}
-
-	@Override
-	public void startDocument() {}
-
-	@Override
-	public void	endHeader(){}
-
-	@Override
-	public void	handleStylesheet(String stylesheetUrl) {}
-
-	@Override
-	public void	handleNamespace(String prefix, String uri) {}
-
-	@Override
-	public QueryResultFormat getQueryResultFormat() {return null;}
 
 }

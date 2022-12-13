@@ -12,6 +12,7 @@ package eu.earthobservatory.runtime.generaldb;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import javax.servlet.ServletOutputStream;
 import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -249,6 +250,7 @@ public abstract class Strabon {
 				} catch (Exception e2) {
 					logger.error("[Strabon.query] Error in preparing tuple or ask query.", e2);
 					status = false;
+					throw new RuntimeException(e2.getMessage());
 				}
 		}
 		

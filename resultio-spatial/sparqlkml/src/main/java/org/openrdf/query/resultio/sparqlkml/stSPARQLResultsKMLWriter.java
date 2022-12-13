@@ -37,9 +37,6 @@ import org.openrdf.sail.generaldb.model.GeneralDBPolyhedron;
 import org.openrdf.sail.generaldb.model.XMLGSDatatypeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.openrdf.rio.RioSetting;
-import org.openrdf.rio.WriterConfig;
-import org.openrdf.query.resultio.QueryResultFormat;
 
 
 import com.vividsolutions.jts.geom.Geometry;
@@ -458,38 +455,4 @@ public class stSPARQLResultsKMLWriter implements TupleQueryResultWriter {
 			sb.append(xmlWriter.getIndentString());
 		}
 	}
-
-
-	@Override
-	public void handleLinks(List<String> linkUrls){}
-
-	@Override
-	public void handleBoolean(boolean value){}
-
-	@Override
-	public Collection<RioSetting<?>> getSupportedSettings(){return null;}
-
-	@Override
-	public WriterConfig	getWriterConfig(){ return null;}
-
-	@Override
-	public void	setWriterConfig(WriterConfig config) {}
-
-	@Override
-	public void startHeader(){}
-
-	@Override
-	public void startDocument() {}
-
-	@Override
-	public void	endHeader(){}
-
-	@Override
-	public void	handleStylesheet(String stylesheetUrl) {}
-
-	@Override
-	public void	handleNamespace(String prefix, String uri) {}
-
-	@Override
-	public QueryResultFormat getQueryResultFormat() {return null;}
 }

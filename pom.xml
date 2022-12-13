@@ -141,17 +141,17 @@
 
 	<properties>
         <eu.earthobservatory.version>3.3.3-SNAPSHOT</eu.earthobservatory.version>
-		<sesame.version>2.7.2</sesame.version>
-		<aduna.appbase.version>3.5.0</aduna.appbase.version>
+		<sesame.version>2.6.8</sesame.version>
+		<aduna.appbase.version>3.11.0</aduna.appbase.version>
 		<slf4j.version>1.6.4</slf4j.version>
 		<spring.version>3.2.10.RELEASE</spring.version>
-		<jts.version>1.11</jts.version>
+		<jts.version>1.13</jts.version>
 		<geotools.version>19.3</geotools.version>
 		<ogc.tools.gml.version>3.1.1</ogc.tools.gml.version>
 		<xml.bind.version>2.1.7</xml.bind.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.build.targetEncoding>UTF-8</project.build.targetEncoding>
-		<skipTests>true</skipTests>
+		<skipTests>false</skipTests>
 	</properties>
 
 	<dependencyManagement>
@@ -552,7 +552,7 @@
 			<dependency>
 				<groupId>org.postgresql</groupId>
 				<artifactId>postgresql</artifactId>
-				<version>42.1.4.jre7</version>
+				<version>42.2.6</version>
 			</dependency>
 
 			<dependency>
@@ -718,7 +718,7 @@
 			<dependency>
 				<groupId>javax</groupId>
 				<artifactId>javaee-web-api</artifactId>
-				<version>7.0</version>
+				<version>8.0</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -737,11 +737,6 @@
 					<groupId>org.apache.tomcat.maven</groupId>
 					<artifactId>tomcat7-maven-plugin</artifactId>
 					<version>2.2</version>
-					<configuration>
-						<argLine>
-							--illegal-access=permit
-						</argLine>
-					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>
@@ -752,8 +747,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.1</version>
 				<configuration>
-					<source>11</source>
-					<target>11</target>
+					<source>1.8</source>
+					<target>1.8</target>
 					<encoding>utf8</encoding>
 				</configuration>
 			</plugin>
@@ -776,20 +771,12 @@
 		        <version>2.10</version>
 		        <configuration>
 		        	<skipTests>${skipTests}</skipTests>
-					<argLine>
-						--illegal-access=permit
-					</argLine>
 			    </configuration>
 		    </plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
 				<version>2.10</version>
-				<configuration>
-					<argLine>
-						--illegal-access=permit
-					</argLine>
-				</configuration>
 			</plugin>
 <!--			<plugin>
                                 <artifactId>jdeb</artifactId>
@@ -838,7 +825,7 @@
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>3.0.0</version>
 				<configuration>
-					<source>11</source>
+					<source>1.8</source>
 					<encoding>utf8</encoding>
 				</configuration>
 			</plugin>

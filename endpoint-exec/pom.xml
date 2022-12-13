@@ -41,9 +41,6 @@
 							<path>/</path>
 							<uriEncoding>UTF-8</uriEncoding>
 							<finalName>strabon-endpoint-executable-${project.version}.jar</finalName>
-							<argLine>
-								--illegal-access=permit
-							</argLine>
 							<!-- Override the default server.xml if nessecary
 							<serverXml>src/main/tomcatconf/server.xml</serverXml>
 							-->
