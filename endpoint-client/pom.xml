@@ -28,7 +28,7 @@
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 			<!-- version was put in purpose! do not remove it; -->
-			<version>4.4</version>
+			<version>4.5.5</version>
 		</dependency>
 
 		<!-- Base64 -->

@@ -55,11 +55,11 @@ public class TestSPARQLEndpointWithVirtuoso {
 	
 	/**
 	 * Test method for {@link eu.earthobservatory.org.StrabonEndpoint.client.SPARQLEndpoint#query(java.lang.String, org.openrdf.query.resultio.stSPARQLQueryResultFormat)}.
-	 */
+	*/
 	@Test
 	public void testQuery() {
 			try {
-				EndpointResult response = endpoint.query(query, stSPARQLQueryResultFormat.TSV);
+				EndpointResult response = endpoint.query(query, stSPARQLQueryResultFormat.HTML);
 				
 				if (response.getStatusCode() != 200) {
 					System.err.println("Status code ("+response.getStatusCode()+"):" + response.getStatusText());
