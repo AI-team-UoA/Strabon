@@ -151,7 +151,7 @@
 		<xml.bind.version>2.1.7</xml.bind.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.build.targetEncoding>UTF-8</project.build.targetEncoding>
-		<skipTests>false</skipTests>
+		<skipTests>true</skipTests>
 	</properties>
 
 	<dependencyManagement>
