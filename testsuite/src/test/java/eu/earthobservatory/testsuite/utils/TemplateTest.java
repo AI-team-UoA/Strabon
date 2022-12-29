@@ -11,6 +11,7 @@ package eu.earthobservatory.testsuite.utils;
 
 import java.io.File;
 import java.net.URISyntaxException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -42,6 +43,7 @@ public abstract class TemplateTest
 	{
 		queryFile=new ArrayList<String>();
 		resultsFile=new ArrayList<String>();
+		boolean win=false;
 		
 		String testname=this.getClass().getSimpleName();
 		
@@ -57,19 +59,35 @@ public abstract class TemplateTest
 			e.printStackTrace();
 			System.exit(1);
 		}
+		catch (NullPointerException ne){
+			//Tests are run on a windows setup - change the format of the test directories
+			testfolder = new File("src\\test\\resources\\"+testpackage+"\\"+testname+"\\");
+			win=true;
+		}
 		
 		String[] files = testfolder.list();
-		
+		String relativePath = "src\\test\\resources\\"+testpackage+"\\"+testname+"\\";
+
 		for(String file : files)
 		{
 			if(file.endsWith(".nt") || file.endsWith(".nq"))
 			{
-				datasetFile=File.separator+testpackage+File.separator+testname+File.separator+file;
+				if(!win)
+					datasetFile=File.separator+testpackage+File.separator+testname+File.separator+file;
+				else {
+					datasetFile = buildFilePath(relativePath+file);
+				}
 			}
 			else if(file.endsWith(".rq"))
 			{
-				queryFile.add(File.separator+testpackage+File.separator+testname+File.separator+file);
-				resultsFile.add(File.separator+testpackage+File.separator+testname+File.separator+file.substring(0, file.length()-3)+".srx");
+				if(!win) {
+					queryFile.add(File.separator + testpackage + File.separator + testname + File.separator + file);
+					resultsFile.add(File.separator + testpackage + File.separator + testname + File.separator + file.substring(0, file.length() - 3) + ".srx");
+				}
+				else{
+					queryFile.add(buildFilePath(relativePath+file));
+					resultsFile.add(buildFilePath(relativePath+file.substring(0, file.length() - 3) + ".srx"));
+				}
 			}
 		}
 		
@@ -100,5 +118,13 @@ public abstract class TemplateTest
 	public void after() throws Exception
 	{
 		Utils.dropdb();
+	}
+
+	//Helper method for windows file systems
+	private String buildFilePath(String path){
+		File file = new File(path);
+		String root = System.getProperty("user.dir");
+		String rootDir = root.substring(0, root.indexOf(File.separator)+1);
+		return file.getAbsolutePath().replace(rootDir,"\\");
 	}
 }

@@ -12,11 +12,8 @@ package eu.earthobservatory.testsuite.utils;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+
+import java.io.*;
 import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -75,7 +72,13 @@ public class Utils
 		
 		//Read properties
 		Properties properties = new Properties();
-		InputStream propertiesStream =  Utils.class.getResourceAsStream(dbPropertiesFile);
+		InputStream propertiesStream;
+		if(System.getProperty("os.name").toLowerCase().contains("win")) {
+			propertiesStream = new FileInputStream(new File("src\\test\\resources\\databases.properties"));
+		}
+		else
+			propertiesStream =  Utils.class.getResourceAsStream(dbPropertiesFile);
+
 		properties.load(propertiesStream);
 
 		if((databaseTemplateName = System.getProperty("postgis.databaseTemplateName"))==null)
@@ -146,14 +149,32 @@ public class Utils
 	public static void testQuery(String queryFile, String resultsFile, boolean orderOn) throws IOException, MalformedQueryException, QueryEvaluationException, TupleQueryResultHandlerException, URISyntaxException, QueryResultParseException, UnsupportedQueryResultFormatException
 	{
 		ByteArrayOutputStream resultsStream = new ByteArrayOutputStream();
-		String query = FileUtils.readFileToString(new File(Utils.class.getResource(prefixesFile).toURI()))+"\n"+FileUtils.readFileToString(new File(Utils.class.getResource(queryFile).toURI()));
-		
+		File prefixFile;
+		File qFile;
+		if(System.getProperty("os.name").toLowerCase().contains("win")) {
+			prefixFile = new File("src\\test\\resources\\prefixes");
+			qFile = new File(queryFile);
+		}
+		else {
+			prefixFile = new File(Utils.class.getResource(prefixesFile).toURI());
+			qFile = new File(Utils.class.getResource(queryFile).toURI());
+		}
+
+		String query = FileUtils.readFileToString(prefixFile)+"\n"+FileUtils.readFileToString(qFile);
+
 		//Pose the query
 		strabon.query(query, Format.XML, strabon.getSailRepoConnection(), resultsStream);
 		
 		//Check if the results of the query are the expected
+		InputStream rStream;
+		if(System.getProperty("os.name").toLowerCase().contains("win")) {
+			rStream = new FileInputStream(new File(resultsFile));
+		}
+		else
+			rStream =  Utils.class.getResourceAsStream(dbPropertiesFile);
+
 		compareResults(queryFile, orderOn, 
-					   QueryResultIO.parse(Utils.class.getResourceAsStream(resultsFile), TupleQueryResultFormat.SPARQL),
+					   QueryResultIO.parse(rStream, TupleQueryResultFormat.SPARQL),
 					   QueryResultIO.parse((new ByteArrayInputStream(resultsStream.toByteArray())), TupleQueryResultFormat.SPARQL));
 	}
 	

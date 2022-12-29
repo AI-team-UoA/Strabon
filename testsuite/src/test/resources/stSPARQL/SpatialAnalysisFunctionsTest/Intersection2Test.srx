@@ -6,7 +6,7 @@
 	<results>
 		<result>
 			<binding name='intersection'>
-				<literal datatype='http://strdf.di.uoa.gr/ontology#WKT'>GEOMETRYCOLLECTION EMPTY</literal>
+				<literal datatype='http://strdf.di.uoa.gr/ontology#WKT'>POLYGON EMPTY</literal>
 			</binding>
 		</result>
 	</results>
