@@ -5,9 +5,16 @@
 
 ### Prerequisites
 
-1. Install maven:
+1. Install maven 3.6.3:
 
-        sudo apt-get install maven
+        wget https://mirrors.estointernet.in/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz \
+        && tar -xvf apache-maven-3.6.3-bin.tar.gz \
+        && mv apache-maven-3.6.3 /opt/
+        
+        M2_HOME='/opt/apache-maven-3.6.3'
+        PATH="$M2_HOME/bin:$PATH"
+        export PATH
+
 
 2. Install Java 8:
 
@@ -15,19 +22,9 @@
 
 ### Installing PostgreSQL and PostGIS
 
-1. Install PostgreSQL 9.4 & PostGIS 2.3 :
+1. Install PostgreSQL 12 & PostGIS 3.0 :
 
-        touch /etc/apt/sources.list.d/pgdg.list \
-        && echo "deb http://apt.postgresql.org/pub/repos/apt xenial-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
-        && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add
-        
-        apt-get update \
-        && apt-get install -y \
-        postgresql-9.4 \
-        postgresql-server-dev-9.4 \
-        postgresql-9.4-postgis-2.3 \
-        && apt-get clean \
-        && rm -rf /var/lib/apt/lists/*
+        sudo apt install postgresql-12 postgresql-12-postgis-3
 
 2. Provide a password for default user (postgres)
 
@@ -83,7 +80,7 @@
         
 ### Tuning PostgreSQL
 
-The default settings of Postgres are rather conservative. As a result, parameter tuning is neccessary for speeding up Postgres, therefore Strabon. If you are using Strabon to compare its performance against your implementation of stSPARQL/GeoSPARQL, you are *strongly* encouraged to contact us using the Strabon Users mailing list for assistance on tuning Postgres. You can follow the instructions below for tuning a Postgres server running on an Ubuntu machine that is dedicated to PostgreSQL and Strabon.
+The default settings of Postgres are rather conservative. As a result, parameter tuning is neccessary for speeding up Postgres, therefore Strabon. If you are using Strabon to compare its performance against your implementation of stSPARQL/GeoSPARQL, you are *strongly* encouraged to contact us using the Strabon Users mailing list for assistance on tuning Postgres. You can follow the instructions below for tuning a Postgres server running on an Ubuntu machine that is dedicated to PostgreSQL and Strabon. ( The following settings work on Unix-based systems. Windows do not allow some of the options listed bellow)
 
 1. Append the following text at the end of postgresql.conf, **Uncomment** the appropriate lines :
 
@@ -179,7 +176,7 @@ The default settings of Postgres are rather conservative. As a result, parameter
 
 ## Installing Strabon on Windows
 
-1. First download PostgreSQL database from [here](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads). (try Version 9.4.26)
+1. First download PostgreSQL database from [here](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads). (try Version 12.13)
 
 2. Then install the .exe file
 
@@ -187,9 +184,9 @@ The default settings of Postgres are rather conservative. As a result, parameter
 
 4. For anything else, keep the defaults
 
-5. Then, in the Stack builder select "PostgreSQL 9.4 on port 5432"
+5. Then, in the Stack builder select "PostgreSQL 12.13 on port 5432"
 
-6. Then check the Spatial Extension PostGIS 2.3 for PostgreSQL 9.4
+6. Then check the Spatial Extension PostGIS 3.0 for PostgreSQL 12.13
 
 7. Then, in the PostGIS installation, check the option "Create spatial database"
 
