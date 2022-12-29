@@ -176,7 +176,7 @@ The default settings of Postgres are rather conservative. As a result, parameter
 
 ## Installing Strabon on Windows
 
-1. First download PostgreSQL database from [here](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads). (try Version 12.13)
+1. First download PostgreSQL database from [here](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads). (Version 12.13)
 
 2. Then install the .exe file
 
@@ -198,7 +198,7 @@ The default settings of Postgres are rather conservative. As a result, parameter
 
 11. Now you have PostgreSQL and PostGIS installed
 
-12. Now open pgadmin III (it was installed with postgreSQL. If template_postgis was not created, you may create it manually)
+12. Now open pgadmin IV (it was installed with postgreSQL)
 
 13. Create a new database with the name "endpoint" and in the definition select as template the "template_postgis"
 
