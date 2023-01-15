@@ -151,7 +151,7 @@
 		<xml.bind.version>2.1.7</xml.bind.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.build.targetEncoding>UTF-8</project.build.targetEncoding>
-		<skipTests>true</skipTests>
+		<skipTests>false</skipTests>
 	</properties>
 
 	<dependencyManagement>
@@ -592,7 +592,7 @@
 			<dependency>
 				<groupId>commons-fileupload</groupId>
 				<artifactId>commons-fileupload</artifactId>
-				<version>1.2.1</version>
+				<version>1.3.3</version>
 			</dependency>
 
 			<dependency>
