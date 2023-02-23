@@ -609,13 +609,13 @@ if test "${CLASS}" = "StoreOp"; then
 			file="$(pwd)/${file}"
 		fi
 
-		STRABON_EXEC="${STRABON_EXEC}(cd java ${JAVA_OPTS} -cp ./target/\*:. ${PKG}.${DATABASE}.${CLASS} ${HOST} ${PORT} ${DB} ${DBUSER} ${DBPASS} \"${file}\" -f ${FORMAT} ${NAMED_GRAPH} ${INFERENCE});
+		STRABON_EXEC="${STRABON_EXEC}(java ${JAVA_OPTS} -cp :../runtime/target/* ${PKG}.${DATABASE}.${CLASS} ${HOST} ${PORT} ${DB} ${DBUSER} ${DBPASS} \"${file}\" -f ${FORMAT} ${NAMED_GRAPH} ${INFERENCE});
 "
 	done
 elif test "${CLASS}" = "QueryOp"; then
-	STRABON_EXEC="(java ${JAVA_OPTS} -cp ./target/\*:. ${PKG}.${DATABASE}.${CLASS} ${HOST} ${PORT} ${DB} ${DBUSER} ${DBPASS} \"${PREFIXES}${QUERY}\" ${FORCE_DELETE} ${RESULT_FORMAT})"
+	STRABON_EXEC="(java ${JAVA_OPTS} -cp :../runtime/target/* ${PKG}.${DATABASE}.${CLASS} ${HOST} ${PORT} ${DB} ${DBUSER} ${DBPASS} \"${PREFIXES}${QUERY}\" ${FORCE_DELETE} ${RESULT_FORMAT})"
 else
-	STRABON_EXEC="(java ${JAVA_OPTS} -cp ./target/\*:. ${PKG}.${DATABASE}.${CLASS} ${HOST} ${PORT} ${DB} ${DBUSER} ${DBPASS} \"${PREFIXES}${QUERY}\" ${RESULT_FORMAT})"
+	STRABON_EXEC="(java ${JAVA_OPTS} -cp :../runtime/target/* ${PKG}.${DATABASE}.${CLASS} ${HOST} ${PORT} ${DB} ${DBUSER} ${DBPASS} \"${PREFIXES}${QUERY}\" ${RESULT_FORMAT})"
 fi
 
 # execute command or debug

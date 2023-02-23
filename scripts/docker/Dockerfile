@@ -87,6 +87,12 @@ RUN git clone https://github.com/AI-team-UoA/Strabon \
  && mvn clean package
 
 RUN cp /Strabon/endpoint/target/strabon-endpoint-3.3.3-SNAPSHOT.war /tomcat/webapps/Strabon.war \
+ && mkdir /strabon \
+ && mkdir /strabon/scripts \
+ && cp -R /Strabon/runtime /strabon \
+ && cp /Strabon/scripts/strabon-cmd /strabon/scripts/strabon-cmd \
+ && chmod +x /strabon/scripts/strabon-cmd \
+ && echo 'alias strabon="/strabon/scripts/strabon-cmd"' >>  ~/.bashrc \
  && rm -rf /Strabon
 
 # FINAL CONFIGURATIONS
