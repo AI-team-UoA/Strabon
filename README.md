@@ -1,5 +1,17 @@
-# Strabon
-<br/>
+<div align="center">
+<br>
+<img align="center" src="https://github.com/AI-team-UoA/Strabon/blob/main/STRABON_color.png?raw=true" alt="STRABON" width="400"/>
+</div>
+<br><br>
+<div align="center">
+</div>
+
+---
+
+
+
+
+
 
 ## Installing Strabon on Linux ( Ubuntu 20.04 )
 
