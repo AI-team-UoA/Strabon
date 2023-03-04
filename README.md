@@ -2,7 +2,7 @@
 <br>
 <img align="center" src="https://github.com/AI-team-UoA/Strabon/blob/main/STRABON_color.png?raw=true" alt="STRABON" width="400"/>
 </div>
-<br><br>
+<br>
 <div align="center">
 </div>
 
