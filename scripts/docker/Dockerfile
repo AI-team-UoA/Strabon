@@ -60,6 +60,15 @@ RUN apt-get update \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
+#DELETE JAVA 11
+RUN apt purge openjdk-11-* -y
+
+#SET UP JAVA 8
+ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
+RUN export JAVA_HOME
+RUN PATH="$JAVA_HOME/bin:$PATH" \
+ && export PATH
+
 ADD initdb.sh enable_remote.sh /usr/local/bin/
 
 RUN chmod -v +x /usr/local/bin/initdb.sh
