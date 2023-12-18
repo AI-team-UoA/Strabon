@@ -134,8 +134,6 @@ public class StrabonBeanWrapper implements org.springframework.beans.factory.Dis
 
                 // initialize Strabon according to user preference
                 switch (StrabonDBEngine.getStrabonDBEngine(dbBackend)) {
-                    case MonetDB : this.strabon = new eu.earthobservatory.runtime.monetdb.Strabon(databaseName, user, password, port, serverName, checkForLockTable);
-                                   break;
                     case PostGIS : // use PostGIS as the default database backend
                     default :
                                     this.strabon = new eu.earthobservatory.runtime.postgis.Strabon(databaseName, user, password, port, serverName, checkForLockTable);

@@ -84,12 +84,12 @@
 			<scope>provided</scope>
 		</dependency>
 		
+ 		
 		<dependency>
-			<groupId>monetdb</groupId>
-			<artifactId>jdbcclient</artifactId>
-			<scope>provided</scope>
+		    <groupId>monetdb</groupId>
+		    <artifactId>monetdb-jdbc</artifactId>
+		    <scope>provided</scope>
 		</dependency>
-		
  		
 		<dependency>
 			<groupId>junit</groupId>

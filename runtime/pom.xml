@@ -61,11 +61,6 @@
 
 		<dependency>
 			<groupId>org.openrdf.sesame</groupId>
-			<artifactId>sesame-sail-monetdb</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.openrdf.sesame</groupId>
 			<artifactId>sesame-sail-generaldb</artifactId>
 		</dependency>
 
@@ -212,7 +207,7 @@
 			<groupId>info.aduna.commons</groupId>
 			<artifactId>aduna-commons-iteration</artifactId>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>info.aduna.commons</groupId>
 			<artifactId>aduna-commons-net-http-server-embedded</artifactId>
 			<exclusions>
@@ -221,7 +216,7 @@
 					<groupId>org.mortbay.jetty</groupId>
 				</exclusion>
 			</exclusions>
-		</dependency>
+		</dependency> -->
 
 		<!-- Apache Commons -->
 		<dependency>
@@ -276,14 +271,14 @@
 		</dependency>
 
 		<!-- Compliance tests -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>edu.lehigh.swat.bench</groupId>
 			<artifactId>uba</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>edu.lehigh.swat.bench</groupId>
 			<artifactId>ubt</artifactId>
-		</dependency>
+		</dependency> -->
 
 		<!-- JDBC Drivers -->
 
@@ -311,8 +306,8 @@
 		</dependency>
 
 		<dependency>
-			<groupId>monetdb</groupId>
-			<artifactId>jdbcclient</artifactId>
+		    <groupId>monetdb</groupId>
+		    <artifactId>monetdb-jdbc</artifactId>
 		</dependency>
 
 		<!-- Geotools -->
@@ -342,6 +337,11 @@
 			<groupId>org.opengis</groupId>
 			<artifactId>geoapi-pending</artifactId>
 		</dependency>
+		
+		<dependency>
+		    <groupId>javax.servlet</groupId>
+		    <artifactId>servlet-api</artifactId>
+		</dependency>		
 		
 	</dependencies>
 

@@ -129,7 +129,7 @@
 		<module>evaluation</module>
 		<module>runtime</module>
 		<module>postgis</module>
-		<module>monetdb</module>
+		<!-- <module>monetdb</module> -->
 		<module>generaldb</module>
 		<module>resultio-spatial</module>
 		<module>endpoint</module>
@@ -542,11 +542,13 @@
 			</dependency>
 
 			<!-- JDBC Drivers -->
+			<!-- https://mvnrepository.com/artifact/monetdb/monetdb-jdbc -->
 			<dependency>
-				<groupId>monetdb</groupId>
-				<artifactId>jdbcclient</artifactId>
-				<version>3.4.0</version>
+			    <groupId>monetdb</groupId>
+			    <artifactId>monetdb-jdbc</artifactId>
+			    <version>2.10</version>
 			</dependency>
+
 
 			<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
 			<dependency>
@@ -720,6 +722,15 @@
 				<artifactId>javaee-web-api</artifactId>
 				<version>7.0</version>
 			</dependency>
+			
+			<!-- https://mvnrepository.com/artifact/javax.servlet/servlet-api -->
+			<dependency>
+			    <groupId>javax.servlet</groupId>
+			    <artifactId>servlet-api</artifactId>
+			    <version>2.5</version>
+			    <scope>provided</scope>
+			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 
@@ -926,7 +937,7 @@
 			<url>http://maven.strabon.di.uoa.gr/content/repositories/testing</url>
 		</repository>
 		-->
-		<repository>
+		<!-- <repository>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
@@ -958,28 +969,18 @@
 	            <id>strabon.sesame</id>
 	            <name>Strabon - maven repository - sesame artifacts (temporary)</name>
 	            <url>http://maven.strabon.di.uoa.gr/content/repositories/strabon.sesame/</url>
-	        </repository>
+	        </repository> -->
+	        
 		<repository>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
 			<id>aduna-opensource.releases</id>
 			<name>Aduna Open Source - Maven releases</name>
 			<url>http://repo.aduna-software.org/maven2/releases</url>
 		</repository>
+
 		<repository>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<id>aduna-opensource.snapshots</id>
-			<name>Aduna Open Source - Maven snapshots</name>
-			<url>http://repo.aduna-software.org/maven2/snapshots</url>
+			<id>clojars</id>
+			<name>Clojars</name>
+			<url>https://clojars.org/repo/</url>
 		</repository>
 		<repository>
 			<snapshots>
