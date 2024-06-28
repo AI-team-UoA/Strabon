@@ -19,7 +19,7 @@
 
 1. Install maven 3.6.3:
 
-        wget https://mirrors.estointernet.in/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz \
+        wget https://archive.apache.org/dist/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz \
         && tar -xvf apache-maven-3.6.3-bin.tar.gz \
         && mv apache-maven-3.6.3 /opt/
         
